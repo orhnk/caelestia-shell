@@ -70,7 +70,7 @@ StyledListView {
     highlightFollowsCurrentItem: false
     highlight: StyledRect {
         radius: Tokens.rounding.large
-        color: Colours.palette.m3onSurface
+        color: root.state === "apps" ? Colours.palette.m3onSurface : root.state === "actions" || root.state === "calc" ? Colours.palette.m3primary : root.state === "scheme" ? Colours.palette.m3secondary : Colours.palette.m3tertiary
         opacity: 0.08
 
         y: root.currentItem?.y ?? 0

@@ -9,6 +9,7 @@ Slider {
     id: root
 
     required property string icon
+    property color fillColour: Colours.palette.m3secondary
     property real oldValue
     property bool initialized
 
@@ -25,7 +26,7 @@ Slider {
             y: root.handle.y
             implicitHeight: parent.height - y
 
-            color: Colours.palette.m3secondary
+            color: root.fillColour
             radius: parent.radius
         }
     }

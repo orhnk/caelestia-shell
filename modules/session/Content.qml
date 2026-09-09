@@ -44,6 +44,8 @@ Column {
 
         icon: Config.session.icons.shutdown
         command: Config.session.commands.shutdown
+        focusColour: Colours.palette.m3errorContainer
+        focusOnColour: Colours.palette.m3onErrorContainer
 
         KeyNavigation.up: logout
         KeyNavigation.down: hibernate
@@ -66,6 +68,8 @@ Column {
 
         icon: Config.session.icons.hibernate
         command: Config.session.commands.hibernate
+        focusColour: Colours.palette.m3tertiaryContainer
+        focusOnColour: Colours.palette.m3onTertiaryContainer
 
         KeyNavigation.up: shutdown
         KeyNavigation.down: reboot
@@ -76,6 +80,8 @@ Column {
 
         icon: Config.session.icons.reboot
         command: Config.session.commands.reboot
+        focusColour: Colours.palette.m3primaryContainer
+        focusOnColour: Colours.palette.m3onPrimaryContainer
 
         KeyNavigation.up: hibernate
     }
@@ -84,6 +90,8 @@ Column {
         id: button
 
         required property list<string> command
+        property color focusColour: Colours.palette.m3secondaryContainer
+        property color focusOnColour: Colours.palette.m3onSecondaryContainer
 
         function exec(): void {
             if (!SessionManager.exec(command))
@@ -93,8 +101,8 @@ Column {
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button
 
-        inactiveColour: activeFocus ? Colours.palette.m3secondaryContainer : Colours.tPalette.m3surfaceContainer
-        inactiveOnColour: activeFocus ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
+        inactiveColour: activeFocus ? focusColour : Colours.tPalette.m3surfaceContainer
+        inactiveOnColour: activeFocus ? focusOnColour : Colours.palette.m3onSurface
         radius: pressed ? Tokens.rounding.medium : activeFocus ? Tokens.rounding.extraLarge : Tokens.rounding.largeIncreased
         font: Tokens.font.icon.builders.large.scale(1.3).build()
         onClicked: exec()

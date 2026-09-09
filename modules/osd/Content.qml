@@ -48,6 +48,7 @@ Item {
 
                 icon: Icons.getVolumeIcon(value, root.muted)
                 value: root.volume
+                fillColour: root.muted ? Colours.palette.m3error : Colours.palette.m3tertiary
                 to: GlobalConfig.services.maxVolume
                 onMoved: Audio.setVolume(value)
             }
@@ -73,6 +74,7 @@ Item {
 
                     icon: Icons.getMicVolumeIcon(value, root.sourceMuted)
                     value: root.sourceVolume
+                    fillColour: root.sourceMuted ? Colours.palette.m3error : Colours.palette.m3tertiary
                     to: GlobalConfig.services.maxVolume
                     onMoved: Audio.setSourceVolume(value)
                 }
@@ -102,6 +104,7 @@ Item {
 
                     icon: `brightness_${(Math.round(value * 6) + 1)}`
                     value: root.brightness
+                    fillColour: Colours.palette.m3secondary
                     onMoved: root.monitor?.setBrightness(value)
                 }
             }

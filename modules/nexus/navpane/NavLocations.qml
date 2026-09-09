@@ -13,6 +13,30 @@ VerticalFadeFlickable {
 
     required property NexusState nState
 
+    function categoryColour(category: string): color {
+        switch (category) {
+        case "appearance":
+        case "shell":
+            return Colours.palette.m3primaryContainer;
+        case "connectivity":
+            return Colours.palette.m3tertiaryContainer;
+        default:
+            return Colours.palette.m3secondaryContainer;
+        }
+    }
+
+    function categoryOnColour(category: string): color {
+        switch (category) {
+        case "appearance":
+        case "shell":
+            return Colours.palette.m3onPrimaryContainer;
+        case "connectivity":
+            return Colours.palette.m3onTertiaryContainer;
+        default:
+            return Colours.palette.m3onSecondaryContainer;
+        }
+    }
+
     topMargin: Tokens.padding.large
     bottomMargin: Tokens.padding.large
     contentHeight: content.implicitHeight
@@ -88,14 +112,14 @@ VerticalFadeFlickable {
                         implicitWidth: height
 
                         radius: Tokens.rounding.full
-                        color: item.isCurrentPage ? Colours.palette.m3primary : Colours.palette.m3secondaryContainer
+                        color: item.isCurrentPage ? Colours.palette.m3primary : root.categoryColour(item.modelData.category)
 
                         MaterialIcon {
                             anchors.centerIn: parent
                             anchors.verticalCenterOffset: 1
 
                             text: item.modelData.icon
-                            color: item.isCurrentPage ? Colours.palette.m3onPrimary : Colours.palette.m3onSecondaryContainer
+                            color: item.isCurrentPage ? Colours.palette.m3onPrimary : root.categoryOnColour(item.modelData.category)
                             fontStyle: Tokens.font.icon.builders.medium.weight(Font.Medium).build()
                             grade: 25
                             fill: item.modelData.noFill ? 0 : 1

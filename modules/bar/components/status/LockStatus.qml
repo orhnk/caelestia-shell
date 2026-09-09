@@ -46,7 +46,7 @@ ColumnLayout {
             opacity: Hypr.capsLock ? 1 : 0
 
             text: "keyboard_capslock_badge"
-            color: root.colour
+            color: Colours.palette.m3tertiary
             fill: 1
             grade: 25
 
@@ -75,7 +75,7 @@ ColumnLayout {
             opacity: Hypr.numLock ? 1 : 0
 
             text: "looks_one"
-            color: root.colour
+            color: Colours.palette.m3tertiary
             fill: 1
             grade: 25
 

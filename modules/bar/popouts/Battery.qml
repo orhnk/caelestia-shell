@@ -105,6 +105,20 @@ Column {
                 return perf.icon;
             return balance.icon;
         }
+        readonly property color currentColour: {
+            if (current === saver.icon)
+                return Colours.palette.m3success;
+            if (current === perf.icon)
+                return Colours.palette.m3tertiary;
+            return Colours.palette.m3secondary;
+        }
+        readonly property color currentOnColour: {
+            if (current === saver.icon)
+                return Colours.palette.m3onSuccess;
+            if (current === perf.icon)
+                return Colours.palette.m3onTertiary;
+            return Colours.palette.m3onSecondary;
+        }
 
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -117,7 +131,7 @@ Column {
         StyledRect {
             id: indicator
 
-            color: Colours.palette.m3primary
+            color: profiles.currentColour
             radius: Tokens.rounding.full
             state: profiles.current
 
@@ -201,7 +215,7 @@ Column {
 
         StateLayer {
             radius: Tokens.rounding.full
-            color: profiles.current === parent.icon ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+            color: profiles.current === parent.icon ? profiles.currentOnColour : Colours.palette.m3onSurface
             onClicked: PowerProfiles.profile = parent.profile
         }
 
@@ -212,7 +226,7 @@ Column {
 
             text: parent.icon
             fontStyle: Tokens.font.icon.large
-            color: profiles.current === text ? Colours.palette.m3onPrimary : Colours.palette.m3onSurfaceVariant
+            color: profiles.current === text ? profiles.currentOnColour : Colours.palette.m3onSurfaceVariant
             fill: profiles.current === text ? 1 : 0
 
             Behavior on fill {

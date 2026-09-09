@@ -61,7 +61,7 @@ ColumnLayout {
                 StyledText {
                     Layout.alignment: Qt.AlignRight
                     text: Nmcli.activeEthernet ? qsTr("Connected") : qsTr("Not connected")
-                    color: Nmcli.activeEthernet ? Colours.palette.m3primary : Colours.palette.m3outline
+                    color: Nmcli.activeEthernet ? Colours.palette.m3secondary : Colours.palette.m3outline
                     font: Tokens.font.label.small
                 }
 
@@ -119,7 +119,7 @@ ColumnLayout {
                     implicitWidth: implicitHeight
                     implicitHeight: ethIcon.implicitHeight + Tokens.padding.small * 2
                     radius: Tokens.rounding.full
-                    color: ethRow.isConnected ? Colours.palette.m3primaryContainer : Colours.palette.m3surfaceContainerHighest
+                    color: ethRow.isConnected ? Colours.palette.m3secondaryContainer : Colours.palette.m3surfaceContainerHighest
 
                     MaterialIcon {
                         id: ethIcon
@@ -127,7 +127,7 @@ ColumnLayout {
                         anchors.centerIn: parent
                         text: ethRow.isConnected ? "lan" : "settings_ethernet"
                         fill: text === "lan" ? 1 : 0
-                        color: ethRow.isConnected ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSurfaceVariant
+                        color: ethRow.isConnected ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
                         fontStyle: Tokens.font.icon.medium
                         animate: true
                     }
@@ -149,7 +149,7 @@ ColumnLayout {
                     StyledText {
                         Layout.fillWidth: true
                         text: ethRow.isConnected ? ethRow.modelData.iface : qsTr("Not connected • %1").arg(ethRow.modelData.iface)
-                        color: ethRow.isConnected ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                        color: ethRow.isConnected ? Colours.palette.m3secondary : Colours.palette.m3onSurfaceVariant
                         font: Tokens.font.label.small
                         elide: Text.ElideRight
                         animate: true

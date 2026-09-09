@@ -115,6 +115,7 @@ StyledRect {
 
                         Layout.fillWidth: true
                         text: modelData
+                        color: modelData.startsWith("BATT") && modelData.includes("(+)") ? Colours.palette.m3success : Colours.palette.m3onSurface
                         elide: Text.ElideRight
                     }
                 }

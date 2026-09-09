@@ -63,7 +63,7 @@ Item {
                     anchors.leftMargin: (ShellState.componentsFor(root.screen)?.bar?.exclusiveZone ?? 0) + Tokens.spacing.small * Config.background.visualiser.spacing
 
                     values: Audio.cava.values
-                    primaryColor: Qt.alpha(Colours.palette.m3primary, 0.7)
+                    primaryColor: Qt.alpha(Colours.palette.m3tertiary, 0.7)
                     secondaryColor: Qt.alpha(Colours.palette.m3inversePrimary, 0.7)
                     rounding: Tokens.rounding.medium * Config.background.visualiser.rounding
                     spacing: Tokens.spacing.extraSmall * Config.background.visualiser.spacing

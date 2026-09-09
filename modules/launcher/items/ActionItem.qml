@@ -30,7 +30,7 @@ Item {
 
             anchors.verticalCenter: parent.verticalCenter
             text: root.modelData?.icon ?? ""
-            color: Colours.palette.m3onSurfaceVariant
+            color: root.modelData?.dangerous ? Colours.palette.m3error : Colours.palette.m3onSurfaceVariant
             fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
         }
 
@@ -46,6 +46,7 @@ Item {
                 id: name
 
                 text: root.modelData?.name ?? ""
+                color: root.modelData?.dangerous ? Colours.palette.m3error : Colours.palette.m3onSurface
                 font: Tokens.font.body.medium
             }
 

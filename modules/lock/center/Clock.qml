@@ -40,7 +40,7 @@ Item {
         y: -root.calcTopOff(minuteMetrics)
 
         text: Time.minuteStr
-        color: Colours.palette.m3secondary
+        color: Colours.palette.m3tertiary
         font: Tokens.font.headline.builders.large.scale((GlobalConfig.services.useTwelveHourClock ? 3.8 : 7) * root.centerScale).width(30).build()
 
         TextMetrics {

@@ -88,6 +88,7 @@ ColumnLayout {
 
             Layout.fillWidth: true
             value: Players.active ? Players.active.position / (Players.active.length || 1) : 0
+            fgColour: Colours.palette.m3tertiary
             enabled: (Players.active?.canSeek ?? false) && !root.hasUnknownLength
             wavy: true
             animateWave: Players.active?.isPlaying ?? false

@@ -22,6 +22,9 @@ Slider {
     property color fgColour: enabled ? Colours.palette.m3primary : Qt.alpha(Colours.palette.m3onSurface, 0.38)
     property color bgColour: enabled ? Colours.palette.m3secondaryContainer : Qt.alpha(Colours.palette.m3onSurface, 0.1)
 
+    readonly property color effectiveFgColour: root.enabled ? root.fgColour : Qt.alpha(Colours.palette.m3onSurface, 0.38)
+    readonly property color effectiveBgColour: root.enabled ? root.bgColour : Qt.alpha(Colours.palette.m3onSurface, 0.1)
+
     property real pos: visualPosition
     property real filledWidth
 
@@ -49,7 +52,7 @@ Slider {
             radius: root.radius
             topLeftRadius: Tokens.rounding.extraSmall / 2
             bottomLeftRadius: Tokens.rounding.extraSmall / 2
-            color: root.bgColour
+            color: root.effectiveBgColour
         }
 
         StyledRect {
@@ -62,7 +65,7 @@ Slider {
             opacity: remaining.opacity
 
             radius: Tokens.rounding.full
-            color: root.fgColour
+            color: root.effectiveFgColour
         }
 
         StyledRect {
@@ -80,7 +83,7 @@ Slider {
             }
 
             radius: Tokens.rounding.full
-            color: root.fgColour
+            color: root.effectiveFgColour
 
             Behavior on implicitHeight {
                 Anim {
@@ -109,7 +112,7 @@ Slider {
                 radius: root.radius
                 topRightRadius: Tokens.rounding.extraSmall / 2
                 bottomRightRadius: Tokens.rounding.extraSmall / 2
-                color: root.fgColour
+                color: root.effectiveFgColour
             }
         }
 
@@ -121,7 +124,7 @@ Slider {
                 frequency: root.waveFrequency
                 startX: x
                 fullLength: root.width - handle.implicitWidth - handle.anchors.leftMargin
-                color: root.fgColour
+                color: root.effectiveFgColour
 
                 implicitWidth: root.filledWidth
                 implicitHeight: lineWidth * amplitudeMultiplier * 2 + lineWidth

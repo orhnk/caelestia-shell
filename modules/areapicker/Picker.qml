@@ -226,7 +226,7 @@ MouseArea {
         id: overlay
 
         anchors.fill: parent
-        color: Colours.palette.m3secondaryContainer
+        color: root.loader.clipboardOnly ? Colours.palette.m3errorContainer : Colours.palette.m3secondaryContainer
         opacity: 0.3
 
         layer.enabled: true
@@ -260,7 +260,7 @@ MouseArea {
         color: "transparent"
         radius: root.realRounding > 0 ? root.realRounding + root.realBorderWidth : 0
         border.width: root.realBorderWidth
-        border.color: Colours.palette.m3primary
+        border.color: root.onClient ? Colours.palette.m3tertiary : Colours.palette.m3primary
 
         x: selectionRect.x - root.realBorderWidth
         y: selectionRect.y - root.realBorderWidth

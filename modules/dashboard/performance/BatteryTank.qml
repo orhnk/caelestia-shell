@@ -10,12 +10,24 @@ StyledClippingRect {
     id: root
 
     property real animPerc: UPower.displayDevice.percentage
+    readonly property bool charging: [UPowerDeviceState.Charging, UPowerDeviceState.FullyCharged, UPowerDeviceState.PendingCharge].includes(UPower.displayDevice.state)
+    readonly property bool low: UPower.displayDevice.percentage <= 0.2 && !root.charging
 
-    color: Colours.palette.m3secondaryContainer
+    readonly property color stateContainerColour: root.charging ? Colours.palette.m3successContainer : root.low ? Colours.palette.m3errorContainer : Colours.palette.m3secondaryContainer
+    readonly property color stateFillColour: root.charging ? Colours.palette.m3success : root.low ? Colours.palette.m3error : Colours.palette.m3secondary
+    readonly property color stateOuterAccent: root.charging ? Colours.palette.m3onSuccessContainer : root.low ? Colours.palette.m3onErrorContainer : Colours.palette.m3primary
+    readonly property color stateOuterText: root.charging ? Colours.palette.m3onSuccessContainer : root.low ? Colours.palette.m3onErrorContainer : Colours.palette.m3onSurface
+    readonly property color stateInnerAccent: root.charging ? Colours.palette.m3onSuccess : root.low ? Colours.palette.m3onError : Colours.palette.m3primaryContainer
+    readonly property color stateInnerText: root.charging ? Colours.palette.m3onSuccess : root.low ? Colours.palette.m3onError : Colours.palette.m3onSecondary
+
+    color: root.stateContainerColour
     radius: Tokens.rounding.large
-
     implicitWidth: Config.dashboard.performance.showCpu || (Config.dashboard.performance.showGpu && Gpu.type !== Gpu.None) || Config.dashboard.performance.showStorage || Config.dashboard.performance.showMemory ? Tokens.sizes.dashboard.perfBattWidth : Tokens.sizes.dashboard.perfBattWidthSingle
     implicitHeight: Tokens.sizes.dashboard.perfBattHeight
+
+    Behavior on color {
+        CAnim {}
+    }
 
     Behavior on animPerc {
         Anim {}
@@ -27,9 +39,9 @@ StyledClippingRect {
         anchors.fill: parent
         anchors.margins: Tokens.padding.medium
 
-        accentColour: Colours.palette.m3primary
-        textColour: Colours.palette.m3onSurface
-        subTextColour: Colours.palette.m3onSurfaceVariant
+        accentColour: root.stateOuterAccent
+        textColour: root.stateOuterText
+        subTextColour: root.stateOuterText
     }
 
     StyledRect {
@@ -38,9 +50,13 @@ StyledClippingRect {
         anchors.bottom: parent.bottom
         implicitHeight: parent.height * root.animPerc
 
-        color: Colours.palette.m3secondary
+        color: root.stateFillColour
         radius: Tokens.rounding.extraSmall
         clip: true
+
+        Behavior on color {
+            CAnim {}
+        }
 
         Contents {
             anchors.left: parent.left
@@ -49,9 +65,9 @@ StyledClippingRect {
             anchors.margins: layout.anchors.margins
             height: layout.height
 
-            accentColour: Colours.palette.m3primaryContainer
-            textColour: Colours.palette.m3onSecondary
-            subTextColour: Colours.palette.m3secondaryContainer
+            accentColour: root.stateInnerAccent
+            textColour: root.stateInnerText
+            subTextColour: root.stateInnerText
         }
     }
 
@@ -61,7 +77,6 @@ StyledClippingRect {
         required property color accentColour
         required property color textColour
         required property color subTextColour
-        readonly property bool charging: [UPowerDeviceState.Charging, UPowerDeviceState.FullyCharged, UPowerDeviceState.PendingCharge].includes(UPower.displayDevice.state)
 
         spacing: 0
 
@@ -89,7 +104,7 @@ StyledClippingRect {
                 if (UPower.displayDevice.state === UPowerDeviceState.FullyCharged)
                     return qsTr("Full");
 
-                if (contents.charging)
+                if (root.charging)
                     return qsTr("Charging");
 
                 const s = UPower.displayDevice.timeToEmpty;
@@ -121,8 +136,8 @@ StyledClippingRect {
                 fontStyle: Tokens.font.icon.large
                 fill: 1
 
-                scale: contents.charging ? 1 : 0
-                opacity: contents.charging ? 1 : 0
+                scale: root.charging ? 1 : 0
+                opacity: root.charging ? 1 : 0
 
                 Behavior on scale {
                     Anim {

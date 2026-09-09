@@ -20,10 +20,10 @@ StyledRect {
         if (root.modelData.type === Toast.Success)
             return Colours.palette.m3successContainer;
         if (root.modelData.type === Toast.Warning)
-            return Colours.palette.m3secondary;
+            return Colours.palette.m3tertiary;
         if (root.modelData.type === Toast.Error)
             return Colours.palette.m3errorContainer;
-        return Colours.palette.m3surface;
+        return Colours.palette.m3secondaryContainer;
     }
 
     border.width: 1
@@ -32,9 +32,11 @@ StyledRect {
         if (root.modelData.type === Toast.Success)
             colour = Colours.palette.m3success;
         if (root.modelData.type === Toast.Warning)
-            colour = Colours.palette.m3secondaryContainer;
+            colour = Colours.palette.m3tertiaryContainer;
         if (root.modelData.type === Toast.Error)
             colour = Colours.palette.m3error;
+        if (root.modelData.type === Toast.Info)
+            colour = Colours.palette.m3secondary;
         return Qt.alpha(colour, 0.3);
     }
 
@@ -61,10 +63,10 @@ StyledRect {
                 if (root.modelData.type === Toast.Success)
                     return Colours.palette.m3success;
                 if (root.modelData.type === Toast.Warning)
-                    return Colours.palette.m3secondaryContainer;
+                    return Colours.palette.m3tertiaryContainer;
                 if (root.modelData.type === Toast.Error)
                     return Colours.palette.m3error;
-                return Colours.palette.m3surfaceContainerHigh;
+                return Colours.palette.m3secondary;
             }
 
             implicitWidth: implicitHeight
@@ -79,10 +81,10 @@ StyledRect {
                     if (root.modelData.type === Toast.Success)
                         return Colours.palette.m3onSuccess;
                     if (root.modelData.type === Toast.Warning)
-                        return Colours.palette.m3onSecondaryContainer;
+                        return Colours.palette.m3onTertiaryContainer;
                     if (root.modelData.type === Toast.Error)
                         return Colours.palette.m3onError;
-                    return Colours.palette.m3onSurfaceVariant;
+                    return Colours.palette.m3onSecondary;
                 }
                 fontStyle: Tokens.font.icon.builders.large.scale(1.2).build()
             }
@@ -101,10 +103,10 @@ StyledRect {
                     if (root.modelData.type === Toast.Success)
                         return Colours.palette.m3onSuccessContainer;
                     if (root.modelData.type === Toast.Warning)
-                        return Colours.palette.m3onSecondary;
+                        return Colours.palette.m3onTertiary;
                     if (root.modelData.type === Toast.Error)
                         return Colours.palette.m3onErrorContainer;
-                    return Colours.palette.m3onSurface;
+                    return Colours.palette.m3onSecondaryContainer;
                 }
                 font: Tokens.font.title.small
                 elide: Text.ElideRight
@@ -118,10 +120,10 @@ StyledRect {
                     if (root.modelData.type === Toast.Success)
                         return Colours.palette.m3onSuccessContainer;
                     if (root.modelData.type === Toast.Warning)
-                        return Colours.palette.m3onSecondary;
+                        return Colours.palette.m3onTertiary;
                     if (root.modelData.type === Toast.Error)
                         return Colours.palette.m3onErrorContainer;
-                    return Colours.palette.m3onSurface;
+                    return Colours.palette.m3onSecondaryContainer;
                 }
                 opacity: 0.8
                 elide: Text.ElideRight

@@ -16,6 +16,8 @@ StyledRect {
     required property real usage
     required property real temperature
 
+    readonly property bool critical: root.usage > 0.9
+
     color: Colours.tPalette.m3surfaceContainer
     radius: Tokens.rounding.extraLarge
 
@@ -114,7 +116,7 @@ StyledRect {
         anchors.margins: Tokens.padding.medium
 
         implicitSize: Tokens.sizes.dashboard.perfUsageShapeSize
-        color: Colours.palette.m3secondaryContainer
+        color: root.critical ? Colours.palette.m3errorContainer : Colours.palette.m3secondaryContainer
         shape: {
             if (root.usage >= 0.8)
                 return MaterialShape.SoftBurst;
@@ -134,14 +136,14 @@ StyledRect {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: qsTr("Usage")
-            color: Colours.palette.m3onSurfaceVariant
+            color: root.critical ? Colours.palette.m3onErrorContainer : Colours.palette.m3onSurfaceVariant
             font: Tokens.font.body.small
         }
 
         StyledText {
             anchors.centerIn: parent
             text: isNaN(root.usage) ? "...%" : Math.round(root.usage * 100) + "%"
-            color: root.accent
+            color: root.critical ? Colours.palette.m3error : root.accent
             font: Tokens.font.headline.builders.small.width(50).build()
         }
     }

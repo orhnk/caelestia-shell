@@ -181,7 +181,7 @@ PageBase {
                         implicitWidth: implicitHeight
                         implicitHeight: providerIcon.implicitHeight + Tokens.padding.small * 2
                         radius: Tokens.rounding.full
-                        color: provider.isConnected ? Colours.palette.m3primaryContainer : provider.isSelected ? Colours.palette.m3secondaryContainer : Colours.palette.m3surfaceContainerHighest
+                        color: provider.isConnected ? Colours.palette.m3successContainer : provider.isSelected ? Colours.palette.m3secondaryContainer : Colours.palette.m3surfaceContainerHighest
 
                         MaterialIcon {
                             id: providerIcon
@@ -189,7 +189,7 @@ PageBase {
                             anchors.centerIn: parent
                             text: provider.isConnected || provider.isSelected ? "vpn_key" : "vpn_key_off"
                             fill: provider.isConnected ? 1 : 0
-                            color: provider.isConnected ? Colours.palette.m3onPrimaryContainer : provider.isSelected ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
+                            color: provider.isConnected ? Colours.palette.m3onSuccessContainer : provider.isSelected ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
                             fontStyle: Tokens.font.icon.medium
                             animate: true
                         }
@@ -231,7 +231,7 @@ PageBase {
                                     return Colours.palette.m3onSurfaceVariant;
                                 switch (VPN.status.state) {
                                 case "connected":
-                                    return Colours.palette.m3primary;
+                                    return Colours.palette.m3success;
                                 case "needs-auth":
                                 case "error":
                                     return Colours.palette.m3error;
@@ -308,7 +308,7 @@ PageBase {
                                         implicitWidth: Math.round(Tokens.font.body.small.pointSize * 0.7)
                                         implicitHeight: implicitWidth
                                         radius: Tokens.rounding.full
-                                        color: VPN.pingMs <= 80 ? Colours.palette.m3primary : VPN.pingMs <= 150 ? Colours.palette.m3tertiary : Colours.palette.m3error
+                                        color: VPN.pingMs <= 80 ? Colours.palette.m3success : VPN.pingMs <= 150 ? Colours.palette.m3tertiary : Colours.palette.m3error
                                     }
 
                                     StyledText {

@@ -10,6 +10,23 @@ Item {
     required property M3Variants.Variant modelData
     required property var list
 
+    readonly property color accent: {
+        switch (root.modelData?.variant) {
+        case "vibrant":
+        case "fidelity":
+            return Colours.palette.m3primary;
+        case "tonalspot":
+        case "content":
+            return Colours.palette.m3secondary;
+        case "expressive":
+        case "fruitsalad":
+        case "rainbow":
+            return Colours.palette.m3tertiary;
+        default:
+            return Colours.palette.m3onSurfaceVariant;
+        }
+    }
+
     implicitHeight: Tokens.sizes.launcher.itemHeight
 
     anchors.left: parent?.left
@@ -70,7 +87,7 @@ Item {
 
             sourceComponent: MaterialIcon {
                 text: "check"
-                color: Colours.palette.m3onSurfaceVariant
+                color: root.accent
                 fontStyle: Tokens.font.icon.large
             }
         }

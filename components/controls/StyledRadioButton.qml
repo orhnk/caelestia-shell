@@ -7,6 +7,8 @@ import qs.services
 RadioButton {
     id: root
 
+    property color activeColour: Colours.palette.m3primary
+
     font: Tokens.font.body.small
 
     implicitWidth: implicitIndicatorWidth + implicitContentWidth + contentItem.anchors.leftMargin
@@ -19,13 +21,13 @@ RadioButton {
         implicitHeight: 20
         radius: Tokens.rounding.full
         color: "transparent"
-        border.color: root.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+        border.color: root.checked ? root.activeColour : Colours.palette.m3onSurfaceVariant
         border.width: 2
         anchors.verticalCenter: parent.verticalCenter
 
         StateLayer {
             anchors.margins: -Tokens.padding.small
-            color: root.checked ? Colours.palette.m3onSurface : Colours.palette.m3primary
+            color: root.checked ? root.activeColour : Colours.palette.m3onSurface
             z: -1
             onClicked: root.click()
         }
@@ -36,7 +38,7 @@ RadioButton {
             implicitHeight: 8
 
             radius: Tokens.rounding.full
-            color: Qt.alpha(Colours.palette.m3primary, root.checked ? 1 : 0)
+            color: Qt.alpha(root.activeColour, root.checked ? 1 : 0)
         }
 
         Behavior on border.color {

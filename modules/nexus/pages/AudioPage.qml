@@ -25,6 +25,7 @@ PageBase {
             label: qsTr("Output")
             valueLabel: Math.round(value * 100) + "%"
             value: Audio.volume
+            accent: Colours.palette.m3tertiary
             enabled: !Audio.muted
             onMoved: v => Audio.setVolume(v)
         }
@@ -52,6 +53,7 @@ PageBase {
             label: qsTr("Input")
             valueLabel: Math.round(value * 100) + "%"
             value: Audio.sourceVolume
+            accent: Colours.palette.m3tertiary
             enabled: !Audio.sourceMuted
             onMoved: v => Audio.setSourceVolume(v)
         }

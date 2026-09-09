@@ -48,7 +48,7 @@ Item {
         anchors.centerIn: cover
         implicitSize: cover.width + root.arcCoverGap + thickness * 2
 
-        fgColour: Colours.palette.m3primary
+        fgColour: Colours.palette.m3tertiary
         strokeWidth: Tokens.sizes.dashboard.mediaProgressThickness
         startAngle: -90 - sweepAngle / 2
         sweepAngle: Tokens.sizes.dashboard.mediaProgressSweep

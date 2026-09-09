@@ -38,6 +38,7 @@ Item {
         Resource {
             icon: "memory"
             value: Cpu.percentage
+            fgColour: Colours.palette.m3primary
         }
 
         Resource {
@@ -49,7 +50,7 @@ Item {
         Resource {
             icon: "hard_disk"
             value: Storage.percentage
-            fgColour: Colours.palette.m3secondary
+            fgColour: Colours.palette.m3success
         }
     }
     component Resource: CircularProgress {

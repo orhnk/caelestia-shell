@@ -17,6 +17,13 @@ Item {
     readonly property real centerY: height / 2
     readonly property real spacing: Tokens.spacing.medium
     readonly property real maxMagnitude: (implicitWidth - cover.implicitWidth) / 2 - spacing
+    readonly property var colourCycle: [
+        Colours.palette.m3primaryContainer,
+        Colours.palette.m3secondaryContainer,
+        Colours.palette.m3tertiaryContainer,
+        Colours.palette.m3primary,
+        Colours.palette.m3tertiary,
+    ]
 
     ServiceRef {
         service: Audio.cava
@@ -55,7 +62,7 @@ Item {
             asynchronous: true
             capStyle: root.Tokens.rounding.scale === 0 ? ShapePath.SquareCap : ShapePath.RoundCap
             strokeWidth: 360 / GlobalConfig.services.visualiserBars - root.Tokens.spacing.small / 4
-            strokeColor: Colours.palette.m3primary
+            strokeColor: root.colourCycle[modelData % root.colourCycle.length]
 
             startX: root.centerX + shapeEdgeDist * cos
             startY: root.centerY + shapeEdgeDist * sin

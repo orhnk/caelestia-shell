@@ -94,7 +94,7 @@ Item {
 
             sourceComponent: MaterialIcon {
                 text: "check"
-                color: Colours.palette.m3onSurfaceVariant
+                color: `#${root.modelData?.colours?.primary}`
                 fontStyle: Tokens.font.icon.large
             }
         }

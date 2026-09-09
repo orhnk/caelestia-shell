@@ -91,6 +91,8 @@ StyledRect {
                     delegate: Toggle {
                         icon: "bluetooth"
                         checked: Bluetooth.defaultAdapter?.enabled ?? false // qmllint disable unresolved-type
+                        activeColour: Colours.palette.m3secondary
+                        activeOnColour: Colours.palette.m3onSecondary
                         onClicked: {
                             const adapter = Bluetooth.defaultAdapter; // qmllint disable unresolved-type
                             if (adapter)
@@ -103,6 +105,8 @@ StyledRect {
                     delegate: Toggle {
                         icon: "mic"
                         checked: !Audio.sourceMuted
+                        activeColour: Colours.palette.m3tertiary
+                        activeOnColour: Colours.palette.m3onTertiary
                         onClicked: {
                             const audio = Audio.source?.audio;
                             if (audio)
@@ -127,6 +131,8 @@ StyledRect {
                     delegate: Toggle {
                         icon: "gamepad"
                         checked: GameMode.enabled
+                        activeColour: Colours.palette.m3tertiary
+                        activeOnColour: Colours.palette.m3onTertiary
                         onClicked: GameMode.enabled = !GameMode.enabled
                     }
                 }
@@ -135,6 +141,8 @@ StyledRect {
                     delegate: Toggle {
                         icon: "notifications_off"
                         checked: Notifs.dnd
+                        activeColour: Colours.palette.m3tertiary
+                        activeOnColour: Colours.palette.m3onTertiary
                         onClicked: Notifs.dnd = !Notifs.dnd
                     }
                 }
@@ -145,7 +153,9 @@ StyledRect {
                         checked: VPN.connected && VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
                         enabled: !VPN.connecting && !VPN.disconnecting
                         isToggle: VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
-                        inactiveOnColour: Colours.palette.m3onSurfaceVariant
+                        activeColour: Colours.palette.m3success
+                        activeOnColour: Colours.palette.m3onSuccess
+                        inactiveOnColour: Colours.layer(VPN.status.state === "needs-auth" || VPN.status.state === "error" ? Colours.palette.m3error : Colours.palette.m3onSurfaceVariant, 2)
                         onClicked: VPN.toggle()
                     }
                 }

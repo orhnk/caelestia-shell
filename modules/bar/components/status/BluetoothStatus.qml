@@ -37,7 +37,13 @@ Item {
                     return "bluetooth_connected";
                 return "bluetooth";
             }
-            color: root.colour
+            color: {
+                if (!Bluetooth.defaultAdapter?.enabled) // qmllint disable unresolved-type
+                    return Colours.palette.m3outline;
+                if (Bluetooth.devices.values.some(d => d.connected)) // qmllint disable unresolved-type
+                    return Colours.palette.m3success;
+                return root.colour;
+            }
         }
 
         // Connected bluetooth devices
@@ -53,7 +59,7 @@ Item {
 
                 animate: true
                 text: Icons.getBluetoothIcon(modelData?.icon)
-                color: root.colour
+                color: modelData?.state === BluetoothDeviceState.Connected ? Colours.palette.m3success : Colours.palette.m3tertiary // qmllint disable unresolved-type
                 fill: 1
 
                 SequentialAnimation on opacity {

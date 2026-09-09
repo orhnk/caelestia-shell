@@ -15,6 +15,7 @@ ConnectedRect {
     property alias label: label.text
     property alias valueLabel: valueLabel.text
     property real value
+    property color accent: Colours.palette.m3primary
 
     signal moved(value: real)
 
@@ -80,6 +81,7 @@ ConnectedRect {
 
                     radius: Tokens.rounding.small
                     value: root.value
+                    fgColour: root.accent
                     enabled: root.enabled
                     onInteraction: v => root.moved(v)
                 }
