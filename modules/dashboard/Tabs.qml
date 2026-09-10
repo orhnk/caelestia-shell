@@ -8,6 +8,7 @@ import Caelestia.Config
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -85,7 +86,7 @@ Item {
             anchors.right: parent.right
             implicitHeight: parent.implicitHeight * 2
 
-            color: Colours.palette.m3primary
+            color: Accents.at(Accents.topMenuColors, bar.currentIndex)
             radius: Tokens.rounding.full
         }
 
@@ -114,6 +115,7 @@ Item {
 
         required property string iconName
         readonly property bool current: TabBar.tabBar.currentItem === this
+        readonly property color accent: Accents.at(Accents.topMenuColors, TabBar.index)
 
         Layout.fillWidth: true
         Layout.preferredWidth: 1 // Uniform width across all tabs
@@ -149,7 +151,7 @@ Item {
                 implicitHeight: parent.height + Tokens.sizes.dashboard.tabIndicatorSpacing * 2
 
                 radius: Tokens.rounding.medium
-                color: tab.current ? Colours.palette.m3primary : Colours.palette.m3onSurface
+                color: tab.accent
                 onClicked: root.screenState.dashboardTab = tab.TabBar.index
             }
 
@@ -160,7 +162,7 @@ Item {
                 anchors.bottom: label.top
 
                 text: tab.iconName
-                color: tab.current ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                color: Accents.topMenu(tab.TabBar.index, tab.current)
                 fill: tab.current ? 1 : 0
                 fontStyle: Tokens.font.icon.medium
 
@@ -178,7 +180,7 @@ Item {
                 anchors.bottom: parent.bottom
 
                 text: tab.text
-                color: tab.current ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                color: Accents.topMenu(tab.TabBar.index, tab.current)
             }
         }
     }

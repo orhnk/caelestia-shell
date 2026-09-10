@@ -22,6 +22,7 @@ Column {
     SessionButton {
         id: logout
 
+        sessionIndex: 0
         icon: Config.session.icons.logout
         command: Config.session.commands.logout
 
@@ -42,6 +43,7 @@ Column {
     SessionButton {
         id: shutdown
 
+        sessionIndex: 1
         icon: Config.session.icons.shutdown
         command: Config.session.commands.shutdown
 
@@ -64,6 +66,7 @@ Column {
     SessionButton {
         id: hibernate
 
+        sessionIndex: 2
         icon: Config.session.icons.hibernate
         command: Config.session.commands.hibernate
 
@@ -74,6 +77,7 @@ Column {
     SessionButton {
         id: reboot
 
+        sessionIndex: 3
         icon: Config.session.icons.reboot
         command: Config.session.commands.reboot
 
@@ -84,6 +88,7 @@ Column {
         id: button
 
         required property list<string> command
+        property int sessionIndex: 0
 
         function exec(): void {
             if (!SessionManager.exec(command))
@@ -93,8 +98,8 @@ Column {
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button
 
-        inactiveColour: activeFocus ? Colours.palette.m3secondaryContainer : Colours.tPalette.m3surfaceContainer
-        inactiveOnColour: activeFocus ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
+        inactiveColour: Accents.session(button.sessionIndex, activeFocus)
+        inactiveOnColour: activeFocus ? Colours.on(Accents.sessionFg(button.sessionIndex)) : Colours.palette.m3onSurface
         radius: pressed ? Tokens.rounding.medium : activeFocus ? Tokens.rounding.extraLarge : Tokens.rounding.largeIncreased
         font: Tokens.font.icon.builders.large.scale(1.3).build()
         onClicked: exec()

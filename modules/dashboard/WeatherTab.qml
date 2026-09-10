@@ -82,7 +82,7 @@ Item {
                     Layout.alignment: Qt.AlignVCenter
                     text: Weather.icon
                     fontStyle: Tokens.font.icon.builders.extraLarge.scale(3).build()
-                    color: Colours.palette.m3secondary
+                    color: Accents.base0A
                     animate: true
                 }
 
@@ -93,7 +93,7 @@ Item {
                     StyledText {
                         text: Weather.temp
                         font: Tokens.font.body.builders.large.size(28 * 2).weight(Font.Medium).build()
-                        color: Colours.palette.m3primary
+                        color: Accents.tempColor(Weather.cc?.tempC ?? NaN)
                     }
 
                     StyledText {

@@ -9,6 +9,7 @@ import qs.components
 import qs.components.controls
 import qs.components.effects
 import qs.services
+import qs.utils
 
 CustomMouseArea {
     id: root
@@ -168,7 +169,11 @@ CustomMouseArea {
                 horizontalAlignment: Text.AlignHCenter
                 text: model.shortName
                 font: Tokens.font.body.builders.small.weight(Font.Medium).build()
-                color: (model.day === 0 || model.day === 6) ? Colours.palette.m3tertiary : Colours.palette.m3onSurface
+                color: {
+                    if (model.day === 0 || model.day === 6)
+                        return Accents.base0E;
+                    return Accents.at(Accents.weekColors, model.day - 1);
+                }
             }
         }
 
@@ -208,9 +213,13 @@ CustomMouseArea {
                         horizontalAlignment: Text.AlignHCenter
                         text: grid.locale.toString(dayItem.model.day)
                         color: {
+                            if (dayItem.model.month !== grid.month)
+                                return Accents.base03;
+                            if (dayItem.model.today)
+                                return Accents.base0F;
                             const dayOfWeek = dayItem.model.date.getDay();
                             if (dayOfWeek === 0 || dayOfWeek === 6)
-                                return Colours.palette.m3tertiary;
+                                return Accents.base0E;
 
                             return Colours.palette.m3onSurfaceVariant;
                         }
@@ -238,7 +247,7 @@ CustomMouseArea {
                 shape: MaterialShape.Sunny
 
                 clip: true
-                color: Colours.palette.m3primary
+                color: Accents.base0F
 
                 opacity: todayItem ? 1 : 0
 
@@ -251,7 +260,7 @@ CustomMouseArea {
 
                     source: grid
                     sourceColor: Colours.palette.m3onSurface
-                    colorizationColor: Colours.palette.m3onPrimary
+                    colorizationColor: Colours.on(Accents.base0F)
                 }
             }
         }

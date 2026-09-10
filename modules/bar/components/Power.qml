@@ -2,6 +2,7 @@ import QtQuick
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -18,6 +19,7 @@ Item {
         implicitWidth: implicitHeight
         implicitHeight: icon.implicitHeight + Tokens.padding.small
         radius: Tokens.rounding.full
+        color: Accents.opaque(Accents.base08, 0.5)
         onClicked: root.screenState.session = !root.screenState.session
     }
 
@@ -27,7 +29,7 @@ Item {
         anchors.centerIn: parent
 
         text: "power_settings_new"
-        color: Colours.palette.m3error
+        color: Accents.base08
         fontStyle: Tokens.font.icon.builders.small.weight(Font.Bold).build()
     }
 }

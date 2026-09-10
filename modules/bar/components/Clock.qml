@@ -5,11 +5,15 @@ import QtQuick.Layouts
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
 
-    readonly property color colour: Colours.palette.m3tertiary
+    readonly property color dayColour: Accents.base0A
+    readonly property color numberColour: Accents.base0B
+    readonly property color sepColour: Accents.base0C
+    readonly property color colour: numberColour
     readonly property int padding: Config.bar.clock.background ? Tokens.padding.medium : Tokens.padding.extraSmall
     readonly property var font: Tokens.font.body.builders.small.scale(1.1)
 
@@ -33,7 +37,7 @@ StyledRect {
 
             sourceComponent: MaterialIcon {
                 text: "calendar_month"
-                color: root.colour
+                color: root.dayColour
             }
         }
 
@@ -50,14 +54,14 @@ StyledRect {
                     Layout.alignment: Qt.AlignHCenter
                     text: Time.format("ddd")
                     font: Tokens.font.body.builders.small.scale(0.9).build()
-                    color: root.colour
+                    color: root.dayColour
                 }
 
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Time.format("d")
                     font: root.font.scale(1.1).build()
-                    color: root.colour
+                    color: root.numberColour
                 }
 
                 StyledRect {
@@ -67,7 +71,7 @@ StyledRect {
                     Layout.topMargin: 4
                     Layout.bottomMargin: Tokens.padding.extraSmall / 2
                     implicitHeight: 1
-                    color: Colours.palette.m3outlineVariant
+                    color: root.sepColour
                 }
             }
         }
@@ -79,7 +83,7 @@ StyledRect {
                 const scale = text === "11" ? 1.15 : Math.min(1.05, Math.max(hourMetrics.width, minMetrics.width) / hourMetrics.width);
                 return root.font.width(scale * 100).letterSpacing(scale).build();
             }
-            color: root.colour
+            color: root.numberColour
 
             TextMetrics {
                 id: hourMetrics
@@ -97,7 +101,7 @@ StyledRect {
                 const scale = text === "11" ? 1.15 : Math.min(1.05, Math.max(hourMetrics.width, minMetrics.width) / minMetrics.width);
                 return root.font.width(scale * 100).letterSpacing(scale).build();
             }
-            color: root.colour
+            color: root.numberColour
 
             TextMetrics {
                 id: minMetrics
@@ -117,7 +121,7 @@ StyledRect {
             sourceComponent: StyledText {
                 text: Time.amPmStr.toLowerCase()
                 font: Tokens.font.body.builders.small.scale(0.9).build()
-                color: root.colour
+                color: root.sepColour
             }
         }
     }

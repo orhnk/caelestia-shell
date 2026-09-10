@@ -9,6 +9,7 @@ import Caelestia.I18n
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 import qs.modules.nexus
 import qs.modules.bar.popouts as BarPopouts
 
@@ -82,6 +83,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "wifi"
                     delegate: Toggle {
+                        accentIndex: 0
                         icon: "wifi"
                         checked: Nmcli.wifiEnabled
                         onClicked: Nmcli.toggleWifi()
@@ -90,6 +92,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "bluetooth"
                     delegate: Toggle {
+                        accentIndex: 1
                         icon: "bluetooth"
                         checked: Bluetooth.defaultAdapter?.enabled ?? false // qmllint disable unresolved-type
                         onClicked: {
@@ -102,6 +105,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "mic"
                     delegate: Toggle {
+                        accentIndex: 2
                         icon: "mic"
                         checked: !Audio.sourceMuted
                         onClicked: {
@@ -114,6 +118,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "settings"
                     delegate: Toggle {
+                        accentIndex: 3
                         icon: "settings"
                         inactiveOnColour: Colours.palette.m3onSurfaceVariant
                         isToggle: false
@@ -126,6 +131,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "gameMode"
                     delegate: Toggle {
+                        accentIndex: 4
                         icon: "gamepad"
                         checked: GameMode.enabled
                         onClicked: GameMode.enabled = !GameMode.enabled
@@ -134,6 +140,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "dnd"
                     delegate: Toggle {
+                        accentIndex: 5
                         icon: "notifications_off"
                         checked: Notifs.dnd
                         onClicked: Notifs.dnd = !Notifs.dnd
@@ -142,6 +149,7 @@ StyledRect {
                 DelegateChoice {
                     roleValue: "vpn"
                     delegate: Toggle {
+                        accentIndex: 6
                         icon: "vpn_key"
                         checked: VPN.connected && VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
                         enabled: !VPN.connecting && !VPN.disconnecting
@@ -155,7 +163,11 @@ StyledRect {
     }
 
     component Toggle: IconButton {
-        inactiveColour: Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+        property int accentIndex: 0
+        readonly property color accent: Accents.toggle(accentIndex)
+        activeColour: accent
+        activeOnColour: Colours.on(accent)
+        inactiveColour: Accents.toggleBg(accentIndex, false)
         fillWidth: true
         isToggle: true
         isRound: true

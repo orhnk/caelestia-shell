@@ -9,6 +9,7 @@ import Caelestia.I18n
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -97,6 +98,7 @@ Item {
                 anchors.right: parent.right
                 implicitHeight: parent.implicitHeight
 
+                fgColour: Accents.base0A
                 value: Audio.volume
                 onInteraction: value => Audio.setVolume(value)
             }

@@ -70,6 +70,7 @@ ColumnLayout {
             id: device
 
             required property BluetoothDevice modelData
+            required property int index
             readonly property bool loading: modelData.state === BluetoothDeviceState.Connecting || modelData.state === BluetoothDeviceState.Disconnecting // qmllint disable unresolved-type
 
             Layout.fillWidth: true
@@ -119,7 +120,7 @@ ColumnLayout {
                 implicitHeight: connectIcon.implicitHeight + Tokens.padding.extraSmall
 
                 radius: Tokens.rounding.full
-                color: Qt.alpha(Colours.palette.m3primary, device.modelData.state === BluetoothDeviceState.Connected ? 1 : 0) // qmllint disable unresolved-type
+                color: Accents.opaque(Accents.popList(device.index), device.modelData.state === BluetoothDeviceState.Connected ? 1 : 0) // qmllint disable unresolved-type
 
                 CircularIndicator {
                     anchors.fill: parent
@@ -127,7 +128,7 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.palette.m3onSurface // qmllint disable unresolved-type
                     disabled: device.loading
                     onClicked: device.modelData.connected = !device.modelData.connected
                 }
@@ -138,7 +139,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: device.modelData.connected ? "link_off" : "link"
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.palette.m3onSurface // qmllint disable unresolved-type
 
                     opacity: device.loading ? 0 : 1
 

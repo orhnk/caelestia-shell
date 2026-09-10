@@ -7,6 +7,7 @@ import Caelestia.Config
 import Caelestia.I18n
 import qs.components
 import qs.services
+import qs.utils
 
 ColumnLayout {
     id: root
@@ -119,6 +120,7 @@ ColumnLayout {
                 anchors.rightMargin: Tokens.padding.extraSmall
                 text: kbDelegate.label
                 elide: Text.ElideRight
+                color: Accents.popList(kbDelegate.layoutIndex)
                 opacity: kbDelegate.isDisabled ? 0.4 : 1.0
             }
         }
@@ -149,7 +151,7 @@ ColumnLayout {
 
         MaterialIcon {
             text: "keyboard"
-            color: Colours.palette.m3primary
+            color: Accents.base0B
         }
 
         StyledText {
@@ -157,7 +159,7 @@ ColumnLayout {
             text: kb.activeLabel
             elide: Text.ElideRight
             font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
-            color: Colours.palette.m3primary
+            color: Accents.base0B
         }
 
         Connections {

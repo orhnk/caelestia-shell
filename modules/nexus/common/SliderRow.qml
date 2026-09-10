@@ -6,6 +6,7 @@ import Caelestia.Config
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 import qs.modules.nexus.common
 
 ConnectedRect {
@@ -15,6 +16,7 @@ ConnectedRect {
     property alias label: label.text
     property alias valueLabel: valueLabel.text
     property real value
+    property color accent: Colours.palette.m3primary
 
     signal moved(value: real)
 
@@ -32,7 +34,7 @@ ConnectedRect {
         MaterialIcon {
             id: icon
 
-            color: Colours.palette.m3onSurfaceVariant
+            color: root.accent
             fontStyle: Tokens.font.icon.medium
         }
 
@@ -79,6 +81,7 @@ ConnectedRect {
                     implicitHeight: parent.implicitHeight
 
                     radius: Tokens.rounding.small
+                    fgColour: root.enabled ? root.accent : Qt.alpha(Colours.palette.m3onSurface, 0.38)
                     value: root.value
                     enabled: root.enabled
                     onInteraction: v => root.moved(v)

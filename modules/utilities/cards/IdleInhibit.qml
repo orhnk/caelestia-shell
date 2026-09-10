@@ -5,6 +5,7 @@ import Caelestia.I18n
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
@@ -31,14 +32,14 @@ StyledRect {
             implicitHeight: icon.implicitHeight + Tokens.padding.large
 
             radius: Tokens.rounding.full
-            color: IdleInhibitor.enabled ? Colours.palette.m3secondary : Colours.palette.m3secondaryContainer
+            color: IdleInhibitor.enabled ? Accents.base0A : Colours.palette.m3secondaryContainer
 
             MaterialIcon {
                 id: icon
 
                 anchors.centerIn: parent
                 text: "coffee"
-                color: IdleInhibitor.enabled ? Colours.palette.m3onSecondary : Colours.palette.m3onSecondaryContainer
+                color: IdleInhibitor.enabled ? Colours.on(Accents.base0A) : Colours.palette.m3onSecondaryContainer
                 fontStyle: Tokens.font.icon.large
             }
         }

@@ -74,6 +74,7 @@ ColumnLayout {
             id: recording
 
             required property FileSystemEntry modelData
+            required property int index
             property string baseName
 
             anchors.left: list.contentItem.left
@@ -102,6 +103,8 @@ ColumnLayout {
             IconButton {
                 icon: "play_arrow"
                 type: IconButton.Text
+                label.color: Accents.popList(recording.index)
+                stateLayer.color: Accents.popList(recording.index)
                 onClicked: {
                     root.screenState.utilities = false;
                     root.screenState.sidebar = false;

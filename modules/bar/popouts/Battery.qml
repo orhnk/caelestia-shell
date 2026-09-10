@@ -6,6 +6,7 @@ import Caelestia.Config
 import Caelestia.I18n
 import qs.components
 import qs.services
+import qs.utils
 
 Column {
     id: root
@@ -160,7 +161,8 @@ Column {
         StyledRect {
             id: indicator
 
-            color: Colours.palette.m3primary
+            readonly property color accent: profiles.current === saver.icon ? Accents.popList(0) : profiles.current === balance.icon ? Accents.popList(1) : Accents.popList(2)
+            color: accent
             radius: Tokens.rounding.full
             state: profiles.current
 
@@ -244,7 +246,7 @@ Column {
 
         StateLayer {
             radius: Tokens.rounding.full
-            color: profiles.current === parent.icon ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+            color: profiles.current === parent.icon ? Colours.on(indicator.accent) : Colours.palette.m3onSurface
             onClicked: PowerProfiles.profile = parent.profile
         }
 
@@ -255,7 +257,7 @@ Column {
 
             text: parent.icon
             fontStyle: Tokens.font.icon.large
-            color: profiles.current === text ? Colours.palette.m3onPrimary : Colours.palette.m3onSurfaceVariant
+            color: profiles.current === text ? Colours.on(indicator.accent) : Colours.palette.m3onSurfaceVariant
             fill: profiles.current === text ? 1 : 0
 
             Behavior on fill {

@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -23,14 +24,14 @@ Item {
             Layout.bottomMargin: -(font.pointSize * 0.4)
             Layout.alignment: Qt.AlignHCenter
             text: Time.hourStr
-            color: Colours.palette.m3secondary
+            color: Accents.base0B
             font: Tokens.font.clock.size(28).weight(Font.DemiBold).build()
         }
 
         StyledText {
             Layout.alignment: Qt.AlignHCenter
             text: "•••"
-            color: Colours.palette.m3primary
+            color: Accents.base0C
             font: Tokens.font.clock.size(28 * 0.9).build()
         }
 
@@ -38,7 +39,7 @@ Item {
             Layout.topMargin: -(font.pointSize * 0.4)
             Layout.alignment: Qt.AlignHCenter
             text: Time.minuteStr
-            color: Colours.palette.m3secondary
+            color: Accents.base0B
             font: Tokens.font.clock.size(28).weight(Font.DemiBold).build()
         }
 
@@ -51,7 +52,7 @@ Item {
 
             sourceComponent: StyledText {
                 text: Time.amPmStr
-                color: Colours.palette.m3primary
+                color: Accents.base0C
                 font: Tokens.font.clock.size(18).weight(Font.DemiBold).build()
             }
         }

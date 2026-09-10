@@ -302,5 +302,21 @@ Singleton {
         property color term13: "#f9a8c2"
         property color term14: "#ffd1c0"
         property color term15: "#ffffff"
+        property color m3base00: m3surface
+        property color m3base01: m3surfaceContainer
+        property color m3base02: m3surfaceContainerHigh
+        property color m3base03: m3outline
+        property color m3base04: m3onSurfaceVariant
+        property color m3base05: m3onSurface
+        property color m3base06: m3onSurface
+        property color m3base07: m3onSurface
+        property color m3base08: m3error
+        property color m3base09: m3tertiary
+        property color m3base0A: m3primary
+        property color m3base0B: m3secondary
+        property color m3base0C: m3tertiary
+        property color m3base0D: m3primary
+        property color m3base0E: m3secondary
+        property color m3base0F: m3primary
     }
 }

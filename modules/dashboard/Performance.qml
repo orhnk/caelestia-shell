@@ -7,6 +7,7 @@ import Caelestia.I18n
 import Caelestia.Services
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -77,7 +78,7 @@ Item {
                         subLabel: Cpu.name
                         usage: Cpu.percentage
                         temperature: Cpu.temperature
-                        accent: Colours.palette.m3primary
+                        accent: Accents.base0A
 
                         ServiceRef {
                             service: Cpu
@@ -96,7 +97,7 @@ Item {
                         subLabel: Gpu.name || (Gpu.detecting ? Tr.tr("Detecting GPU...") : Tr.trCtx("None", "GPU name"))
                         usage: Gpu.percentage
                         temperature: Gpu.temperature
-                        accent: Colours.palette.m3secondary
+                        accent: Accents.base0B
 
                         ServiceRef {
                             service: Gpu

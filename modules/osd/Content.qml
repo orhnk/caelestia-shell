@@ -46,6 +46,7 @@ Item {
             FilledSlider {
                 anchors.fill: parent
 
+                fillColour: Accents.base0A
                 icon: Icons.getVolumeIcon(value, root.muted)
                 value: root.volume
                 to: GlobalConfig.services.maxVolume
@@ -71,6 +72,7 @@ Item {
                 FilledSlider {
                     anchors.fill: parent
 
+                    fillColour: Accents.base0A
                     icon: Icons.getMicVolumeIcon(value, root.sourceMuted)
                     value: root.sourceVolume
                     to: GlobalConfig.services.maxVolume
@@ -100,6 +102,7 @@ Item {
                 FilledSlider {
                     anchors.fill: parent
 
+                    fillColour: Accents.base0B
                     icon: `brightness_${(Math.round(value * 6) + 1)}`
                     value: root.brightness
                     onMoved: root.monitor?.setBrightness(value)

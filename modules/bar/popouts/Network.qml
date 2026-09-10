@@ -65,6 +65,7 @@ ColumnLayout {
             id: networkItem
 
             required property Nmcli.AccessPoint modelData
+            required property int index
             readonly property bool isConnecting: root.connectingToSsid === modelData.ssid
             readonly property bool loading: networkItem.isConnecting
 
@@ -94,7 +95,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: Icons.getNetworkIcon(networkItem.modelData.strength)
-                color: networkItem.modelData.active ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.palette.m3onSurfaceVariant
             }
 
             MaterialIcon {
@@ -110,7 +111,7 @@ ColumnLayout {
                 text: networkItem.modelData.ssid
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(networkItem.modelData.active ? Font.Medium : Font.Normal).build()
-                color: networkItem.modelData.active ? Colours.palette.m3primary : Colours.palette.m3onSurface
+                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.palette.m3onSurface
             }
 
             StyledRect {
@@ -118,7 +119,7 @@ ColumnLayout {
                 implicitHeight: wirelessConnectIcon.implicitHeight + Tokens.padding.extraSmall
 
                 radius: Tokens.rounding.full
-                color: Qt.alpha(Colours.palette.m3primary, networkItem.modelData.active ? 1 : 0)
+                color: Accents.opaque(Accents.popList(networkItem.index), networkItem.modelData.active ? 1 : 0)
 
                 CircularIndicator {
                     anchors.fill: parent
@@ -126,7 +127,7 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: networkItem.modelData.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.palette.m3onSurface
                     disabled: networkItem.loading || !Nmcli.wifiEnabled
 
                     onClicked: {
@@ -153,7 +154,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: networkItem.modelData.active ? "link_off" : "link"
-                    color: networkItem.modelData.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.palette.m3onSurface
 
                     opacity: networkItem.loading ? 0 : 1
 
@@ -255,6 +256,7 @@ ColumnLayout {
             id: ethernetItem
 
             required property var modelData
+            required property int index
             readonly property bool loading: false
 
             visible: root.view === "ethernet"
@@ -283,7 +285,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: "cable"
-                color: ethernetItem.modelData.connected ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.palette.m3onSurfaceVariant
             }
 
             StyledText {
@@ -293,7 +295,7 @@ ColumnLayout {
                 text: ethernetItem.modelData.iface || Tr.trCtx("Unknown", "unknown network interface")
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(ethernetItem.modelData.connected ? Font.Medium : Font.Normal).build()
-                color: ethernetItem.modelData.connected ? Colours.palette.m3primary : Colours.palette.m3onSurface
+                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.palette.m3onSurface
             }
 
             StyledRect {
@@ -301,7 +303,7 @@ ColumnLayout {
                 implicitHeight: connectIcon.implicitHeight + Tokens.padding.extraSmall
 
                 radius: Tokens.rounding.full
-                color: Qt.alpha(Colours.palette.m3primary, ethernetItem.modelData.connected ? 1 : 0)
+                color: Accents.opaque(Accents.popList(ethernetItem.index), ethernetItem.modelData.connected ? 1 : 0)
 
                 CircularIndicator {
                     anchors.fill: parent
@@ -309,7 +311,7 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: ethernetItem.modelData.connected ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.palette.m3onSurface
                     disabled: ethernetItem.loading
 
                     onClicked: {
@@ -327,7 +329,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: ethernetItem.modelData.connected ? "link_off" : "link"
-                    color: ethernetItem.modelData.connected ? Colours.palette.m3onPrimary : Colours.palette.m3onSurface
+                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.palette.m3onSurface
 
                     opacity: ethernetItem.loading ? 0 : 1
 

@@ -5,6 +5,7 @@ import Caelestia.Services
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -38,18 +39,19 @@ Item {
         Resource {
             icon: "memory"
             value: Cpu.percentage
+            fgColour: Accents.base0A
         }
 
         Resource {
             icon: "memory_alt"
             value: Memory.percentage
-            fgColour: Colours.palette.m3tertiary
+            fgColour: Accents.base0C
         }
 
         Resource {
             icon: "hard_disk"
             value: Storage.percentage
-            fgColour: Colours.palette.m3secondary
+            fgColour: Accents.base0E
         }
     }
     component Resource: CircularProgress {
@@ -69,7 +71,7 @@ Item {
             anchors.centerIn: parent
             text: res.icon
             font: Tokens.font.icon.large
-            color: res.fgColour
+            color: Accents.base07
         }
     }
 }

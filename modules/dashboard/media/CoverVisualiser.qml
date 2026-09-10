@@ -9,6 +9,7 @@ import Caelestia.Services
 import qs.components
 import qs.components.widgets
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -55,7 +56,7 @@ Item {
             asynchronous: true
             capStyle: root.Tokens.rounding.scale === 0 ? ShapePath.SquareCap : ShapePath.RoundCap
             strokeWidth: 360 / GlobalConfig.services.visualiserBars - root.Tokens.spacing.small / 4
-            strokeColor: Colours.palette.m3primary
+            strokeColor: Accents.base0B
 
             startX: root.centerX + shapeEdgeDist * cos
             startY: root.centerY + shapeEdgeDist * sin

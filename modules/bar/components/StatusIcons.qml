@@ -12,7 +12,10 @@ import qs.modules.bar.components.status
 StyledRect {
     id: root
 
-    property color colour: Colours.palette.m3secondary
+    property color colour: Accents.base0E
+    function widgetColour(index: int): color {
+        return Accents.status(index);
+    }
     readonly property alias items: iconColumn
 
     readonly property int spacing: Tokens.spacing.medium / 2
@@ -40,7 +43,7 @@ StyledRect {
         return false;
     }
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Accents.base01
     radius: Tokens.rounding.full
 
     clip: true
@@ -71,7 +74,7 @@ StyledRect {
                     roleValue: "lockStatus"
                     delegate: EntryWrapper {
                         LockStatus {
-                            colour: root.colour
+                            colour: root.widgetColour(index)
                             parentSpacing: root.spacing
                         }
                     }
@@ -84,7 +87,7 @@ StyledRect {
                         MaterialIcon {
                             animate: true
                             text: Icons.getVolumeIcon(Audio.volume, Audio.muted)
-                            color: root.colour
+                            color: root.widgetColour(index)
                             fontStyle: Tokens.font.icon.medium
                             fill: 1
                         }
@@ -99,7 +102,7 @@ StyledRect {
                         MaterialIcon {
                             animate: true
                             text: Icons.getMicVolumeIcon(Audio.sourceVolume, Audio.sourceMuted)
-                            color: root.colour
+                            color: root.widgetColour(index)
                             fontStyle: Tokens.font.icon.medium
                             fill: 1
                         }
@@ -111,7 +114,7 @@ StyledRect {
                         StyledText {
                             animate: true
                             text: Hypr.kbLayout
-                            color: root.colour
+                            color: root.widgetColour(index)
                             font: Tokens.font.mono.medium
                         }
                     }
@@ -122,7 +125,7 @@ StyledRect {
                         MaterialIcon {
                             animate: true
                             text: Nmcli.activeEthernet ? "cable" : Nmcli.active ? Icons.getNetworkIcon(Nmcli.active.strength ?? 0) : "wifi_off"
-                            color: root.colour
+                            color: root.widgetColour(index)
                         }
                     }
                 }
@@ -130,7 +133,7 @@ StyledRect {
                     roleValue: "bluetooth"
                     delegate: EntryWrapper {
                         BluetoothStatus {
-                            colour: root.colour
+                            colour: root.widgetColour(index)
                         }
                     }
                 }
@@ -138,7 +141,7 @@ StyledRect {
                     roleValue: "battery"
                     delegate: EntryWrapper {
                         BatteryStatus {
-                            colour: root.colour
+                            colour: root.widgetColour(index)
                         }
                     }
                 }

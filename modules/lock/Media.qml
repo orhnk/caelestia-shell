@@ -8,6 +8,7 @@ import qs.components
 import qs.components.controls
 import qs.components.images
 import qs.services
+import qs.utils
 
 StyledClippingRect {
     id: root
@@ -58,7 +59,7 @@ StyledClippingRect {
             Layout.fillWidth: true
             animate: true
             text: (Players.active?.trackTitle ?? Tr.tr("Nothing playing")) || Tr.tr("Unknown track")
-            color: Colours.palette.m3primary
+            color: Accents.base0A
             horizontalAlignment: Text.AlignHCenter
             font: Tokens.font.title.medium
             elide: Text.ElideRight

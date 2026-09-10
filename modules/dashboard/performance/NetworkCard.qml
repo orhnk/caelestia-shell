@@ -34,7 +34,7 @@ StyledRect {
 
             MaterialIcon {
                 text: "swap_vert"
-                color: Colours.palette.m3primary
+                color: Accents.base0B
                 fontStyle: Tokens.font.icon.medium
             }
 
@@ -59,10 +59,10 @@ StyledRect {
 
                 anchors.fill: parent
                 line1: NetworkUsage.uploadBuffer // qmllint disable missing-type
-                line1Color: Colours.palette.m3secondary
+                line1Color: Accents.base0B
                 line1FillAlpha: 0.15
                 line2: NetworkUsage.downloadBuffer // qmllint disable missing-type
-                line2Color: Colours.palette.m3tertiary
+                line2Color: Accents.base0D
                 line2FillAlpha: 0.2
                 maxValue: smoothMax
                 historyLength: NetworkUsage.historyLength
@@ -109,7 +109,7 @@ StyledRect {
 
             MaterialIcon {
                 text: "download"
-                color: Colours.palette.m3tertiary
+                color: Accents.base0D
                 fontStyle: Tokens.font.icon.medium
             }
 
@@ -129,7 +129,7 @@ StyledRect {
                     return fmt ? Strings.withDataUnit(fmt.value.toFixed(1), fmt.unit) : Strings.withDataUnit("0.0", "B/s");
                 }
                 font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
-                color: Colours.palette.m3tertiary
+                color: Accents.base0D
             }
         }
 
@@ -140,7 +140,7 @@ StyledRect {
 
             MaterialIcon {
                 text: "upload"
-                color: Colours.palette.m3secondary
+                color: Accents.base0B
                 fontStyle: Tokens.font.icon.medium
             }
 
@@ -160,7 +160,7 @@ StyledRect {
                     return fmt ? Strings.withDataUnit(fmt.value.toFixed(1), fmt.unit) : Strings.withDataUnit("0.0", "B/s");
                 }
                 font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
-                color: Colours.palette.m3secondary
+                color: Accents.base0B
             }
         }
 

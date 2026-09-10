@@ -5,6 +5,7 @@ import Quickshell
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -68,7 +69,7 @@ Item {
             implicitWidth: Tokens.sizes.bar.innerWidth - Tokens.padding.small + 2
             implicitHeight: start && end ? end.y + end.size - start.y + 2 : 0
 
-            color: Colours.layer(Colours.palette.m3surfaceContainerHigh, 2)
+            color: Accents.wsBg((modelData.start ?? 1) - 1, false)
             radius: Tokens.rounding.full
 
             scale: 0

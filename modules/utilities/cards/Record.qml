@@ -8,6 +8,7 @@ import Caelestia.I18n
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
@@ -41,7 +42,7 @@ StyledRect {
                 }
 
                 radius: Tokens.rounding.full
-                color: Recorder.running ? Colours.palette.m3secondary : Colours.palette.m3secondaryContainer
+                color: Recorder.running ? Accents.base0A : Colours.palette.m3secondaryContainer
 
                 MaterialIcon {
                     id: icon
@@ -49,7 +50,7 @@ StyledRect {
                     anchors.centerIn: parent
                     anchors.verticalCenterOffset: 1
                     text: "screen_record"
-                    color: Recorder.running ? Colours.palette.m3onSecondary : Colours.palette.m3onSecondaryContainer
+                    color: Recorder.running ? Colours.on(Accents.base0A) : Colours.palette.m3onSecondaryContainer
                     fontStyle: Tokens.font.icon.large
                 }
             }

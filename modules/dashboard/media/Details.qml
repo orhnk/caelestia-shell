@@ -7,6 +7,7 @@ import Caelestia.I18n
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 ColumnLayout {
     id: root
@@ -39,6 +40,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Players.active?.trackTitle ?? ""
+        color: Accents.base0A
         font: Tokens.font.title.large
         elide: Text.ElideRight
         animate: true
@@ -47,7 +49,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Players.active?.trackArtist || Tr.tr("Unknown artist")
-        color: Colours.palette.m3onSurfaceVariant
+        color: Accents.base0C
         font: Tokens.font.title.medium
         elide: Text.ElideRight
         animate: true
@@ -56,7 +58,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Players.active?.trackAlbum || Tr.tr("Unknown album")
-        color: Colours.palette.m3secondary
+        color: Accents.base0B
         font: Tokens.font.title.medium
         elide: Text.ElideRight
         animate: true
@@ -90,6 +92,7 @@ ColumnLayout {
             Layout.fillWidth: true
             value: Players.active ? Players.active.position / (Players.active.length || 1) : 0
             enabled: (Players.active?.canSeek ?? false) && !root.hasUnknownLength
+            fgColour: Accents.base0B
             wavy: true
             animateWave: Players.active?.isPlaying ?? false
             waveFrequency: 5
@@ -143,6 +146,8 @@ ColumnLayout {
             isRound: true
             shapeMorph: true
             font: Tokens.font.icon.large
+            inactiveColour: Accents.opaque(Accents.base0E, 0.3)
+            inactiveOnColour: Accents.base0E
             disabled: !Players.active?.canGoPrevious
             onClicked: Players.active?.previous()
         }
@@ -154,6 +159,10 @@ ColumnLayout {
             isRound: true
             shapeMorph: true
             fillWidth: true
+            inactiveColour: Accents.base0D
+            inactiveOnColour: Colours.on(Accents.base0D)
+            activeColour: Accents.base0D
+            activeOnColour: Colours.on(Accents.base0D)
             checked: Players.active?.isPlaying ?? false
             font: Tokens.font.icon.large
             disabled: !Players.active?.canTogglePlaying
@@ -168,6 +177,8 @@ ColumnLayout {
             isRound: true
             shapeMorph: true
             font: Tokens.font.icon.large
+            inactiveColour: Accents.opaque(Accents.base0E, 0.3)
+            inactiveOnColour: Accents.base0E
             disabled: !Players.active?.canGoNext
             onClicked: Players.active?.next()
         }

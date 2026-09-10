@@ -49,7 +49,7 @@ Item {
         anchors.centerIn: cover
         implicitSize: cover.width + root.arcCoverGap + thickness * 2
 
-        fgColour: Colours.palette.m3primary
+        fgColour: Accents.base0B
         strokeWidth: Tokens.sizes.dashboard.mediaProgressThickness
         startAngle: -90 - sweepAngle / 2
         sweepAngle: Tokens.sizes.dashboard.mediaProgressSweep
@@ -81,7 +81,7 @@ Item {
         animate: true
         horizontalAlignment: Text.AlignHCenter
         text: (Players.active?.trackTitle ?? Tr.tr("No media")) || Tr.tr("Unknown title")
-        color: Colours.palette.m3primary
+        color: Accents.base0A
         font: Tokens.font.title.small
 
         width: parent.implicitWidth - Tokens.padding.extraLargeIncreased
@@ -98,7 +98,7 @@ Item {
         animate: true
         horizontalAlignment: Text.AlignHCenter
         text: (Players.active?.trackAlbum ?? Tr.tr("No media")) || Tr.tr("Unknown album")
-        color: Colours.palette.m3outline
+        color: Accents.base0B
         font: Tokens.font.body.small
 
         width: parent.implicitWidth - Tokens.padding.extraLargeIncreased
@@ -115,7 +115,7 @@ Item {
         animate: true
         horizontalAlignment: Text.AlignHCenter
         text: (Players.active?.trackArtist ?? Tr.tr("No media")) || Tr.tr("Unknown artist")
-        color: Colours.palette.m3secondary
+        color: Accents.base0C
 
         width: parent.implicitWidth - Tokens.padding.extraLargeIncreased
         elide: Text.ElideRight
@@ -137,6 +137,8 @@ Item {
             icon: "skip_previous"
             isRound: true
             shapeMorph: true
+            inactiveColour: Accents.opaque(Accents.base0E, 0.3)
+            inactiveOnColour: Accents.base0E
             disabled: !Players.active?.canGoPrevious
             onClicked: Players.active?.previous()
         }
@@ -146,6 +148,10 @@ Item {
             icon: Players.active?.isPlaying ? "pause" : "play_arrow"
             isRound: true
             shapeMorph: true
+            inactiveColour: Accents.base0D
+            inactiveOnColour: Colours.on(Accents.base0D)
+            activeColour: Accents.base0D
+            activeOnColour: Colours.on(Accents.base0D)
             checked: Players.active?.isPlaying ?? false
             disabled: !Players.active?.canTogglePlaying
             onClicked: Players.active?.togglePlaying()
@@ -156,6 +162,8 @@ Item {
             icon: "skip_next"
             isRound: true
             shapeMorph: true
+            inactiveColour: Accents.opaque(Accents.base0E, 0.3)
+            inactiveOnColour: Accents.base0E
             disabled: !Players.active?.canGoNext
             onClicked: Players.active?.next()
         }

@@ -5,6 +5,7 @@ import Caelestia.Config
 import qs.components
 import qs.components.effects
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
@@ -47,7 +48,7 @@ StyledRect {
     implicitWidth: Tokens.sizes.bar.innerWidth - Tokens.padding.small
     implicitHeight: size
     radius: Tokens.rounding.full
-    color: Colours.palette.m3primary
+    color: Accents.wsBg(currentWsIdx, true)
 
     Colouriser {
         source: root.mask

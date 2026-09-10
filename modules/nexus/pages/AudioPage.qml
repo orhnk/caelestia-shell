@@ -22,6 +22,7 @@ PageBase {
         // Output
         SliderRow {
             first: true
+            accent: Accents.base0A
             icon: Icons.getVolumeIcon(Audio.volume, Audio.muted)
             label: Tr.trCtx("Output", "audio output")
             valueLabel: Strings.percentOne(value)
@@ -49,6 +50,7 @@ PageBase {
         SliderRow {
             Layout.topMargin: Tokens.spacing.large - parent.spacing
             first: true
+            accent: Accents.base0B
             icon: Icons.getMicVolumeIcon(Audio.sourceVolume, Audio.sourceMuted)
             label: Tr.trCtx("Input", "audio input")
             valueLabel: Strings.percentOne(value)
