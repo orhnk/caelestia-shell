@@ -98,8 +98,8 @@ Column {
         implicitWidth: Tokens.sizes.session.button
         implicitHeight: Tokens.sizes.session.button
 
-        inactiveColour: Accents.session(button.sessionIndex, activeFocus)
-        inactiveOnColour: activeFocus ? Colours.on(Accents.sessionFg(button.sessionIndex)) : Colours.palette.m3onSurface
+        inactiveColour: activeFocus ? Accents.sessionFg(button.sessionIndex) : Colours.tPalette.m3surfaceContainer
+        inactiveOnColour: activeFocus ? Colours.on(Accents.sessionFg(button.sessionIndex)) : Accents.sessionFg(button.sessionIndex)
         radius: pressed ? Tokens.rounding.medium : activeFocus ? Tokens.rounding.extraLarge : Tokens.rounding.largeIncreased
         font: Tokens.font.icon.builders.large.scale(1.3).build()
         onClicked: exec()

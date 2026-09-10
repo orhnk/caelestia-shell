@@ -138,7 +138,7 @@ MouseArea {
                         bottomRightRadius: index === repeater?.count - 1 ? Tokens.rounding.medium : radius
 
                         readonly property color accent: Accents.ws(index)
-                        color: Accents.wsBg(index, active)
+                        color: item.active ? accent : "transparent"
 
                         Behavior on radius {
                             Anim {}
@@ -170,14 +170,14 @@ MouseArea {
                             MaterialIcon {
                                 Layout.alignment: Qt.AlignVCenter
                                 text: item.modelData?.icon ?? ""
-                                color: item.active ? Colours.on(item.accent) : Accents.opaque(item.accent, 0.67)
+                                color: item.active ? Colours.on(item.accent) : item.accent
                             }
 
                             StyledText {
                                 Layout.alignment: Qt.AlignVCenter
                                 Layout.fillWidth: true
                                 text: item.modelData?.text ?? ""
-                                color: item.active ? Colours.on(item.accent) : Accents.opaque(item.accent, 0.67)
+                                color: item.active ? Colours.on(item.accent) : item.accent
                             }
 
                             Loader {
@@ -188,7 +188,7 @@ MouseArea {
 
                                 sourceComponent: MaterialIcon {
                                     text: item.modelData.trailingIcon
-                                    color: item.active ? Colours.on(item.accent) : Accents.opaque(item.accent, 0.67)
+                                    color: item.active ? Colours.on(item.accent) : item.accent
                                 }
                             }
                         }

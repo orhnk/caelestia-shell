@@ -25,6 +25,13 @@ class DesktopClockShadow : public settings::ObjectNode {
     CONFIG_PROPERTY(qreal, blur, 0.4)
 };
 
+class DesktopClockBorder : public settings::ObjectNode {
+    CONFIG_NODE(DesktopClockBorder, settings::ObjectNode)
+
+    CONFIG_PROPERTY(bool, enabled, false)
+    CONFIG_PROPERTY(qreal, width, 2.0)
+};
+
 class DesktopClock : public settings::ObjectNode {
     CONFIG_NODE(DesktopClock, settings::ObjectNode)
 
@@ -34,6 +41,7 @@ class DesktopClock : public settings::ObjectNode {
     CONFIG_PROPERTY(bool, invertColors, false)
     CONFIG_SUBOBJECT(DesktopClockBackground, background)
     CONFIG_SUBOBJECT(DesktopClockShadow, shadow)
+    CONFIG_SUBOBJECT(DesktopClockBorder, border)
 };
 
 class BackgroundVisualiser : public settings::ObjectNode {

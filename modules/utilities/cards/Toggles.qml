@@ -167,7 +167,8 @@ StyledRect {
         readonly property color accent: Accents.toggle(accentIndex)
         activeColour: accent
         activeOnColour: Colours.on(accent)
-        inactiveColour: Accents.toggleBg(accentIndex, false)
+        inactiveColour: Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+        inactiveOnColour: accent
         fillWidth: true
         isToggle: true
         isRound: true

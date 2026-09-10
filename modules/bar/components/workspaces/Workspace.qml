@@ -62,7 +62,7 @@ ColumnLayout {
         MaterialShape {
             implicitSize: Tokens.sizes.bar.innerWidth - Tokens.padding.small
 
-            color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.focused ? Accents.wsBg(root.ws - 1, root.focused) : Colours.layer(Colours.palette.m3outlineVariant, 2)
+            color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.focused ? Colours.palette.m3onSurface : Colours.layer(Colours.palette.m3outlineVariant, 2)
             scale: root.focused ? 2 / 3 : root.isOccupied ? 1 / 3 : 1 / 4
 
             animationEasing: Tokens.anim.expressiveDefaultSpatial
@@ -110,7 +110,7 @@ ColumnLayout {
                     return wsName.toString().toLowerCase();
                 return wsName;
             }
-            color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.focused ? Accents.wsBg(root.ws - 1, root.focused) : Colours.layer(Colours.palette.m3outlineVariant, 2)
+            color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.focused ? Colours.palette.m3onSurface : Colours.layer(Colours.palette.m3outlineVariant, 2)
             verticalAlignment: Qt.AlignVCenter
             font.family: Tokens.font.workspaces
         }

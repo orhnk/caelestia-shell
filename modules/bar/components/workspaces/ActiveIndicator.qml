@@ -53,7 +53,7 @@ StyledRect {
     Colouriser {
         source: root.mask
         sourceColor: Colours.palette.m3onSurface
-        colorizationColor: Colours.palette.m3onPrimary
+        colorizationColor: Colours.on(Accents.ws(currentWsIdx))
 
         x: 0
         y: -parent.offset

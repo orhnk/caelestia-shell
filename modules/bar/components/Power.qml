@@ -12,6 +12,14 @@ Item {
     implicitWidth: icon.implicitHeight + Tokens.padding.small
     implicitHeight: icon.implicitHeight
 
+    StyledRect {
+        anchors.centerIn: parent
+        implicitWidth: implicitHeight
+        implicitHeight: icon.implicitHeight + Tokens.padding.small
+        radius: Tokens.rounding.full
+        color: Accents.opaque(Accents.base08, 0.5)
+    }
+
     StateLayer {
         // Cursed workaround to make the height larger than the parent
         anchors.fill: undefined
@@ -19,7 +27,7 @@ Item {
         implicitWidth: implicitHeight
         implicitHeight: icon.implicitHeight + Tokens.padding.small
         radius: Tokens.rounding.full
-        color: Accents.opaque(Accents.base08, 0.5)
+        color: Accents.base08
         onClicked: root.screenState.session = !root.screenState.session
     }
 

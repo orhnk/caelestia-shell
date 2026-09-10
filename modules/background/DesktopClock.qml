@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -16,6 +17,7 @@ Item {
 
     property real clockScale: Config.background.desktopClock.scale
     readonly property bool bgEnabled: Config.background.desktopClock.background.enabled
+    readonly property bool borderEnabled: Config.background.desktopClock.border.enabled
     readonly property bool blurEnabled: bgEnabled && Config.background.desktopClock.background.blur && !GameMode.enabled
     readonly property bool invertColors: Config.background.desktopClock.invertColors
     readonly property bool useLightSet: Colours.light ? !invertColors : invertColors
@@ -68,6 +70,15 @@ Item {
             color: Colours.palette.m3surface
 
             layer.enabled: root.blurEnabled
+        }
+
+        StyledRect {
+            visible: root.borderEnabled
+            anchors.fill: parent
+            radius: Tokens.rounding.extraLarge * root.clockScale
+            color: "transparent"
+            border.width: Config.background.desktopClock.border.width
+            border.color: Accents.base07
         }
 
         RowLayout {
