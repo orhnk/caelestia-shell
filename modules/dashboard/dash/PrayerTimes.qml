@@ -79,14 +79,14 @@ Item {
                         Layout.fillWidth: true
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.medium
+                        font: Tokens.font.body.small
                         elide: Text.ElideRight
                     }
 
                     StyledText {
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.medium
+                        font: Tokens.font.body.small
                     }
                 }
             }
