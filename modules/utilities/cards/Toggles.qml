@@ -164,7 +164,7 @@ StyledRect {
         property int accentIndex: 0
         readonly property color accent: Accents.toggle(accentIndex)
         activeColour: accent
-        activeOnColour: Colours.on(accent)
+        activeOnColour: Accents.deep(accent)
         inactiveColour: Accents.toggleBg(accentIndex, checked)
         inactiveOnColour: accent
         fillWidth: true

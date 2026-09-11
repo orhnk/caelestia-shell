@@ -40,6 +40,10 @@ Singleton {
         return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, 1);
     }
 
+    function deep(c: color): color {
+        return mix(c, Qt.rgba(0, 0, 0, 1), 0.65);
+    }
+
     function opaque(c: color, opacity: real): color {
         if (Colours.transparency.enabled)
             return Qt.alpha(c, opacity);

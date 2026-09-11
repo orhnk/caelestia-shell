@@ -258,7 +258,7 @@ Column {
             id: layer
 
             radius: Tokens.rounding.full
-            color: profiles.current === parent.icon ? Colours.on(indicator.accent) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+            color: profiles.current === parent.icon ? Accents.deep(indicator.accent) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
             onClicked: PowerProfiles.profile = parent.profile
         }
 
@@ -269,7 +269,7 @@ Column {
 
             text: parent.icon
             fontStyle: Tokens.font.icon.large
-            color: profiles.current === text ? Colours.on(indicator.accent) : Accents.popList(parent.idx)
+            color: profiles.current === text ? Accents.deep(indicator.accent) : Accents.popList(parent.idx)
             fill: profiles.current === text ? 1 : 0
 
             Behavior on fill {

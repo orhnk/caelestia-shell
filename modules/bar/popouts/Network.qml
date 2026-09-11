@@ -129,7 +129,7 @@ ColumnLayout {
                 StateLayer {
                     id: wirelessState
 
-                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Accents.popList(networkItem.index)
+                    color: networkItem.modelData.active ? Accents.deep(Accents.popList(networkItem.index)) : Accents.popList(networkItem.index)
                     disabled: networkItem.loading || !Nmcli.wifiEnabled
 
                     onClicked: {
@@ -156,7 +156,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: networkItem.modelData.active ? "link_off" : "link"
-                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Accents.popList(networkItem.index)
+                    color: networkItem.modelData.active ? Accents.deep(Accents.popList(networkItem.index)) : Accents.popList(networkItem.index)
 
                     opacity: networkItem.loading ? 0 : 1
 
@@ -315,7 +315,7 @@ ColumnLayout {
                 StateLayer {
                     id: ethernetState
 
-                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Accents.popList(ethernetItem.index)
+                    color: ethernetItem.modelData.connected ? Accents.deep(Accents.popList(ethernetItem.index)) : Accents.popList(ethernetItem.index)
                     disabled: ethernetItem.loading
 
                     onClicked: {
@@ -333,7 +333,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: ethernetItem.modelData.connected ? "link_off" : "link"
-                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Accents.popList(ethernetItem.index)
+                    color: ethernetItem.modelData.connected ? Accents.deep(Accents.popList(ethernetItem.index)) : Accents.popList(ethernetItem.index)
 
                     opacity: ethernetItem.loading ? 0 : 1
 

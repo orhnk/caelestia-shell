@@ -116,6 +116,7 @@ ColumnLayout {
                 icon: "folder"
                 type: IconButton.Text
                 label.color: Accents.dj(recording.index)
+                label.opacity: 0.77
                 stateLayer.color: Accents.opaque(Accents.dj(recording.index), 0.5)
                 onClicked: {
                     root.screenState.utilities = false;

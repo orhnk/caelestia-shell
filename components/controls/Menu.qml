@@ -150,7 +150,7 @@ MouseArea {
                             bottomLeftRadius: parent.bottomLeftRadius
                             bottomRightRadius: parent.bottomRightRadius
 
-                            color: item.active ? Colours.on(item.accent) : item.accent
+                            color: item.active ? Accents.deep(item.accent) : item.accent
                             disabled: !root.expanded
                             onClicked: {
                                 root.itemSelected(item.modelData);
@@ -170,14 +170,14 @@ MouseArea {
                             MaterialIcon {
                                 Layout.alignment: Qt.AlignVCenter
                                 text: item.modelData?.icon ?? ""
-                                color: item.active ? Colours.on(item.accent) : item.accent
+                                color: item.active ? Accents.deep(item.accent) : item.accent
                             }
 
                             StyledText {
                                 Layout.alignment: Qt.AlignVCenter
                                 Layout.fillWidth: true
                                 text: item.modelData?.text ?? ""
-                                color: item.active ? Colours.on(item.accent) : item.accent
+                                color: item.active ? Accents.deep(item.accent) : item.accent
                             }
 
                             Loader {
@@ -188,7 +188,7 @@ MouseArea {
 
                                 sourceComponent: MaterialIcon {
                                     text: item.modelData.trailingIcon
-                                    color: item.active ? Colours.on(item.accent) : item.accent
+                                    color: item.active ? Accents.deep(item.accent) : item.accent
                                 }
                             }
                         }

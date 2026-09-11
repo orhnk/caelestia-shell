@@ -130,7 +130,7 @@ ColumnLayout {
                 anchors.rightMargin: Tokens.padding.extraSmall
                 text: kbDelegate.label
                 elide: Text.ElideRight
-                color: kbDelegate.isActive ? Colours.on(Accents.popList(kbDelegate.layoutIndex)) : Accents.popList(kbDelegate.layoutIndex)
+                color: kbDelegate.isActive ? Accents.deep(Accents.popList(kbDelegate.layoutIndex)) : Accents.popList(kbDelegate.layoutIndex)
                 opacity: kbDelegate.isDisabled ? 0.4 : 1.0
             }
         }

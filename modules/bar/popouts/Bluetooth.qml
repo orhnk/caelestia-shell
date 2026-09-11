@@ -132,7 +132,7 @@ ColumnLayout {
                 StateLayer {
                     id: btState
 
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Accents.popList(device.index) // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.deep(Accents.popList(device.index)) : Accents.popList(device.index) // qmllint disable unresolved-type
                     disabled: device.loading
                     onClicked: device.modelData.connected = !device.modelData.connected
                 }
@@ -143,7 +143,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: device.modelData.connected ? "link_off" : "link"
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Accents.popList(device.index) // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.deep(Accents.popList(device.index)) : Accents.popList(device.index) // qmllint disable unresolved-type
 
                     opacity: device.loading ? 0 : 1
 

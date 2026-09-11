@@ -89,7 +89,7 @@ StyledRect {
                 text: root.isSalat ? "mosque" : root.modelData.icon
                 color: {
                     if (root.isSalat)
-                        return Colours.on(root.salatColor);
+                        return Accents.deep(root.salatColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSuccess);
                     if (root.modelData.type === Toast.Warning)
@@ -113,7 +113,7 @@ StyledRect {
                 text: Tr.trMarked(root.modelData.title)
                 color: {
                     if (root.isSalat)
-                        return Colours.on(root.salatColor);
+                        return Accents.deep(root.salatColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3onSuccessContainer);
                     if (root.modelData.type === Toast.Warning)
@@ -132,7 +132,7 @@ StyledRect {
                 text: Tr.trMarked(root.modelData.message)
                 color: {
                     if (root.isSalat)
-                        return Colours.on(root.salatColor);
+                        return Accents.deep(root.salatColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3onSuccessContainer);
                     if (root.modelData.type === Toast.Warning)
