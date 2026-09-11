@@ -10,6 +10,8 @@ import qs.utils
 Item {
     id: root
 
+    clip: true
+
     implicitWidth: layout.implicitWidth + Tokens.padding.small * 2
     implicitHeight: layout.implicitHeight + Tokens.padding.small * 2
 
@@ -44,6 +46,7 @@ Item {
                 readonly property color prayerColor: Accents.prayerColor(index)
 
                 Layout.fillWidth: true
+                implicitWidth: rowLayout.implicitWidth
                 implicitHeight: rowLayout.implicitHeight + Tokens.padding.small * 2
 
                 StyledRect {
