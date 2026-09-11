@@ -62,14 +62,14 @@ GridLayout {
                 id: prayerTimes
 
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                Layout.preferredHeight: prayerTimes.implicitHeight
             }
 
             DateTime {
                 id: countdown
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: countdown.implicitHeight
+                Layout.fillHeight: true
                 hour: Salat.nextNow || Salat.nextIndex < 0 ? Time.hourStr : String(Salat.nextHours)
                 minute: Salat.nextNow || Salat.nextIndex < 0 ? Time.minuteStr : String(Salat.nextMins).padStart(2, "0")
             }

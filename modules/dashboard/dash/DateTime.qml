@@ -19,7 +19,8 @@ Item {
     ColumnLayout {
         id: layout
 
-        anchors.centerIn: parent
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
         spacing: 0
 
         RowLayout {
