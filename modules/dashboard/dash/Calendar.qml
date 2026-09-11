@@ -169,11 +169,7 @@ CustomMouseArea {
                 horizontalAlignment: Text.AlignHCenter
                 text: model.shortName
                 font: Tokens.font.body.builders.small.weight(Font.Medium).build()
-                color: {
-                    if (model.day === 0 || model.day === 6)
-                        return Accents.base0E;
-                    return Accents.at(Accents.weekColors, model.day - 1);
-                }
+                color: Accents.weekColors[(model.day + 6) % 7]
             }
         }
 
