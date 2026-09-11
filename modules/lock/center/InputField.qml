@@ -126,7 +126,7 @@ Item {
 
         required property int index
         property real nonAnimWidthScale: 1
-        readonly property color charColor: Accents.randomCharColor()
+        readonly property color charColor: Accents.charColor(char.index)
 
         implicitHeight: charList.implicitHeight
 

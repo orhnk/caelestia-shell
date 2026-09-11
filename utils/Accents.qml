@@ -92,11 +92,15 @@ Singleton {
         return at(sessionColors, index);
     }
 
-    function dj(index: int): color {
-        const n = djColors.length;
+    function oscillate(colors: var, index: int): color {
+        const n = colors.length;
         const period = 2 * n - 2;
         const m = ((index % period) + period) % period;
-        return djColors[m < n ? m : period - m];
+        return colors[m < n ? m : period - m];
+    }
+
+    function dj(index: int): color {
+        return oscillate(djColors, index);
     }
 
     function css(c: color): string {
@@ -110,8 +114,8 @@ Singleton {
         return at(prayerColors, index);
     }
 
-    function randomCharColor(): color {
-        return charSpectrum[Math.floor(Math.random() * charSpectrum.length)];
+    function charColor(index: int): color {
+        return oscillate(charSpectrum, index);
     }
 
     function spectrum(t: real): color {
