@@ -24,46 +24,11 @@ Item {
         StyledText {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            visible: Salat.nextIndex < 0 || Salat.nextNow
-            text: Salat.nextIndex < 0 ? Tr.tr("Prayer times") : Salat.nextIn
+            visible: Salat.nextIndex < 0
+            text: Tr.tr("Prayer times")
             color: Accents.base0D
             font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
             elide: Text.ElideRight
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignHCenter
-            visible: Salat.nextIndex >= 0 && !Salat.nextNow
-            spacing: Tokens.spacing.extraSmall
-
-            TextMetrics {
-                id: digitMetrics
-
-                font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
-                text: "00"
-            }
-
-            StyledText {
-                Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignHCenter
-                text: Salat.nextHours
-                color: Accents.base0D
-                font: digitMetrics.font
-            }
-
-            StyledText {
-                text: ":"
-                color: Accents.base0D
-                font: digitMetrics.font
-            }
-
-            StyledText {
-                Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignHCenter
-                text: String(Salat.nextMins).padStart(2, "0")
-                color: Accents.base0D
-                font: digitMetrics.font
-            }
         }
 
         StyledText {

@@ -10,6 +10,9 @@ import qs.utils
 Item {
     id: root
 
+    property string hour: Time.hourStr
+    property string minute: Time.minuteStr
+
     implicitWidth: layout.implicitWidth
     implicitHeight: layout.implicitHeight
 
@@ -29,7 +32,7 @@ Item {
         StyledText {
             Layout.preferredWidth: digitMetrics.width
             horizontalAlignment: Text.AlignHCenter
-            text: Time.hourStr
+            text: root.hour
             color: Accents.base0A
             font: digitMetrics.font
         }
@@ -43,7 +46,7 @@ Item {
         StyledText {
             Layout.preferredWidth: digitMetrics.width
             horizontalAlignment: Text.AlignHCenter
-            text: Time.minuteStr
+            text: root.minute
             color: Accents.base0A
             font: digitMetrics.font
         }
