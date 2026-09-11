@@ -34,19 +34,28 @@ Item {
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
             visible: Salat.nextIndex >= 0 && !Salat.nextNow
-            spacing: 0
+            spacing: Tokens.spacing.extraSmall
+
+            TextMetrics {
+                id: digitMetrics
+
+                font: Tokens.font.clock.size(36).weight(Font.DemiBold).build()
+                text: "00"
+            }
 
             StyledText {
+                Layout.preferredWidth: digitMetrics.width
+                horizontalAlignment: Text.AlignHCenter
                 text: Salat.nextHours
                 color: Accents.base0D
-                font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
+                font: digitMetrics.font
             }
 
             StyledText {
                 text: ":"
                 color: Accents.base0D
                 opacity: Time.seconds % 2 === 0 ? 1 : 0.3
-                font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
+                font: digitMetrics.font
 
                 Behavior on opacity {
                     Anim {
@@ -56,9 +65,11 @@ Item {
             }
 
             StyledText {
+                Layout.preferredWidth: digitMetrics.width
+                horizontalAlignment: Text.AlignHCenter
                 text: String(Salat.nextMins).padStart(2, "0")
                 color: Accents.base0D
-                font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
+                font: digitMetrics.font
             }
         }
 
