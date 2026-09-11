@@ -24,7 +24,7 @@ Item {
         StyledText {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            text: Salat.nextIndex >= 0 ? `${Salat.label(Salat.prayers[Salat.nextIndex]?.name ?? "")} · ${Tr.tr("in %1").arg(Salat.nextIn)}` : Tr.tr("Prayer times")
+            text: Salat.nextIndex >= 0 ? Salat.nextIn : Tr.tr("Prayer times")
             color: Accents.base0D
             font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
             elide: Text.ElideRight
