@@ -98,18 +98,36 @@
     buildInputs = [qt6.qtbase qt6.qtdeclarative qt6.qtshadertools libqalculate pipewire aubio libcava fftw lm_sensors];
 
     dontWrapQtApps = true;
-    cmakeFlags =
-      [
-        (lib.cmakeFeature "ENABLE_MODULES" "plugin")
-        (lib.cmakeFeature "INSTALL_QMLDIR" qt6.qtbase.qtQmlPrefix)
-      ]
-      ++ cmakeVersionFlags;
+    # NOTE: the plugin never embeds VERSION/GIT_REVISION, so keep them stable
+    # here. Otherwise every commit (even QML-only ones) would change this
+    # derivation and trigger a full C++ rebuild for no reason.
+    cmakeFlags = [
+      (lib.cmakeFeature "ENABLE_MODULES" "plugin")
+      (lib.cmakeFeature "INSTALL_QMLDIR" qt6.qtbase.qtQmlPrefix)
+      (lib.cmakeFeature "VERSION" version)
+      (lib.cmakeFeature "GIT_REVISION" "nix")
+      (lib.cmakeFeature "DISTRIBUTOR" "nix-flake")
+    ];
   };
 in
   stdenv.mkDerivation {
     inherit version cmakeBuildType;
     pname = "caelestia-shell${lib.optionalString debug "-debug"}";
-    src = ./..;
+    # NOTE: scoped fileset (like plugin/extras above) so unrelated changes
+    # (C++, docs, nix/, lockfile) don't rebuild the shell wrapper.
+    src = lib.fileset.toSource {
+      root = ./..;
+      fileset = lib.fileset.unions [
+        ./../CMakeLists.txt
+        ./../LICENSE
+        ./../shell.qml
+        ./../assets
+        ./../components
+        ./../modules
+        ./../services
+        ./../utils
+      ];
+    };
 
     nativeBuildInputs = [cmake ninja makeWrapper qt6.wrapQtAppsHook];
     buildInputs = [qs extras plugin xkeyboard-config qt6.qtbase];

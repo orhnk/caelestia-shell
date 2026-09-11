@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # NOTE for consumers: point nixpkgs at your system flake's nixpkgs
+    # (inputs.caelestia-shell.inputs.nixpkgs.follows = "nixpkgs") so updates
+    # don't duplicate nixpkgs and rebuild the world. The follows below keep
+    # every other input on that same nixpkgs instance.
     caelestia-cli = {
       url = "github:caelestia-dots/cli";
       inputs.nixpkgs.follows = "nixpkgs";

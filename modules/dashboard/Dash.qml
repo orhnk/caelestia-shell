@@ -45,13 +45,31 @@ GridLayout {
 
     Rect {
         Layout.row: 1
-        Layout.preferredWidth: dateTime.implicitWidth
+        Layout.preferredWidth: Math.max(dateTime.implicitWidth, salat.implicitWidth)
         Layout.fillHeight: true
 
         radius: Tokens.rounding.large
 
-        DateTime {
-            id: dateTime
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: Tokens.padding.small
+            spacing: Tokens.spacing.small
+
+            DateTime {
+                id: dateTime
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.verticalStretch: 1
+            }
+
+            Salat {
+                id: salat
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.verticalStretch: 1
+            }
         }
     }
 

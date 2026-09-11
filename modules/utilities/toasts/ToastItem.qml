@@ -6,11 +6,16 @@ import Caelestia.I18n
 import qs.components
 import qs.components.effects
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
 
     required property Toast modelData
+
+    readonly property bool isSalat: root.modelData.icon.startsWith("salat:")
+    readonly property int salatIndex: isSalat ? Number(root.modelData.icon.slice(6)) : -1
+    readonly property color salatColor: [Accents.base08, Accents.base09, Accents.base0A, Accents.base0B, Accents.base0C][root.salatIndex] ?? Accents.base0D
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -18,6 +23,8 @@ StyledRect {
 
     radius: Tokens.rounding.large
     color: {
+        if (root.isSalat)
+            return Accents.opaque(root.salatColor, 0.85);
         if (root.modelData.type === Toast.Success)
             return Colours.pick(Colours.palette.m3base02, Colours.palette.m3successContainer);
         if (root.modelData.type === Toast.Warning)
@@ -29,6 +36,8 @@ StyledRect {
 
     border.width: 1
     border.color: {
+        if (root.isSalat)
+            return root.salatColor;
         let colour = Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant);
         if (root.modelData.type === Toast.Success)
             colour = Colours.pick(Colours.palette.m3base0B, Colours.palette.m3success);
@@ -59,6 +68,8 @@ StyledRect {
         StyledRect {
             radius: Tokens.rounding.large
             color: {
+                if (root.isSalat)
+                    return root.salatColor;
                 if (root.modelData.type === Toast.Success)
                     return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3success);
                 if (root.modelData.type === Toast.Warning)
@@ -75,8 +86,10 @@ StyledRect {
                 id: icon
 
                 anchors.centerIn: parent
-                text: root.modelData.icon
+                text: root.isSalat ? "mosque" : root.modelData.icon
                 color: {
+                    if (root.isSalat)
+                        return Colours.on(root.salatColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSuccess);
                     if (root.modelData.type === Toast.Warning)
@@ -99,6 +112,8 @@ StyledRect {
                 Layout.fillWidth: true
                 text: Tr.trMarked(root.modelData.title)
                 color: {
+                    if (root.isSalat)
+                        return Colours.on(root.salatColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3onSuccessContainer);
                     if (root.modelData.type === Toast.Warning)
@@ -116,6 +131,8 @@ StyledRect {
                 textFormat: Text.StyledText
                 text: Tr.trMarked(root.modelData.message)
                 color: {
+                    if (root.isSalat)
+                        return Colours.on(root.salatColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3onSuccessContainer);
                     if (root.modelData.type === Toast.Warning)
