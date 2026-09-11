@@ -26,7 +26,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             text: Salat.nextIndex >= 0 ? `${Salat.label(Salat.prayers[Salat.nextIndex]?.name ?? "")} · ${Tr.tr("in %1").arg(Salat.nextIn)}` : Tr.tr("Prayer times")
             color: Accents.base0D
-            font: Tokens.font.title.small
+            font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
             elide: Text.ElideRight
         }
 
@@ -36,7 +36,7 @@ Item {
             visible: text.length > 0
             text: Salat.hijri
             color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
-            font: Tokens.font.body.small
+            font: Tokens.font.body.builders.small.letterSpacing(1).build()
             elide: Text.ElideRight
         }
 
@@ -71,22 +71,22 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: row.isNext ? Tokens.padding.small : 0
-                    anchors.rightMargin: row.isNext ? Tokens.padding.small : 0
+                    anchors.leftMargin: Tokens.padding.small
+                    anchors.rightMargin: Tokens.padding.small
                     spacing: Tokens.spacing.medium
 
                     StyledText {
                         Layout.fillWidth: true
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.small
+                        font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
                         elide: Text.ElideRight
                     }
 
                     StyledText {
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.small
+                        font: Tokens.font.mono.builders.medium.weight(Font.Medium).build()
                     }
                 }
             }
