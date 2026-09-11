@@ -45,7 +45,7 @@ GridLayout {
 
     Rect {
         Layout.row: 1
-        Layout.preferredWidth: Math.max(dateTime.implicitWidth, salat.implicitWidth)
+        Layout.preferredWidth: Math.max(dateTime.implicitWidth, prayerTimes.implicitWidth)
         Layout.fillHeight: true
 
         radius: Tokens.rounding.large
@@ -60,15 +60,13 @@ GridLayout {
 
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.verticalStretch: 1
             }
 
-            Salat {
-                id: salat
+            PrayerTimes {
+                id: prayerTimes
 
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.verticalStretch: 1
             }
         }
     }
