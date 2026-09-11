@@ -217,11 +217,8 @@ CustomMouseArea {
                                 return Accents.base04;
                             if (dayItem.model.today)
                                 return Colours.on(Accents.base0F);
-                            const dayOfWeek = dayItem.model.date.getDay();
-                            if (dayOfWeek === 0 || dayOfWeek === 6)
-                                return Accents.base0E;
-
-                            return Accents.at(Accents.weekColors, dayOfWeek - 1);
+                            const dayOfWeek = (dayItem.model.date.getDay() + 6) % 7;
+                            return Accents.weekColors[dayOfWeek];
                         }
                         opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.4
                         font: Tokens.font.body.small

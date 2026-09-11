@@ -30,7 +30,7 @@ Singleton {
     readonly property list<color> toggleColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
     readonly property list<color> topMenuColors: [base08, base09, base0A, base0B]
     readonly property list<color> sessionColors: [base0C, base0B, base0A, base09]
-    readonly property list<color> weekColors: [base08, base09, base0A, base0B, base0C]
+    readonly property list<color> weekColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
     readonly property list<color> djColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
     readonly property list<color> spectrumColors: [base0F, base0E, base0D, base0C, base0B, base0A, base09, base08]
     readonly property list<color> charSpectrum: [base08, base09, base0A, base0B, base0C, base0D, base0E, base0F]
