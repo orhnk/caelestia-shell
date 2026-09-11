@@ -46,33 +46,30 @@ GridLayout {
     Rect {
         Layout.row: 1
         Layout.preferredWidth: Math.max(countdown.implicitWidth, prayerTimes.implicitWidth)
+        Layout.minimumWidth: prayerTimes.implicitWidth
         Layout.fillHeight: true
-        implicitHeight: clockColumn.implicitHeight + Tokens.padding.small * 2
+        implicitHeight: prayerTimes.implicitHeight + countdown.implicitHeight + Tokens.padding.small * 2 + Tokens.spacing.small
 
         radius: Tokens.rounding.large
 
-        ColumnLayout {
-            id: clockColumn
+        PrayerTimes {
+            id: prayerTimes
 
-            anchors.fill: parent
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
             anchors.margins: Tokens.padding.small
-            spacing: Tokens.spacing.small
+        }
 
-            PrayerTimes {
-                id: prayerTimes
+        DateTime {
+            id: countdown
 
-                Layout.fillWidth: true
-                Layout.preferredHeight: prayerTimes.implicitHeight
-            }
-
-            DateTime {
-                id: countdown
-
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                hour: Salat.nextNow || Salat.nextIndex < 0 ? Time.hourStr : String(Salat.nextHours)
-                minute: Salat.nextNow || Salat.nextIndex < 0 ? Time.minuteStr : String(Salat.nextMins).padStart(2, "0")
-            }
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: Tokens.padding.small
+            hour: Salat.nextNow || Salat.nextIndex < 0 ? Time.hourStr : String(Salat.nextHours)
+            minute: Salat.nextNow || Salat.nextIndex < 0 ? Time.minuteStr : String(Salat.nextMins).padStart(2, "0")
         }
     }
 
