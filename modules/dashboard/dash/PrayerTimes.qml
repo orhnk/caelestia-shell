@@ -10,8 +10,8 @@ import qs.utils
 Item {
     id: root
 
-    implicitWidth: layout.implicitWidth + Tokens.padding.medium * 2
-    implicitHeight: layout.implicitHeight + Tokens.padding.medium * 2
+    implicitWidth: layout.implicitWidth + Tokens.padding.small * 2
+    implicitHeight: layout.implicitHeight + Tokens.padding.small * 2
 
     Component.onCompleted: Salat.reload()
 
@@ -53,7 +53,7 @@ Item {
                 readonly property color prayerColor: Accents.prayerColor(index)
 
                 Layout.fillWidth: true
-                implicitHeight: rowLayout.implicitHeight + (isNext ? Tokens.padding.small * 2 : 0)
+                implicitHeight: rowLayout.implicitHeight + Tokens.padding.small * 2
 
                 StyledRect {
                     anchors.fill: parent
@@ -68,11 +68,15 @@ Item {
                 RowLayout {
                     id: rowLayout
 
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: Tokens.padding.small
+                    anchors.rightMargin: Tokens.padding.small
                     spacing: Tokens.spacing.extraSmall
 
                     StyledText {
+                        Layout.fillWidth: true
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
                         font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
