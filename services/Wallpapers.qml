@@ -30,7 +30,14 @@ Searcher {
     }
 
     function setRandom(): void {
-        Quickshell.execDetached(["caelestia", "wallpaper", "-r", ...smartArg]);
+        // Pick from the recursive model so wallpapers in subdirs are included
+        // (the cli picker only looks at the top level).
+        if (wallpapers.entries.length > 0) {
+            const entry = wallpapers.entries[Math.floor(Math.random() * wallpapers.entries.length)];
+            setWallpaper(entry.path);
+        } else {
+            Quickshell.execDetached(["caelestia", "wallpaper", "-r", ...smartArg]);
+        }
     }
 
     function setWallpaper(path: string): void {
