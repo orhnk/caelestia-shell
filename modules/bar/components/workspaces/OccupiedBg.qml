@@ -69,7 +69,7 @@ Item {
             implicitWidth: Tokens.sizes.bar.innerWidth - Tokens.padding.small + 2
             implicitHeight: start && end ? end.y + end.size - start.y + 2 : 0
 
-            color: Accents.wsBg((modelData.start ?? 1) - 1, false)
+            color: Accents.wsBg(getWsIdx(modelData.start ?? 1), false)
             radius: Tokens.rounding.full
 
             scale: 0

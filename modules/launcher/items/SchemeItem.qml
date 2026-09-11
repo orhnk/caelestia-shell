@@ -96,7 +96,7 @@ Item {
 
             sourceComponent: MaterialIcon {
                 text: "check"
-                color: Accents.ws(root.index)
+                color: Accents.popList(root.index)
                 fontStyle: Tokens.font.icon.large
             }
         }

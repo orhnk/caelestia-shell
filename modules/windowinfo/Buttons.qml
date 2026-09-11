@@ -138,8 +138,8 @@ ColumnLayout {
         }
 
         Button {
-            color: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
-            onColor: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
+            color: Accents.base08
+            onColor: Colours.on(Accents.base08)
             text: Tr.tr("Kill")
             onClicked: Hypr.dispatch(Hypr.usingLua ? `hl.dsp.window.kill({ window = "address:0x${root.client?.address}" })` : `killwindow address:0x${root.client?.address}`)
         }

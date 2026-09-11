@@ -59,8 +59,8 @@ PageBase {
                 shapeMorph: true
                 isRound: true
 
-                inactiveColour: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
-                inactiveOnColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
+                inactiveColour: Accents.base08
+                inactiveOnColour: Colours.on(Accents.base08)
 
                 implicitWidth: forgetBtnLayout.implicitWidth + Tokens.padding.extraLarge * 2
                 implicitHeight: forgetBtnLayout.implicitHeight + Tokens.padding.medium * 2

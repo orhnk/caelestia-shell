@@ -137,7 +137,7 @@ MouseArea {
                         bottomLeftRadius: index === repeater?.count - 1 ? Tokens.rounding.medium : radius
                         bottomRightRadius: index === repeater?.count - 1 ? Tokens.rounding.medium : radius
 
-                        readonly property color accent: Accents.ws(index)
+                        readonly property color accent: Accents.popList(index)
                         color: item.active ? accent : "transparent"
 
                         Behavior on radius {

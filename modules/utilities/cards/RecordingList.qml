@@ -103,8 +103,8 @@ ColumnLayout {
             IconButton {
                 icon: "play_arrow"
                 type: IconButton.Text
-                label.color: Accents.base07
-                stateLayer.color: Accents.opaque(Accents.base07, 0.5)
+                label.color: Accents.base0D
+                stateLayer.color: Accents.opaque(Accents.base0D, 0.5)
                 onClicked: {
                     root.screenState.utilities = false;
                     root.screenState.sidebar = false;

@@ -69,7 +69,7 @@ StyledClippingRect {
             Layout.fillWidth: true
             animate: true
             text: (Players.active?.trackArtist ?? Tr.tr("Try playing some music!")) || Tr.tr("Unknown artist")
-            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+            color: Accents.base0C
             horizontalAlignment: Text.AlignHCenter
             font: Tokens.font.body.small
             elide: Text.ElideRight
@@ -86,6 +86,8 @@ StyledClippingRect {
                 icon: "skip_previous"
                 isRound: true
                 shapeMorph: true
+                inactiveColour: Accents.opaque(Accents.base0E, 0.3)
+                inactiveOnColour: Accents.base0E
                 disabled: !Players.active?.canGoPrevious
                 onClicked: Players.active?.previous()
             }
@@ -94,6 +96,10 @@ StyledClippingRect {
                 icon: Players.active?.isPlaying ? "pause" : "play_arrow"
                 isRound: true
                 shapeMorph: true
+                inactiveColour: Accents.base0D
+                inactiveOnColour: Colours.on(Accents.base0D)
+                activeColour: Accents.base0D
+                activeOnColour: Colours.on(Accents.base0D)
                 checked: Players.active?.isPlaying ?? false
                 disabled: !Players.active?.canTogglePlaying
                 onClicked: Players.active?.togglePlaying()
@@ -105,6 +111,8 @@ StyledClippingRect {
                 icon: "skip_next"
                 isRound: true
                 shapeMorph: true
+                inactiveColour: Accents.opaque(Accents.base0E, 0.3)
+                inactiveOnColour: Accents.base0E
                 disabled: !Players.active?.canGoNext
                 onClicked: Players.active?.next()
             }

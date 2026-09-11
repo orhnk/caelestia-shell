@@ -78,8 +78,8 @@ StyledRect {
 
             SplitButton {
                 disabled: Recorder.running
-                colour: Accents.base0B
-                textColour: Accents.deep(Accents.base0B)
+                colour: Accents.base0D
+                textColour: Accents.deep(Accents.base0D)
 
                 active: menuItems.find(m => root.props.recordingMode === m.icon + m.text) ?? menuItems[0]
                 menu.onItemSelected: item => root.props.recordingMode = item.icon + item.text
@@ -258,10 +258,10 @@ StyledRect {
                     isToggle: true
                     checked: Recorder.paused
                     type: IconButton.Tonal
-                    activeColour: Accents.base0B
-                    activeOnColour: Accents.deep(Accents.base0B)
-                    inactiveColour: Accents.base0B
-                    inactiveOnColour: Accents.deep(Accents.base0B)
+                    activeColour: Accents.base0D
+                    activeOnColour: Accents.deep(Accents.base0D)
+                    inactiveColour: Accents.base0D
+                    inactiveOnColour: Accents.deep(Accents.base0D)
                     font: Tokens.font.icon.medium
                     onClicked: {
                         Recorder.togglePause();

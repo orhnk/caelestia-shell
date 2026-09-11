@@ -181,8 +181,8 @@ PageBase {
                 isRound: true
                 horizontalPadding: Tokens.padding.extraLarge
                 verticalPadding: Tokens.padding.medium
-                inactiveColour: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
-                inactiveOnColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
+                inactiveColour: Accents.base08
+                inactiveOnColour: Colours.on(Accents.base08)
                 iconLabel.fill: 1
                 iconLabel.grade: 25
                 icon: "delete_forever"

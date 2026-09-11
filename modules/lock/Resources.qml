@@ -59,7 +59,7 @@ StyledRect {
                 y: cpu.mShape.pointAtAngle(45).y - implicitSize / 2
 
                 shape: Cpu.temperature > 90 ? MaterialShape.SoftBurst : MaterialShape.Circle
-                color: Cpu.temperature > 90 ? Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+                color: Cpu.temperature > 90 ? Accents.base08 : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
                 implicitSize: {
                     const size = Math.round(tempLabel.implicitHeight * 2);
                     return size % 2 === 0 ? size : size + 1; // Ensure even size so center works properly
@@ -76,7 +76,7 @@ StyledRect {
                     anchors.verticalCenterOffset: Math.round(fontInfo.pointSize * 0.04)
 
                     text: Units.formatSensorTemp(Cpu.temperature)
-                    color: Cpu.temperature > 90 ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
+                    color: Cpu.temperature > 90 ? Colours.on(Accents.base08) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
                     font: Tokens.font.title.builders.medium.scale(cpu.width / 112).width(50).build()
                 }
             }

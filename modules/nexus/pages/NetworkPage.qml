@@ -310,7 +310,7 @@ PageBase {
                                         implicitWidth: Math.round(Tokens.font.body.small.pointSize * 0.7)
                                         implicitHeight: implicitWidth
                                         radius: Tokens.rounding.full
-                                        color: VPN.pingMs <= 80 ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : VPN.pingMs <= 150 ? Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary) : Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
+                                        color: VPN.pingMs <= 80 ? Accents.base0B : VPN.pingMs <= 150 ? Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary) : Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
                                     }
 
                                     StyledText {
