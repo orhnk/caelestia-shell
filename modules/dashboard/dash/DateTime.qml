@@ -38,9 +38,9 @@ Item {
         }
 
         StyledText {
-            text: ":"
+            text: "⋮"
             color: Accents.base0F
-            font: digitMetrics.font
+            font: Tokens.font.clock.size(24 * 0.9).weight(Font.DemiBold).build()
         }
 
         StyledText {
