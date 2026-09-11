@@ -15,7 +15,7 @@ StyledRect {
 
     readonly property bool isSalat: root.modelData.icon.startsWith("salat:")
     readonly property int salatIndex: isSalat ? Number(root.modelData.icon.slice(6)) : -1
-    readonly property color salatColor: [Accents.base08, Accents.base09, Accents.base0A, Accents.base0B, Accents.base0C][root.salatIndex] ?? Accents.base0D
+    readonly property color salatColor: root.salatIndex >= 0 ? Accents.prayerColor(root.salatIndex) : Accents.base0D
 
     anchors.left: parent.left
     anchors.right: parent.right

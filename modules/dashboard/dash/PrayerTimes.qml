@@ -3,17 +3,15 @@ import QtQuick.Layouts
 import Caelestia.Config
 import Caelestia.I18n
 import qs.components
-import qs.components.controls
 import qs.services
 import qs.utils
+
 
 Item {
     id: root
 
-    readonly property list<color> nameColors: [Accents.base08, Accents.base09, Accents.base0A, Accents.base0B, Accents.base0C]
-
-    implicitWidth: layout.implicitWidth + Tokens.padding.large * 2
-    implicitHeight: layout.implicitHeight + Tokens.padding.large * 2
+    implicitWidth: layout.implicitWidth + Tokens.padding.medium * 2
+    implicitHeight: layout.implicitHeight + Tokens.padding.medium * 2
 
     Component.onCompleted: Salat.reload()
 
@@ -45,63 +43,52 @@ Item {
         Repeater {
             model: Salat.prayers
 
-            RowLayout {
+            Item {
                 id: row
 
                 required property var modelData
                 required property int index
 
-                Layout.fillWidth: true
-                spacing: Tokens.spacing.medium
-                opacity: modelData.passed && index !== Salat.nextIndex ? 0.45 : 1
+                readonly property bool isNext: index === Salat.nextIndex
+                readonly property color prayerColor: Accents.prayerColor(index)
 
-                Behavior on opacity {
-                    Anim {
-                        type: Anim.DefaultEffects
+                Layout.fillWidth: true
+                implicitHeight: rowLayout.implicitHeight + (isNext ? Tokens.padding.small * 2 : 0)
+
+                StyledRect {
+                    anchors.fill: parent
+                    radius: Tokens.rounding.medium
+                    color: row.isNext ? row.prayerColor : "transparent"
+
+                    Behavior on color {
+                        CAnim {}
                     }
                 }
 
-                StyledText {
-                    Layout.fillWidth: true
-                    text: Salat.label(modelData.name)
-                    color: root.nameColors[index] ?? Accents.base05
-                    font: Tokens.font.body.medium
-                    elide: Text.ElideRight
+                RowLayout {
+                    id: rowLayout
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: row.isNext ? Tokens.padding.small : 0
+                    anchors.rightMargin: row.isNext ? Tokens.padding.small : 0
+                    spacing: Tokens.spacing.medium
+
+                    StyledText {
+                        Layout.fillWidth: true
+                        text: Salat.label(row.modelData.name)
+                        color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
+                        font: Tokens.font.body.medium
+                        elide: Text.ElideRight
+                    }
+
+                    StyledText {
+                        text: row.modelData.display
+                        color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
+                        font: Tokens.font.body.medium
+                    }
                 }
-
-                StyledText {
-                    text: modelData.display
-                    color: index === Salat.nextIndex ? Accents.base0D : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
-                    font: Tokens.font.body.medium
-                }
-            }
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.topMargin: Tokens.spacing.extraSmall
-            spacing: Tokens.spacing.small
-
-            StyledText {
-                Layout.fillWidth: true
-                text: Tr.tr("Remind before")
-                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
-                font: Tokens.font.body.small
-                elide: Text.ElideRight
-            }
-
-            StyledSpinBox {
-                from: 0
-                to: 60
-                stepSize: 1
-                value: Salat.reminderMins
-                onValueModified: Salat.reminderMins = Math.round(value)
-            }
-
-            StyledText {
-                text: Tr.tr("min")
-                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
-                font: Tokens.font.body.small
             }
         }
     }
