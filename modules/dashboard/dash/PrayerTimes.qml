@@ -68,15 +68,11 @@ Item {
                 RowLayout {
                     id: rowLayout
 
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Tokens.padding.small
-                    anchors.rightMargin: Tokens.padding.small
-                    spacing: Tokens.spacing.medium
+                    spacing: Tokens.spacing.extraSmall
 
                     StyledText {
-                        Layout.fillWidth: true
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
                         font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
