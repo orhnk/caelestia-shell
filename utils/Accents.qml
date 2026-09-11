@@ -26,7 +26,7 @@ Singleton {
 
     readonly property list<color> wsColors: [base08, base09, base0A, base0B, base0C]
     readonly property list<color> statusColors: [base0E, base0D, base0C, base0B, base0A, base09, base08]
-    readonly property list<color> popListColors: [base0B, base0C, base0D, base0E]
+    readonly property list<color> popListColors: [base08, base09, base0A, base0B, base0C, base0D, base0E, base0F]
     readonly property list<color> toggleColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
     readonly property list<color> topMenuColors: [base08, base09, base0A, base0B]
     readonly property list<color> sessionColors: [base0C, base0B, base0A, base09]
