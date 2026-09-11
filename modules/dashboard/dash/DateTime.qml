@@ -24,14 +24,14 @@ Item {
             Layout.bottomMargin: -(font.pointSize * 0.4)
             Layout.alignment: Qt.AlignHCenter
             text: Time.hourStr
-            color: Accents.base0B
+            color: Accents.base0A
             font: Tokens.font.clock.size(28).weight(Font.DemiBold).build()
         }
 
         StyledText {
             Layout.alignment: Qt.AlignHCenter
             text: "•••"
-            color: Accents.base0C
+            color: Accents.base0F
             font: Tokens.font.clock.size(28 * 0.9).build()
         }
 
@@ -39,7 +39,7 @@ Item {
             Layout.topMargin: -(font.pointSize * 0.4)
             Layout.alignment: Qt.AlignHCenter
             text: Time.minuteStr
-            color: Accents.base0B
+            color: Accents.base0A
             font: Tokens.font.clock.size(28).weight(Font.DemiBold).build()
         }
 
@@ -52,7 +52,7 @@ Item {
 
             sourceComponent: StyledText {
                 text: Time.amPmStr
-                color: Accents.base0C
+                color: Accents.base0F
                 font: Tokens.font.clock.size(18).weight(Font.DemiBold).build()
             }
         }

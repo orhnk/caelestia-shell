@@ -2,6 +2,7 @@ import QtQuick
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 import qs.modules.launcher.services
 
 Item {
@@ -9,6 +10,7 @@ Item {
 
     required property Schemes.Scheme modelData
     required property var list
+    required property int index
 
     implicitHeight: Tokens.sizes.launcher.itemHeight
 
@@ -94,7 +96,7 @@ Item {
 
             sourceComponent: MaterialIcon {
                 text: "check"
-                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                color: Accents.ws(root.index)
                 fontStyle: Tokens.font.icon.large
             }
         }

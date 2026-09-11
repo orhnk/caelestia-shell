@@ -97,7 +97,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: Icons.getBluetoothIcon(device.modelData.icon)
-                color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.popList(device.index) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant) // qmllint disable unresolved-type
+                color: Accents.popList(device.index)
             }
 
             StyledText {
@@ -106,7 +106,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 text: device.modelData.name
                 elide: Text.ElideRight
-                color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.popList(device.index) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) // qmllint disable unresolved-type
+                color: Accents.popList(device.index)
             }
 
             MaterialIcon {
@@ -122,7 +122,7 @@ ColumnLayout {
                 implicitHeight: connectIcon.implicitHeight + Tokens.padding.extraSmall
 
                 radius: Tokens.rounding.full
-                color: Accents.opaque(Accents.popList(device.index), device.modelData.state === BluetoothDeviceState.Connected ? 1 : 0) // qmllint disable unresolved-type
+                color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.opaque(Accents.popList(device.index), 1) : btState.containsMouse ? Accents.opaque(Accents.popList(device.index), 0.1) : "transparent" // qmllint disable unresolved-type
 
                 CircularIndicator {
                     anchors.fill: parent
@@ -130,7 +130,9 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) // qmllint disable unresolved-type
+                    id: btState
+
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Accents.popList(device.index) // qmllint disable unresolved-type
                     disabled: device.loading
                     onClicked: device.modelData.connected = !device.modelData.connected
                 }
@@ -141,7 +143,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: device.modelData.connected ? "link_off" : "link"
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Accents.popList(device.index) // qmllint disable unresolved-type
 
                     opacity: device.loading ? 0 : 1
 

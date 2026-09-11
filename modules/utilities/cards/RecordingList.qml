@@ -103,8 +103,8 @@ ColumnLayout {
             IconButton {
                 icon: "play_arrow"
                 type: IconButton.Text
-                label.color: Accents.popList(recording.index)
-                stateLayer.color: Accents.opaque(Accents.popList(recording.index), 0.5)
+                label.color: Accents.base07
+                stateLayer.color: Accents.opaque(Accents.base07, 0.5)
                 onClicked: {
                     root.screenState.utilities = false;
                     root.screenState.sidebar = false;
@@ -115,8 +115,8 @@ ColumnLayout {
             IconButton {
                 icon: "folder"
                 type: IconButton.Text
-                label.color: Accents.popList(recording.index)
-                stateLayer.color: Accents.opaque(Accents.popList(recording.index), 0.5)
+                label.color: Accents.dj(recording.index)
+                stateLayer.color: Accents.opaque(Accents.dj(recording.index), 0.5)
                 onClicked: {
                     root.screenState.utilities = false;
                     root.screenState.sidebar = false;

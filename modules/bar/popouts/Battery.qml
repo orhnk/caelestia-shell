@@ -204,6 +204,7 @@ Column {
 
             profile: PowerProfile.PowerSaver
             icon: "energy_savings_leaf"
+            idx: 0
         }
 
         Profile {
@@ -213,6 +214,7 @@ Column {
 
             profile: PowerProfile.Balanced
             icon: "balance"
+            idx: 1
         }
 
         Profile {
@@ -224,6 +226,7 @@ Column {
 
             profile: PowerProfile.Performance
             icon: "rocket_launch"
+            idx: 2
         }
     }
 
@@ -240,11 +243,20 @@ Column {
     component Profile: Item {
         required property string icon
         required property int profile
+        required property int idx
 
         implicitWidth: icon.implicitHeight + Tokens.padding.small
         implicitHeight: icon.implicitHeight + Tokens.padding.small
 
+        StyledRect {
+            anchors.fill: parent
+            radius: Tokens.rounding.full
+            color: profiles.current === parent.icon ? "transparent" : layer.containsMouse ? Accents.opaque(Accents.popList(parent.idx), 0.1) : "transparent"
+        }
+
         StateLayer {
+            id: layer
+
             radius: Tokens.rounding.full
             color: profiles.current === parent.icon ? Colours.on(indicator.accent) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
             onClicked: PowerProfiles.profile = parent.profile
@@ -257,7 +269,7 @@ Column {
 
             text: parent.icon
             fontStyle: Tokens.font.icon.large
-            color: profiles.current === text ? Colours.on(indicator.accent) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+            color: profiles.current === text ? Colours.on(indicator.accent) : Accents.popList(parent.idx)
             fill: profiles.current === text ? 1 : 0
 
             Behavior on fill {

@@ -33,6 +33,10 @@ Singleton {
         return (formats[unit] ?? ("%1 " + unit)).arg(value);
     }
 
+    function escapeHtml(s: string): string {
+        return (s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
     function testRegexList(filterList: list<string>, target: string): bool {
         const regexChecker = /^\^.*\$$/;
         for (const filter of filterList) {

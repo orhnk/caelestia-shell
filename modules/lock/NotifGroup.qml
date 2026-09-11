@@ -315,7 +315,7 @@ StyledRect {
         text: {
             const summary = modelData.summary.replace(/\n/g, " ");
             const body = modelData.body.replace(/\n/g, " ");
-            const colour = root.urgency === "critical" ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline);
+            const colour = root.urgency === "critical" ? Accents.base08 : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline);
 
             if (metrics.text === metrics.elidedText)
                 return `${summary} <span style='color:${colour}'>${body}</span>`;
@@ -326,7 +326,8 @@ StyledRect {
 
             return `${summary} <span style='color:${colour}'>${body.slice(0, t - summary.length)}...</span>`;
         }
-        color: root.urgency === "critical" ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+        linkColor: Accents.base0D
+        color: root.urgency === "critical" ? Accents.base08 : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
 
         Component.onCompleted: modelData.lock(this)
         Component.onDestruction: modelData.unlock(this)

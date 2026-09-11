@@ -20,6 +20,8 @@ Item {
     }
 
     readonly property real arcCoverGap: Tokens.spacing.extraSmall
+    readonly property bool playing: Players.active?.isPlaying ?? false
+    readonly property real idleOpacity: playing ? 1 : 0.33
 
     anchors.top: parent.top
     anchors.bottom: parent.bottom
@@ -46,6 +48,7 @@ Item {
     CircularProgress {
         id: prog
 
+        opacity: root.idleOpacity
         anchors.centerIn: cover
         implicitSize: cover.width + root.arcCoverGap + thickness * 2
 
@@ -74,6 +77,7 @@ Item {
     StyledText {
         id: title
 
+        opacity: root.idleOpacity
         anchors.top: cover.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: Tokens.spacing.medium
@@ -91,6 +95,7 @@ Item {
     StyledText {
         id: album
 
+        opacity: root.idleOpacity
         anchors.top: title.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: Tokens.spacing.small
@@ -108,6 +113,7 @@ Item {
     StyledText {
         id: artist
 
+        opacity: root.idleOpacity
         anchors.top: album.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: Tokens.spacing.small
@@ -124,6 +130,7 @@ Item {
     ButtonRow {
         id: controls
 
+        opacity: root.idleOpacity
         anchors.top: artist.bottom
         anchors.left: parent.left
         anchors.right: parent.right

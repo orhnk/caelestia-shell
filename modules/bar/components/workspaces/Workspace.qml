@@ -62,7 +62,7 @@ ColumnLayout {
         MaterialShape {
             implicitSize: Tokens.sizes.bar.innerWidth - Tokens.padding.small
 
-            color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.focused ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.layer(Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant), 2)
+            color: root.focused ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Accents.opaque(Accents.ws(root.index), 0.7)
             scale: root.focused ? 2 / 3 : root.isOccupied ? 1 / 3 : 1 / 4
 
             animationEasing: Tokens.anim.expressiveDefaultSpatial
@@ -110,7 +110,7 @@ ColumnLayout {
                     return wsName.toString().toLowerCase();
                 return wsName;
             }
-            color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.focused ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.layer(Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant), 2)
+            color: root.focused ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Accents.opaque(Accents.ws(root.index), 0.7)
             verticalAlignment: Qt.AlignVCenter
             font.family: Tokens.font.workspaces
         }
@@ -165,7 +165,7 @@ ColumnLayout {
 
                     grade: 0
                     text: Icons.getAppCategoryIcon(modelData.lastIpcObject.class, "terminal")
-                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                    color: root.focused ? Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant) : Accents.opaque(Accents.ws(root.index), 0.7)
                 }
             }
         }

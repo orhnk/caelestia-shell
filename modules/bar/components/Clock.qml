@@ -12,7 +12,8 @@ StyledRect {
 
     readonly property color dayColour: Accents.base0A
     readonly property color numberColour: Accents.base0B
-    readonly property color sepColour: Accents.base0C
+    readonly property color sepColour: Accents.base0F
+    readonly property color clockColour: Accents.base09
     readonly property color colour: numberColour
     readonly property int padding: Config.bar.clock.background ? Tokens.padding.medium : Tokens.padding.extraSmall
     readonly property var font: Tokens.font.body.builders.small.scale(1.1)
@@ -83,13 +84,13 @@ StyledRect {
                 const scale = text === "11" ? 1.15 : Math.min(1.05, Math.max(hourMetrics.width, minMetrics.width) / hourMetrics.width);
                 return root.font.width(scale * 100).letterSpacing(scale).build();
             }
-            color: root.numberColour
+            color: root.clockColour
 
             TextMetrics {
                 id: hourMetrics
 
                 font: root.font.build()
-                text: Time.hourStr
+            text: Time.hourStr
             }
         }
 
@@ -101,7 +102,7 @@ StyledRect {
                 const scale = text === "11" ? 1.15 : Math.min(1.05, Math.max(hourMetrics.width, minMetrics.width) / minMetrics.width);
                 return root.font.width(scale * 100).letterSpacing(scale).build();
             }
-            color: root.numberColour
+            color: root.clockColour
 
             TextMetrics {
                 id: minMetrics
@@ -121,7 +122,7 @@ StyledRect {
             sourceComponent: StyledText {
                 text: Time.amPmStr.toLowerCase()
                 font: Tokens.font.body.builders.small.scale(0.9).build()
-                color: root.sepColour
+                color: root.clockColour
             }
         }
     }

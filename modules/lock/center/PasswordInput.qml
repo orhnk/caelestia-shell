@@ -7,6 +7,7 @@ import Caelestia.Config
 import qs.components
 import qs.components.controls
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
@@ -23,6 +24,8 @@ StyledRect {
 
     color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.full
+    border.width: activeFocus ? 2 : 0
+    border.color: Accents.base0D
 
     focus: true
     onActiveFocusChanged: {
@@ -88,7 +91,7 @@ StyledRect {
                             return "face";
                         return "lock";
                     }
-                    color: !root.lock.pam.howdy.canAttempt && root.lock.pam.fprint.tries >= GlobalConfig.lock.maxFprintTries ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                    color: !root.lock.pam.howdy.canAttempt && root.lock.pam.fprint.tries >= GlobalConfig.lock.maxFprintTries ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : (root.lock.pam.fprint.active || root.lock.pam.howdy.active) ? Accents.base0D : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     fontStyle: Tokens.font.icon.builders.medium.scale(root.centerScale).build()
                     fill: text === "face" || text === "visibility"
 
@@ -172,7 +175,7 @@ StyledRect {
 
                 anchors.centerIn: parent
                 text: "arrow_forward"
-                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                color: mouse.containsMouse ? Accents.base0D : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.builders.medium.scale(root.centerScale * 1.2).build()
                 opacity: root.lock.pam.buffer ? 0 : 1
 

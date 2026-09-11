@@ -88,11 +88,21 @@ ColumnLayout {
             required property int layoutIndex
             required property string label
             readonly property bool isDisabled: layoutIndex > 3
+            readonly property bool isActive: layoutIndex === kb.activeIndex
 
             width: list.width
             height: Math.max(36, rowText.implicitHeight + Tokens.padding.small)
             ToolTip.visible: isDisabled && layer.containsMouse
             ToolTip.text: Tr.tr("XKB limitation: maximum 4 layouts allowed")
+
+            StyledRect {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                implicitHeight: parent.height - 4
+                radius: Tokens.rounding.full
+                color: kbDelegate.isActive ? Accents.popList(kbDelegate.layoutIndex) : layer.containsMouse ? Accents.opaque(Accents.popList(kbDelegate.layoutIndex), 0.1) : "transparent"
+            }
 
             StateLayer {
                 id: layer
@@ -120,7 +130,7 @@ ColumnLayout {
                 anchors.rightMargin: Tokens.padding.extraSmall
                 text: kbDelegate.label
                 elide: Text.ElideRight
-                color: Accents.popList(kbDelegate.layoutIndex)
+                color: kbDelegate.isActive ? Colours.on(Accents.popList(kbDelegate.layoutIndex)) : Accents.popList(kbDelegate.layoutIndex)
                 opacity: kbDelegate.isDisabled ? 0.4 : 1.0
             }
         }

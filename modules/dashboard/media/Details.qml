@@ -13,6 +13,8 @@ ColumnLayout {
     id: root
 
     readonly property bool hasUnknownLength: (Players.active?.length ?? 0) > 2147483647
+    readonly property bool playing: Players.active?.isPlaying ?? false
+    readonly property real idleOpacity: playing ? 1 : 0.33
 
     function lengthStr(length: int): string {
         if (length < 0)
@@ -40,6 +42,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Players.active?.trackTitle ?? ""
+        opacity: root.idleOpacity
         color: Accents.base0A
         font: Tokens.font.title.large
         elide: Text.ElideRight
@@ -49,6 +52,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Players.active?.trackArtist || Tr.tr("Unknown artist")
+        opacity: root.idleOpacity
         color: Accents.base0C
         font: Tokens.font.title.medium
         elide: Text.ElideRight
@@ -58,6 +62,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Players.active?.trackAlbum || Tr.tr("Unknown album")
+        opacity: root.idleOpacity
         color: Accents.base0B
         font: Tokens.font.title.medium
         elide: Text.ElideRight
@@ -89,6 +94,7 @@ ColumnLayout {
         StyledSlider {
             id: positionSlider
 
+            opacity: root.idleOpacity
             Layout.fillWidth: true
             value: Players.active ? Players.active.position / (Players.active.length || 1) : 0
             enabled: (Players.active?.canSeek ?? false) && !root.hasUnknownLength
@@ -141,6 +147,7 @@ ColumnLayout {
         IconButton {
             id: previousBtn
 
+            opacity: root.idleOpacity
             type: IconButton.Tonal
             icon: "skip_previous"
             isRound: true
@@ -155,6 +162,7 @@ ColumnLayout {
         IconButton {
             id: playPauseBtn
 
+            opacity: root.idleOpacity
             icon: Players.active?.isPlaying ? "pause" : "play_arrow"
             isRound: true
             shapeMorph: true
@@ -172,6 +180,7 @@ ColumnLayout {
         IconButton {
             id: nextBtn
 
+            opacity: root.idleOpacity
             type: IconButton.Tonal
             icon: "skip_next"
             isRound: true

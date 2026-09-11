@@ -95,7 +95,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: Icons.getNetworkIcon(networkItem.modelData.strength)
-                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                color: Accents.popList(networkItem.index)
             }
 
             MaterialIcon {
@@ -111,7 +111,7 @@ ColumnLayout {
                 text: networkItem.modelData.ssid
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(networkItem.modelData.active ? Font.Medium : Font.Normal).build()
-                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                color: Accents.popList(networkItem.index)
             }
 
             StyledRect {
@@ -119,7 +119,7 @@ ColumnLayout {
                 implicitHeight: wirelessConnectIcon.implicitHeight + Tokens.padding.extraSmall
 
                 radius: Tokens.rounding.full
-                color: Accents.opaque(Accents.popList(networkItem.index), networkItem.modelData.active ? 1 : 0)
+                color: networkItem.modelData.active ? Accents.opaque(Accents.popList(networkItem.index), 1) : wirelessState.containsMouse ? Accents.opaque(Accents.popList(networkItem.index), 0.1) : "transparent"
 
                 CircularIndicator {
                     anchors.fill: parent
@@ -127,7 +127,9 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                    id: wirelessState
+
+                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Accents.popList(networkItem.index)
                     disabled: networkItem.loading || !Nmcli.wifiEnabled
 
                     onClicked: {
@@ -154,7 +156,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: networkItem.modelData.active ? "link_off" : "link"
-                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Accents.popList(networkItem.index)
 
                     opacity: networkItem.loading ? 0 : 1
 
@@ -285,7 +287,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: "cable"
-                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                color: Accents.popList(ethernetItem.index)
             }
 
             StyledText {
@@ -295,7 +297,7 @@ ColumnLayout {
                 text: ethernetItem.modelData.iface || Tr.trCtx("Unknown", "unknown network interface")
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(ethernetItem.modelData.connected ? Font.Medium : Font.Normal).build()
-                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                color: Accents.popList(ethernetItem.index)
             }
 
             StyledRect {
@@ -303,7 +305,7 @@ ColumnLayout {
                 implicitHeight: connectIcon.implicitHeight + Tokens.padding.extraSmall
 
                 radius: Tokens.rounding.full
-                color: Accents.opaque(Accents.popList(ethernetItem.index), ethernetItem.modelData.connected ? 1 : 0)
+                color: ethernetItem.modelData.connected ? Accents.opaque(Accents.popList(ethernetItem.index), 1) : ethernetState.containsMouse ? Accents.opaque(Accents.popList(ethernetItem.index), 0.1) : "transparent"
 
                 CircularIndicator {
                     anchors.fill: parent
@@ -311,7 +313,9 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                    id: ethernetState
+
+                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Accents.popList(ethernetItem.index)
                     disabled: ethernetItem.loading
 
                     onClicked: {
@@ -329,7 +333,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: ethernetItem.modelData.connected ? "link_off" : "link"
-                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Accents.popList(ethernetItem.index)
 
                     opacity: ethernetItem.loading ? 0 : 1
 

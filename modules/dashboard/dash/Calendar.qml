@@ -214,9 +214,9 @@ CustomMouseArea {
                         text: grid.locale.toString(dayItem.model.day)
                         color: {
                             if (dayItem.model.month !== grid.month)
-                                return Accents.base03;
+                                return Accents.base00;
                             if (dayItem.model.today)
-                                return Accents.base0F;
+                                return Colours.on(Accents.base0F);
                             const dayOfWeek = dayItem.model.date.getDay();
                             if (dayOfWeek === 0 || dayOfWeek === 6)
                                 return Accents.base0E;

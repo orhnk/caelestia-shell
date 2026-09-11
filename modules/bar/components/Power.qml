@@ -17,7 +17,7 @@ Item {
         implicitWidth: implicitHeight
         implicitHeight: icon.implicitHeight + Tokens.padding.small
         radius: Tokens.rounding.full
-        color: Accents.opaque(Accents.base08, 0.5)
+        color: Accents.opaque(Accents.base08, 0.1)
     }
 
     StateLayer {

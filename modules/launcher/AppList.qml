@@ -7,6 +7,7 @@ import qs.components
 import qs.components.containers
 import qs.components.controls
 import qs.services
+import qs.utils
 import qs.modules.launcher.items
 import qs.modules.launcher.services
 
@@ -70,8 +71,8 @@ StyledListView {
     highlightFollowsCurrentItem: false
     highlight: StyledRect {
         radius: Tokens.rounding.large
-        color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
-        opacity: 0.08
+        color: Accents.base0D
+        opacity: 0.12
 
         y: root.currentItem?.y ?? 0
         implicitWidth: root.width
@@ -252,6 +253,7 @@ StyledListView {
 
         AppItem {
             screenState: root.screenState
+            searchText: root.displayText
         }
     }
 

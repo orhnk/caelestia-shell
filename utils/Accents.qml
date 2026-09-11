@@ -31,7 +31,9 @@ Singleton {
     readonly property list<color> topMenuColors: [base08, base09, base0A, base0B]
     readonly property list<color> sessionColors: [base0C, base0B, base0A, base09]
     readonly property list<color> weekColors: [base08, base09, base0A, base0B, base0C]
-    readonly property list<color> djColors: [base08, base09, base0A, base0B, base0C, base0D, base0E, base0F]
+    readonly property list<color> djColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
+    readonly property list<color> spectrumColors: [base0F, base0E, base0D, base0C, base0B, base0A, base09, base08]
+    readonly property list<color> charSpectrum: [base07, base08, base09, base0A, base0B, base0C, base0D, base0E, base0F]
 
     function mix(a: color, b: color, t: real): color {
         return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, 1);
@@ -74,7 +76,7 @@ Singleton {
     }
 
     function toggleBg(index: int, active: bool): color {
-        return opaque(at(toggleColors, index), active ? 1 : 0.5);
+        return opaque(at(toggleColors, index), active ? 1 : 0.1);
     }
 
     function topMenu(index: int, focused: bool): color {
@@ -90,7 +92,29 @@ Singleton {
     }
 
     function dj(index: int): color {
-        return at(djColors, index);
+        const n = djColors.length;
+        const period = 2 * n - 2;
+        const m = ((index % period) + period) % period;
+        return djColors[m < n ? m : period - m];
+    }
+
+    function css(c: color): string {
+        const r = Math.round(c.r * 255).toString(16).padStart(2, "0");
+        const g = Math.round(c.g * 255).toString(16).padStart(2, "0");
+        const b = Math.round(c.b * 255).toString(16).padStart(2, "0");
+        return `#${r}${g}${b}`;
+    }
+
+    function randomCharColor(): color {
+        return charSpectrum[Math.floor(Math.random() * charSpectrum.length)];
+    }
+
+    function spectrum(t: real): color {
+        const cl = isNaN(t) ? 0 : Math.max(0, Math.min(1, t));
+        const segs = spectrumColors.length - 1;
+        const pos = cl * segs;
+        const i = Math.min(Math.floor(pos), segs - 1);
+        return mix(spectrumColors[i], spectrumColors[i + 1], pos - i);
     }
 
     function tempColor(tempC: real): color {

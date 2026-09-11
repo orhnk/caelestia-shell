@@ -78,6 +78,9 @@ Singleton {
         }
 
         colours.hasBase16 = ["base00", "base01", "base02", "base03", "base04", "base05", "base06", "base07", "base08", "base09", "base0A", "base0B", "base0C", "base0D", "base0E", "base0F"].every(k => k in scheme.colours);
+
+        if (!isPreview)
+            root.requestReloadHyprRules();
     }
 
     function pick(base: color, fallback: color): color {
@@ -89,15 +92,21 @@ Singleton {
     }
 
     function reloadHyprRules(): void {
-        let rule, trEnabled;
+        const activeBorder = Accents.css(current.m3base0D).slice(1);
+        const inactiveBorder = Accents.css(current.m3base02).slice(1);
+        let rule, trEnabled, borderActive, borderInactive;
         if (Hypr.usingLua) {
             rule = `eval hl.layer_rule({ match = { namespace = "caelestia-drawers" }, %1 = %2 })`;
             trEnabled = transparency.enabled;
+            borderActive = `eval hl.keyword("general:col.active_border", "rgb(${activeBorder})")`;
+            borderInactive = `eval hl.keyword("general:col.inactive_border", "rgb(${inactiveBorder})")`;
         } else {
             rule = "keyword layerrule %1 %2, match:namespace caelestia-drawers";
             trEnabled = transparency.enabled ? 1 : 0;
+            borderActive = `keyword general:col.active_border rgb(${activeBorder})`;
+            borderInactive = `keyword general:col.inactive_border rgb(${inactiveBorder})`;
         }
-        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);
+        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), borderActive, borderInactive]);
     }
 
     function requestReloadHyprRules(): void {

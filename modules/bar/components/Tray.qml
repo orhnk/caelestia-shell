@@ -6,6 +6,7 @@ import Quickshell.Services.SystemTray
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 StyledRect {
     id: root
@@ -105,7 +106,7 @@ StyledRect {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: Config.bar.tray.background ? Tokens.padding.extraSmall : -Tokens.padding.small
                 text: "expand_less"
-                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+                color: root.expanded ? Accents.base0D : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.medium
                 rotation: root.expanded ? 180 : 0
 

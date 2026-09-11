@@ -22,7 +22,7 @@ StyledRect {
     readonly property int nonAnimHeight: summary.implicitHeight + (root.expanded ? Tokens.spacing.extraSmall * 2 + appName.height + body.height + actions.height + actions.anchors.topMargin : bodyPreview.height) + inner.anchors.margins * 2
     property bool expanded: Config.notifs.openExpanded
 
-    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer) : Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
+    color: root.modelData.urgency === NotificationUrgency.Critical ? Accents.opaque(Accents.base08, 0.15) : Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.large
 
     implicitHeight: inner.implicitHeight
@@ -264,6 +264,7 @@ StyledRect {
                 text: summaryMetrics.elidedText
                 maximumLineCount: 1
                 height: implicitHeight
+                color: root.modelData.urgency === NotificationUrgency.Critical ? Accents.base08 : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
 
                 states: State {
                     name: "expanded"
@@ -359,7 +360,7 @@ StyledRect {
 
                 StateLayer {
                     radius: Tokens.rounding.full
-                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Accents.base08 : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                     onClicked: root.expanded = !root.expanded
                 }
 
@@ -393,6 +394,7 @@ StyledRect {
                 animate: true
                 textFormat: root.bodyTextFormat
                 text: bodyPreviewMetrics.elidedText
+                linkColor: Accents.base0D
                 color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
 
@@ -425,6 +427,7 @@ StyledRect {
                 animate: true
                 textFormat: root.bodyTextFormat
                 text: root.modelData.body
+                linkColor: Accents.base0D
                 color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere

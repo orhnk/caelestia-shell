@@ -12,6 +12,29 @@ Item {
 
     required property DesktopEntry modelData
     required property ScreenState screenState
+    required property string searchText
+
+    readonly property string highlightedName: {
+        const name = root.modelData?.name ?? "";
+        const q = root.searchText.trim().toLowerCase();
+        if (!q)
+            return Strings.escapeHtml(name);
+
+        const hex = Accents.css(Accents.base0D);
+        const lower = name.toLowerCase();
+        let out = "";
+        let pos = 0;
+        for (const word of q.split(/\s+/)) {
+            if (!word)
+                continue;
+            const i = lower.indexOf(word, pos);
+            if (i < 0)
+                continue;
+            out += `${Strings.escapeHtml(name.slice(pos, i))}<font color="${hex}"><b>${Strings.escapeHtml(name.slice(i, i + word.length))}</b></font>`;
+            pos = i + word.length;
+        }
+        return out + Strings.escapeHtml(name.slice(pos));
+    }
 
     implicitHeight: Tokens.sizes.launcher.itemHeight
 
@@ -53,7 +76,8 @@ Item {
             StyledText {
                 id: name
 
-                text: root.modelData?.name ?? ""
+                text: root.highlightedName
+                textFormat: Text.RichText
                 font: Tokens.font.body.medium
             }
 

@@ -7,6 +7,7 @@ import Caelestia.Config
 import Caelestia.I18n
 import qs.components
 import qs.services
+import qs.utils
 import qs.modules.lock
 
 Item {
@@ -69,7 +70,7 @@ Item {
         text: nonAnimPlaceholder.text
 
         animate: true
-        color: root.pam.passwd.active ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
+        color: root.pam.passwd.active ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Accents.base0D
         font: Tokens.font.body.builders.medium.scale(root.centerScale).width(110).build()
 
         opacity: root.buffer ? 0 : 1
@@ -125,6 +126,7 @@ Item {
 
         required property int index
         property real nonAnimWidthScale: 1
+        readonly property color charColor: Accents.randomCharColor()
 
         implicitHeight: charList.implicitHeight
 
@@ -229,7 +231,7 @@ Item {
             anchors.centerIn: parent
             implicitSize: charList.implicitHeight * 1.5
             shape: root.shapeQueue[char.index % root.shapeQueue.length] ?? MaterialShape.Circle
-            color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+            color: char.charColor
 
             opacity: root.showPassword ? 0 : 1
 
