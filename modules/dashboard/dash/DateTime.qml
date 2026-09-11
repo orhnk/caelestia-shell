@@ -29,7 +29,7 @@ Item {
             TextMetrics {
                 id: digitMetrics
 
-                font: Tokens.font.clock.size(48).weight(Font.Black).build()
+                font: Tokens.font.clock.size(32).weight(Font.Black).build()
                 text: "00"
             }
 
@@ -44,7 +44,7 @@ Item {
             StyledText {
                 text: "⋮"
                 color: Accents.base0F
-                font: Tokens.font.clock.size(48 * 0.9).weight(Font.Black).build()
+                font: Tokens.font.clock.size(32 * 0.9).weight(Font.Black).build()
             }
 
             StyledText {
@@ -66,7 +66,7 @@ Item {
             sourceComponent: StyledText {
                 text: Time.amPmStr
                 color: Accents.base0F
-                font: Tokens.font.clock.size(30).weight(Font.Black).build()
+                font: Tokens.font.clock.size(20).weight(Font.Black).build()
             }
         }
     }
