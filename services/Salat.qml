@@ -20,6 +20,9 @@ Singleton {
     property string hijri
     property bool isFriday: false
     property string nextIn
+    property int nextHours
+    property int nextMins
+    property bool nextNow
     property string remindedKey
 
     readonly property list<string> names: ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
@@ -81,6 +84,9 @@ Singleton {
             left += 24 * 60;
         const h = Math.floor(left / 60);
         const m = left % 60;
+        nextHours = h;
+        nextMins = m;
+        nextNow = left <= 0;
         if (left <= 0)
             nextIn = Tr.tr("now");
         else if (h > 0)

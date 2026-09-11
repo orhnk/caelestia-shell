@@ -24,10 +24,42 @@ Item {
         StyledText {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            text: Salat.nextIndex >= 0 ? Salat.nextIn : Tr.tr("Prayer times")
+            visible: Salat.nextIndex < 0 || Salat.nextNow
+            text: Salat.nextIndex < 0 ? Tr.tr("Prayer times") : Salat.nextIn
             color: Accents.base0D
             font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
             elide: Text.ElideRight
+        }
+
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            visible: Salat.nextIndex >= 0 && !Salat.nextNow
+            spacing: 0
+
+            StyledText {
+                text: Salat.nextHours
+                color: Accents.base0D
+                font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
+            }
+
+            StyledText {
+                text: ":"
+                color: Accents.base0D
+                opacity: Time.seconds % 2 === 0 ? 1 : 0.3
+                font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
+
+                Behavior on opacity {
+                    Anim {
+                        type: Anim.DefaultEffects
+                    }
+                }
+            }
+
+            StyledText {
+                text: String(Salat.nextMins).padStart(2, "0")
+                color: Accents.base0D
+                font: Tokens.font.headline.builders.small.weight(Font.DemiBold).build()
+            }
         }
 
         StyledText {
