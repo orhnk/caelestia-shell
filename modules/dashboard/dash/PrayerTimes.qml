@@ -39,7 +39,7 @@ Item {
             TextMetrics {
                 id: digitMetrics
 
-                font: Tokens.font.clock.size(36).weight(Font.DemiBold).build()
+                font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
                 text: "00"
             }
 
@@ -54,14 +54,7 @@ Item {
             StyledText {
                 text: ":"
                 color: Accents.base0D
-                opacity: Time.seconds % 2 === 0 ? 1 : 0.3
                 font: digitMetrics.font
-
-                Behavior on opacity {
-                    Anim {
-                        type: Anim.DefaultEffects
-                    }
-                }
             }
 
             StyledText {

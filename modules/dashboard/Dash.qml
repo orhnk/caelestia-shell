@@ -45,15 +45,32 @@ GridLayout {
 
     Rect {
         Layout.row: 1
-        Layout.preferredWidth: prayerTimes.implicitWidth
+        Layout.preferredWidth: Math.max(dateTime.implicitWidth, prayerTimes.implicitWidth)
         Layout.fillHeight: true
+        implicitHeight: clockColumn.implicitHeight + Tokens.padding.small * 2
 
         radius: Tokens.rounding.large
 
-        PrayerTimes {
-            id: prayerTimes
+        ColumnLayout {
+            id: clockColumn
 
             anchors.fill: parent
+            anchors.margins: Tokens.padding.small
+            spacing: Tokens.spacing.small
+
+            DateTime {
+                id: dateTime
+
+                Layout.fillWidth: true
+                Layout.preferredHeight: dateTime.implicitHeight
+            }
+
+            PrayerTimes {
+                id: prayerTimes
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
         }
     }
 

@@ -10,40 +10,47 @@ import qs.utils
 Item {
     id: root
 
-    implicitWidth: Tokens.sizes.dashboard.dateTimeWidth
+    implicitWidth: layout.implicitWidth
+    implicitHeight: layout.implicitHeight
 
-    ColumnLayout {
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        spacing: 0
+    RowLayout {
+        id: layout
+
+        anchors.centerIn: parent
+        spacing: Tokens.spacing.extraSmall
+
+        TextMetrics {
+            id: digitMetrics
+
+            font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
+            text: "00"
+        }
 
         StyledText {
-            Layout.bottomMargin: -(font.pointSize * 0.4)
-            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: digitMetrics.width
+            horizontalAlignment: Text.AlignHCenter
             text: Time.hourStr
             color: Accents.base0A
-            font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
+            font: digitMetrics.font
         }
 
         StyledText {
-            Layout.alignment: Qt.AlignHCenter
-            text: "•••"
+            text: ":"
             color: Accents.base0F
-            font: Tokens.font.clock.size(24 * 0.9).build()
+            font: digitMetrics.font
         }
 
         StyledText {
-            Layout.topMargin: -(font.pointSize * 0.4)
-            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: digitMetrics.width
+            horizontalAlignment: Text.AlignHCenter
             text: Time.minuteStr
             color: Accents.base0A
-            font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
+            font: digitMetrics.font
         }
 
         Loader {
             asynchronous: true
-            Layout.alignment: Qt.AlignHCenter
+            Layout.alignment: Qt.AlignVCenter
 
             active: GlobalConfig.services.useTwelveHourClock
             visible: active
