@@ -44,7 +44,7 @@ StyledRect {
     implicitHeight: layout.implicitHeight + Tokens.padding.extraLargeIncreased
 
     radius: Tokens.rounding.large
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     ColumnLayout {
         id: layout
@@ -120,7 +120,6 @@ StyledRect {
                     delegate: Toggle {
                         accentIndex: 3
                         icon: "settings"
-                        inactiveOnColour: Colours.palette.m3onSurfaceVariant
                         isToggle: false
                         onClicked: {
                             root.screenState.utilities = false;
@@ -154,7 +153,6 @@ StyledRect {
                         checked: VPN.connected && VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
                         enabled: !VPN.connecting && !VPN.disconnecting
                         isToggle: VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
-                        inactiveOnColour: Colours.palette.m3onSurfaceVariant
                         onClicked: VPN.toggle()
                     }
                 }
@@ -167,7 +165,7 @@ StyledRect {
         readonly property color accent: Accents.toggle(accentIndex)
         activeColour: accent
         activeOnColour: Colours.on(accent)
-        inactiveColour: Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+        inactiveColour: Accents.toggleBg(accentIndex, checked)
         inactiveOnColour: accent
         fillWidth: true
         isToggle: true

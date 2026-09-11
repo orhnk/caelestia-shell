@@ -96,7 +96,7 @@ ColumnLayout {
                     date.setMonth(date.getMonth() - 1); // Woe (months start from 0)
                     return Tr.tr("Recording at %1").arg(Qt.formatDateTime(date, Qt.locale()));
                 }
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 elide: Text.ElideRight
             }
 
@@ -104,7 +104,7 @@ ColumnLayout {
                 icon: "play_arrow"
                 type: IconButton.Text
                 label.color: Accents.popList(recording.index)
-                stateLayer.color: Accents.popList(recording.index)
+                stateLayer.color: Accents.opaque(Accents.popList(recording.index), 0.5)
                 onClicked: {
                     root.screenState.utilities = false;
                     root.screenState.sidebar = false;
@@ -115,6 +115,8 @@ ColumnLayout {
             IconButton {
                 icon: "folder"
                 type: IconButton.Text
+                label.color: Accents.popList(recording.index)
+                stateLayer.color: Accents.opaque(Accents.popList(recording.index), 0.5)
                 onClicked: {
                     root.screenState.utilities = false;
                     root.screenState.sidebar = false;
@@ -125,8 +127,8 @@ ColumnLayout {
             IconButton {
                 icon: "delete_forever"
                 type: IconButton.Text
-                label.color: Colours.palette.m3error
-                stateLayer.color: Colours.palette.m3error
+                label.color: Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
+                stateLayer.color: Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
                 onClicked: root.props.recordingConfirmDelete = recording.modelData.path
             }
         }
@@ -172,7 +174,7 @@ ColumnLayout {
                 MaterialIcon {
                     Layout.alignment: Qt.AlignHCenter
                     text: "scan_delete"
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     fontStyle: Tokens.font.icon.extraLarge
 
                     opacity: root.props.recordingListExpanded ? 1 : 0
@@ -200,7 +202,7 @@ ColumnLayout {
                     MaterialIcon {
                         Layout.alignment: Qt.AlignHCenter
                         text: "scan_delete"
-                        color: Colours.palette.m3outline
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
 
                         opacity: !root.props.recordingListExpanded ? 1 : 0
                         scale: !root.props.recordingListExpanded ? 1 : 0
@@ -223,7 +225,7 @@ ColumnLayout {
 
                     StyledText {
                         text: Tr.tr("No recordings found")
-                        color: Colours.palette.m3outline
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     }
                 }
             }

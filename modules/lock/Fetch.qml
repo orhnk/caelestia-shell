@@ -19,7 +19,7 @@ StyledRect {
 
     implicitHeight: layout.implicitHeight + layout.anchors.topMargin + layout.anchors.margins
     radius: Tokens.rounding.medium
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     ColumnLayout {
         id: layout
@@ -40,7 +40,7 @@ StyledRect {
                 implicitWidth: prompt.implicitWidth + Tokens.padding.medium * 2
                 implicitHeight: prompt.implicitHeight + Tokens.padding.small * 2
 
-                color: Colours.palette.m3primary
+                color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
                 radius: Tokens.rounding.medium
 
                 MonoText {
@@ -48,7 +48,7 @@ StyledRect {
 
                     anchors.centerIn: parent
                     text: ">"
-                    color: Colours.palette.m3onPrimary
+                    color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 }
             }
 
@@ -172,7 +172,7 @@ StyledRect {
         ColouredIcon {
             source: SysInfo.osLogo
             implicitSize: height
-            colour: Colours.palette.m3primary
+            colour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
             layer.enabled: Config.lock.recolourLogo
         }
     }

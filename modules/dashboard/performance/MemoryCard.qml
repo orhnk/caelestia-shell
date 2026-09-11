@@ -13,7 +13,7 @@ StyledRect {
 
     readonly property color accent: Accents.base0C
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.medium
 
     implicitWidth: layout.implicitWidth + Tokens.padding.extraLargeIncreased * 2
@@ -36,7 +36,7 @@ StyledRect {
             MaterialIcon {
                 text: "memory_alt"
                 fill: 1
-                color: root.accent
+                color: Accents.base07
                 fontStyle: Tokens.font.icon.builders.medium.weight(Font.DemiBold).build() // DemiBold to fix fill issues
             }
 
@@ -78,7 +78,7 @@ StyledRect {
                     Layout.alignment: Qt.AlignHCenter
                     text: Tr.trCtx("Used", "memory used")
                     font: Tokens.font.body.small
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 }
             }
         }

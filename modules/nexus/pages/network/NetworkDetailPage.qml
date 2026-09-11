@@ -116,8 +116,8 @@ PageBase {
                 fillWidth: true
                 shapeMorph: root.isActive
                 isRound: true
-                inactiveColour: Colours.palette.m3errorContainer
-                inactiveOnColour: Colours.palette.m3onErrorContainer
+                inactiveColour: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
 
                 implicitWidth: forgetLayout.implicitWidth + Tokens.padding.extraLarge * 2
                 implicitHeight: forgetLayout.implicitHeight + Tokens.padding.medium * 2
@@ -155,8 +155,8 @@ PageBase {
                 fillWidth: true
                 shapeMorph: true
                 isRound: true
-                inactiveColour: Colours.palette.m3primaryContainer
-                inactiveOnColour: Colours.palette.m3onPrimaryContainer
+                inactiveColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
 
                 implicitWidth: disconnectLayout.implicitWidth + Tokens.padding.extraLarge * 2
                 implicitHeight: disconnectLayout.implicitHeight + Tokens.padding.medium * 2
@@ -440,8 +440,8 @@ PageBase {
 
                 shapeMorph: true
                 isRound: true
-                inactiveColour: Colours.palette.m3primary
-                inactiveOnColour: Colours.palette.m3onPrimary
+                inactiveColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 stateLayer.disabled: !root.ipLoaded || root.savingIp
 
                 implicitWidth: applyMetrics.width + Tokens.padding.extraLarge * 2

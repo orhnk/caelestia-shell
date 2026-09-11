@@ -11,7 +11,7 @@ Text {
 
     renderType: Text.NativeRendering
     textFormat: Text.PlainText
-    color: Colours.palette.m3onSurface
+    color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
     font: Tokens.font.body.small
 
     Behavior on color {

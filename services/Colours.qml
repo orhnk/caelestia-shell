@@ -76,6 +76,12 @@ Singleton {
             if (colours.hasOwnProperty(propName))
                 colours[propName] = `#${colour}`;
         }
+
+        colours.hasBase16 = ["base00", "base01", "base02", "base03", "base04", "base05", "base06", "base07", "base08", "base09", "base0A", "base0B", "base0C", "base0D", "base0E", "base0F"].every(k => k in scheme.colours);
+    }
+
+    function pick(base: color, fallback: color): color {
+        return palette.hasBase16 ? base : fallback;
     }
 
     function setMode(mode: string): void {
@@ -167,6 +173,22 @@ Singleton {
     }
 
     component M3TPalette: QtObject {
+        readonly property color m3base00: root.layer(root.palette.m3base00, 0)
+        readonly property color m3base01: root.layer(root.palette.m3base01, 0)
+        readonly property color m3base02: root.layer(root.palette.m3base02)
+        readonly property color m3base03: root.layer(root.palette.m3base03)
+        readonly property color m3base04: root.layer(root.palette.m3base04)
+        readonly property color m3base05: root.layer(root.palette.m3base05)
+        readonly property color m3base06: root.layer(root.palette.m3base06)
+        readonly property color m3base07: root.layer(root.palette.m3base07)
+        readonly property color m3base08: root.layer(root.palette.m3base08)
+        readonly property color m3base09: root.layer(root.palette.m3base09)
+        readonly property color m3base0A: root.layer(root.palette.m3base0A)
+        readonly property color m3base0B: root.layer(root.palette.m3base0B)
+        readonly property color m3base0C: root.layer(root.palette.m3base0C)
+        readonly property color m3base0D: root.layer(root.palette.m3base0D)
+        readonly property color m3base0E: root.layer(root.palette.m3base0E)
+        readonly property color m3base0F: root.layer(root.palette.m3base0F)
         readonly property color m3primary_paletteKeyColor: root.layer(root.palette.m3primary_paletteKeyColor)
         readonly property color m3secondary_paletteKeyColor: root.layer(root.palette.m3secondary_paletteKeyColor)
         readonly property color m3tertiary_paletteKeyColor: root.layer(root.palette.m3tertiary_paletteKeyColor)
@@ -228,6 +250,7 @@ Singleton {
     }
 
     component M3Palette: QtObject {
+        property bool hasBase16: false
         property color m3primary_paletteKeyColor: "#a8627b"
         property color m3secondary_paletteKeyColor: "#8e6f78"
         property color m3tertiary_paletteKeyColor: "#986e4c"

@@ -81,7 +81,7 @@ ColumnLayout {
 
             Layout.preferredWidth: timeMetrics.width
             text: root.lengthStr(Players.active?.position ?? -1)
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             font: timeMetrics.font
             horizontalAlignment: Text.AlignHCenter
         }
@@ -115,7 +115,7 @@ ColumnLayout {
         StyledText {
             Layout.preferredWidth: timeMetrics.width
             text: root.hasUnknownLength ? "--:--" : root.lengthStr(Players.active?.length ?? -1)
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             font: timeMetrics.font
             horizontalAlignment: Text.AlignHCenter
         }

@@ -57,7 +57,7 @@ ColumnLayout {
                 return Tr.trN("%n device available (%1 connected)", "%n devices available (%1 connected)", devices.length).arg(connected);
             return Tr.trN("%n device available", "%n devices available", devices.length);
         }
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         font: Tokens.font.body.small
     }
 
@@ -97,6 +97,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: Icons.getBluetoothIcon(device.modelData.icon)
+                color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.popList(device.index) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant) // qmllint disable unresolved-type
             }
 
             StyledText {
@@ -105,12 +106,13 @@ ColumnLayout {
                 Layout.fillWidth: true
                 text: device.modelData.name
                 elide: Text.ElideRight
+                color: device.modelData.state === BluetoothDeviceState.Connected ? Accents.popList(device.index) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) // qmllint disable unresolved-type
             }
 
             MaterialIcon {
                 visible: device.modelData.state === BluetoothDeviceState.Connected  // qmllint disable unresolved-type
                 text: device.modelData.batteryAvailable ? Icons.getBatteryIcon(device.modelData.battery) : "battery_alert"
-                color: device.modelData.batteryAvailable && device.modelData.battery < 0.2 ? Colours.palette.m3error : Colours.palette.m3onSurfaceVariant
+                color: device.modelData.batteryAvailable && device.modelData.battery < 0.2 ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             StyledRect {
@@ -128,7 +130,7 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.palette.m3onSurface // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) // qmllint disable unresolved-type
                     disabled: device.loading
                     onClicked: device.modelData.connected = !device.modelData.connected
                 }
@@ -139,7 +141,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: device.modelData.connected ? "link_off" : "link"
-                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.palette.m3onSurface // qmllint disable unresolved-type
+                    color: device.modelData.state === BluetoothDeviceState.Connected ? Colours.on(Accents.popList(device.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) // qmllint disable unresolved-type
 
                     opacity: device.loading ? 0 : 1
 
@@ -176,8 +178,8 @@ ColumnLayout {
     IconTextButton {
         Layout.fillWidth: true
         Layout.topMargin: Tokens.spacing.medium
-        inactiveColour: Colours.palette.m3primaryContainer
-        inactiveOnColour: Colours.palette.m3onPrimaryContainer
+        inactiveColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+        inactiveOnColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
         verticalPadding: Tokens.padding.extraSmall
         text: Tr.tr("Open settings")
         icon: "settings"

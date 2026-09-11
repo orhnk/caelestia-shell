@@ -107,8 +107,8 @@ Item {
         IconTextButton {
             Layout.fillWidth: true
             Layout.topMargin: Tokens.spacing.medium
-            inactiveColour: Colours.palette.m3primaryContainer
-            inactiveOnColour: Colours.palette.m3onPrimaryContainer
+            inactiveColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+            inactiveOnColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
             verticalPadding: Tokens.padding.extraSmall
             text: Tr.tr("Open settings")
             icon: "settings"

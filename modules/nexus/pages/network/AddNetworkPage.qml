@@ -77,7 +77,7 @@ PageBase {
             Layout.fillWidth: true
             Layout.leftMargin: Tokens.padding.extraSmall
             text: Tr.tr("Enter the details below to manually connect to a network.")
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             font: Tokens.font.body.small
             wrapMode: Text.WordWrap
         }
@@ -207,8 +207,8 @@ PageBase {
 
                 shapeMorph: true
                 isRound: true
-                inactiveColour: Colours.palette.m3primary
-                inactiveOnColour: Colours.palette.m3onPrimary
+                inactiveColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 stateLayer.disabled: root.connecting || ssidField.text.trim().length === 0
 
                 implicitWidth: connectMetrics.width + Tokens.padding.extraLarge * 2

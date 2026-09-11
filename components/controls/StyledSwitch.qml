@@ -20,8 +20,8 @@ Switch {
         radius: Tokens.rounding.full
         color: {
             if (root.disabled)
-                return root.checked ? Qt.alpha(Colours.palette.m3onSurface, 0.12) : Qt.alpha(Colours.palette.m3surfaceContainerHighest, 0.38);
-            return root.checked ? Colours.palette.m3primary : Colours.layer(Colours.palette.m3surfaceContainerHighest, root.cLayer);
+                return root.checked ? Qt.alpha(Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface), 0.12) : Qt.alpha(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 0.38);
+            return root.checked ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), root.cLayer);
         }
 
         implicitWidth: implicitHeight * 1.7
@@ -33,8 +33,8 @@ Switch {
             radius: Tokens.rounding.full
             color: {
                 if (root.disabled)
-                    return root.checked ? Colours.palette.m3surface : Qt.alpha(Colours.palette.m3onSurface, 0.12);
-                return root.checked ? Colours.palette.m3onPrimary : Colours.layer(Colours.palette.m3outline, root.cLayer + 1);
+                    return root.checked ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface) : Qt.alpha(Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface), 0.12);
+                return root.checked ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary) : Colours.layer(Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline), root.cLayer + 1);
             }
 
             x: root.checked ? parent.implicitWidth - nonAnimWidth - Tokens.padding.extraSmall / 2 : Tokens.padding.extraSmall / 2
@@ -46,7 +46,7 @@ Switch {
                 anchors.fill: parent
                 radius: parent.radius
 
-                color: root.checked ? Colours.palette.m3primary : Colours.palette.m3onSurface
+                color: root.checked ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                 opacity: root.pressed ? 0.1 : root.hovered ? 0.08 : 0
 
                 Behavior on opacity {
@@ -104,8 +104,8 @@ Switch {
                     strokeWidth: root.Tokens.font.body.large.pointSize * 0.15
                     strokeColor: {
                         if (root.disabled)
-                            return root.checked ? Colours.palette.m3outline : Colours.palette.m3surfaceContainer;
-                        return root.checked ? Colours.palette.m3primary : Colours.palette.m3surfaceContainerHighest;
+                            return root.checked ? Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer);
+                        return root.checked ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest);
                     }
                     fillColor: "transparent"
                     capStyle: root.Tokens.rounding.scale === 0 ? ShapePath.SquareCap : ShapePath.RoundCap

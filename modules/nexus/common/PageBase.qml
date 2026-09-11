@@ -43,8 +43,8 @@ ColumnLayout {
                     font: Tokens.font.icon.medium
                     type: IconButton.Tonal
                     isRound: true
-                    inactiveColour: Colours.tPalette.m3surfaceContainerHigh
-                    inactiveOnColour: Colours.palette.m3onSurfaceVariant
+                    inactiveColour: Colours.pick(Colours.tPalette.m3base03, Colours.tPalette.m3surfaceContainerHigh)
+                    inactiveOnColour: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     onClicked: root.nState.closeSubPage()
                 }
             }

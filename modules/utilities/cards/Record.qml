@@ -20,7 +20,7 @@ StyledRect {
     implicitHeight: layout.implicitHeight + layout.anchors.margins * 2
 
     radius: Tokens.rounding.large
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     ColumnLayout {
         id: layout
@@ -42,7 +42,7 @@ StyledRect {
                 }
 
                 radius: Tokens.rounding.full
-                color: Recorder.running ? Accents.base0A : Colours.palette.m3secondaryContainer
+                color: Accents.base0A
 
                 MaterialIcon {
                     id: icon
@@ -50,7 +50,7 @@ StyledRect {
                     anchors.centerIn: parent
                     anchors.verticalCenterOffset: 1
                     text: "screen_record"
-                    color: Recorder.running ? Colours.on(Accents.base0A) : Colours.palette.m3onSecondaryContainer
+                    color: Colours.on(Accents.base0A)
                     fontStyle: Tokens.font.icon.large
                 }
             }
@@ -69,7 +69,7 @@ StyledRect {
                 StyledText {
                     Layout.fillWidth: true
                     text: Recorder.paused ? Tr.trCtx("Paused", "recorder state") : Recorder.running ? Tr.trCtx("Running...", "recorder state") : Tr.trCtx("Ready", "recorder state")
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     font: Tokens.font.body.small
                     elide: Text.ElideRight
                     animate: true
@@ -184,7 +184,7 @@ StyledRect {
 
             StyledRect {
                 radius: Tokens.rounding.full
-                color: Recorder.paused ? Colours.palette.m3tertiary : Colours.palette.m3error
+                color: Recorder.paused ? Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary) : Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
 
                 implicitWidth: recText.implicitWidth + Tokens.padding.medium * 2
                 implicitHeight: recText.implicitHeight + Tokens.padding.large
@@ -195,7 +195,7 @@ StyledRect {
                     anchors.centerIn: parent
                     animate: true
                     text: Recorder.paused ? Tr.trCtx("PAUSED", "recording status") : Tr.trCtx("REC", "recording status")
-                    color: Recorder.paused ? Colours.palette.m3onTertiary : Colours.palette.m3onError
+                    color: Recorder.paused ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary) : Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError)
                     font: Tokens.font.mono.small
                 }
 
@@ -275,8 +275,8 @@ StyledRect {
                     shapeMorph: true
                     isRound: true
                     icon: "stop"
-                    inactiveColour: Colours.palette.m3error
-                    inactiveOnColour: Colours.palette.m3onError
+                    inactiveColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
+                    inactiveOnColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError)
                     font: Tokens.font.icon.medium
                     onClicked: Recorder.stop()
 

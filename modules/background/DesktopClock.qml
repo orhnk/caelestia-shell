@@ -21,9 +21,9 @@ Item {
     readonly property bool blurEnabled: bgEnabled && Config.background.desktopClock.background.blur && !GameMode.enabled
     readonly property bool invertColors: Config.background.desktopClock.invertColors
     readonly property bool useLightSet: Colours.light ? !invertColors : invertColors
-    readonly property color safePrimary: useLightSet ? Colours.palette.m3primaryContainer : Colours.palette.m3primary
-    readonly property color safeSecondary: useLightSet ? Colours.palette.m3secondaryContainer : Colours.palette.m3secondary
-    readonly property color safeTertiary: useLightSet ? Colours.palette.m3tertiaryContainer : Colours.palette.m3tertiary
+    readonly property color safePrimary: useLightSet ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer) : Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+    readonly property color safeSecondary: useLightSet ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
+    readonly property color safeTertiary: useLightSet ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3tertiaryContainer) : Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary)
 
     implicitWidth: layout.implicitWidth + (Tokens.padding.large * 4 * root.clockScale)
     implicitHeight: layout.implicitHeight + (Tokens.padding.extraLargeIncreased * root.clockScale)
@@ -36,7 +36,7 @@ Item {
         layer.enabled: Config.background.desktopClock.shadow.enabled
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: Colours.palette.m3shadow
+            shadowColor: Colours.pick(Colours.palette.m3base00, Colours.palette.m3shadow)
             shadowOpacity: Config.background.desktopClock.shadow.opacity
             shadowBlur: Config.background.desktopClock.shadow.blur
         }
@@ -67,7 +67,7 @@ Item {
             anchors.fill: parent
             radius: Tokens.rounding.extraLarge * root.clockScale
             opacity: Config.background.desktopClock.background.opacity
-            color: Colours.palette.m3surface
+            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface)
 
             layer.enabled: root.blurEnabled
         }

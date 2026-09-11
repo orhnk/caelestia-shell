@@ -91,7 +91,7 @@ Column {
             implicitWidth: child.implicitWidth + Tokens.padding.medium * 2
             implicitHeight: child.implicitHeight + Tokens.padding.large
 
-            color: Colours.palette.m3error
+            color: Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
             radius: Tokens.rounding.large
 
             Column {
@@ -108,14 +108,14 @@ Column {
                         anchors.verticalCenterOffset: -font.pointSize / 10
 
                         text: "warning"
-                        color: Colours.palette.m3onError
+                        color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError)
                     }
 
                     StyledText {
                         anchors.verticalCenter: parent.verticalCenter
                         // TRANSLATORS: charger or thermal warning: the battery cannot draw full power
                         text: Tr.tr("Performance degraded")
-                        color: Colours.palette.m3onError
+                        color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError)
                         font: Tokens.font.title.small
                     }
 
@@ -124,7 +124,7 @@ Column {
                         anchors.verticalCenterOffset: -font.pointSize / 10
 
                         text: "warning"
-                        color: Colours.palette.m3onError
+                        color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError)
                     }
                 }
 
@@ -132,7 +132,7 @@ Column {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     text: root.perfDegradationToString(PowerProfiles.degradationReason)
-                    color: Colours.palette.m3onError
+                    color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError)
                 }
             }
         }
@@ -155,7 +155,7 @@ Column {
         implicitWidth: saver.implicitHeight + balance.implicitHeight + perf.implicitHeight + Tokens.padding.medium * 2 + Tokens.spacing.largeIncreased * 2
         implicitHeight: Math.max(saver.implicitHeight, balance.implicitHeight, perf.implicitHeight) + Tokens.padding.small
 
-        color: Colours.tPalette.m3surfaceContainer
+        color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
         radius: Tokens.rounding.full
 
         StyledRect {
@@ -246,7 +246,7 @@ Column {
 
         StateLayer {
             radius: Tokens.rounding.full
-            color: profiles.current === parent.icon ? Colours.on(indicator.accent) : Colours.palette.m3onSurface
+            color: profiles.current === parent.icon ? Colours.on(indicator.accent) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
             onClicked: PowerProfiles.profile = parent.profile
         }
 
@@ -257,7 +257,7 @@ Column {
 
             text: parent.icon
             fontStyle: Tokens.font.icon.large
-            color: profiles.current === text ? Colours.on(indicator.accent) : Colours.palette.m3onSurfaceVariant
+            color: profiles.current === text ? Colours.on(indicator.accent) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             fill: profiles.current === text ? 1 : 0
 
             Behavior on fill {

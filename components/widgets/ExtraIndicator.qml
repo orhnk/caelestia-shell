@@ -10,7 +10,7 @@ StyledRect {
     anchors.right: parent.right
     anchors.margins: Tokens.padding.medium
 
-    color: Colours.palette.m3tertiary
+    color: Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary)
     radius: Tokens.rounding.medium
 
     implicitWidth: count.implicitWidth + Tokens.padding.medium * 2
@@ -33,7 +33,7 @@ StyledRect {
         anchors.centerIn: parent
         animate: parent.opacity > 0
         text: `+${parent.extra}`
-        color: Colours.palette.m3onTertiary
+        color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary)
     }
 
     Behavior on opacity {

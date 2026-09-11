@@ -34,7 +34,7 @@ Item {
             Layout.fillWidth: true
             implicitHeight: width
             radius: Tokens.rounding.largeIncreased
-            color: Colours.tPalette.m3surfaceContainer
+            color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
             Loader {
                 anchors.centerIn: parent
@@ -46,7 +46,7 @@ Item {
                     implicitWidth: loadingIndicator.implicitSize + Tokens.padding.large * 2
                     implicitHeight: loadingIndicator.implicitSize + Tokens.padding.large * 2
 
-                    color: Colours.palette.m3primaryContainer
+                    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
                     radius: Tokens.rounding.full
 
                     LoadingIndicator {
@@ -91,7 +91,7 @@ Item {
 
             Layout.bottomMargin: Tokens.padding.small
             Layout.fillWidth: true
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             font: Tokens.font.label.builders.small.weight(Font.Medium).build()
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight

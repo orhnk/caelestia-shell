@@ -15,7 +15,7 @@ StyledRect {
     readonly property color accent: Accents.base0E
     readonly property real percentage: Storage.primaryDisk?.perc ?? 0
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.extraExtraLarge
 
     implicitWidth: layout.implicitWidth + layout.anchors.margins * 2
@@ -60,7 +60,7 @@ StyledRect {
                     MaterialIcon {
                         Layout.alignment: Qt.AlignHCenter
                         text: "hard_drive"
-                        color: root.accent
+                        color: Accents.base07
                         fontStyle: Tokens.font.icon.medium
                     }
 
@@ -75,7 +75,7 @@ StyledRect {
                         Layout.alignment: Qt.AlignHCenter
                         text: Tr.trCtx("Used", "storage used")
                         font: Tokens.font.body.small
-                        color: Colours.palette.m3onSurfaceVariant
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     }
                 }
             }

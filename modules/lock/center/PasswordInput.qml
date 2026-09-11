@@ -21,7 +21,7 @@ StyledRect {
     }
     implicitHeight: input.implicitHeight + Tokens.padding.small
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.full
 
     focus: true
@@ -88,7 +88,7 @@ StyledRect {
                             return "face";
                         return "lock";
                     }
-                    color: !root.lock.pam.howdy.canAttempt && root.lock.pam.fprint.tries >= GlobalConfig.lock.maxFprintTries ? Colours.palette.m3error : Colours.palette.m3onSurfaceVariant
+                    color: !root.lock.pam.howdy.canAttempt && root.lock.pam.fprint.tries >= GlobalConfig.lock.maxFprintTries ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     fontStyle: Tokens.font.icon.builders.medium.scale(root.centerScale).build()
                     fill: text === "face" || text === "visibility"
 
@@ -142,7 +142,7 @@ StyledRect {
             MaterialShape {
                 anchors.fill: parent
 
-                color: root.lock.pam.buffer ? Colours.palette.m3primary : Colours.layer(Colours.palette.m3surfaceContainerHigh, 2)
+                color: root.lock.pam.buffer ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 2)
                 shape: root.lock.pam.buffer ? MaterialShape.Arrow : MaterialShape.Circle
                 scale: !root.lock.pam.buffer ? 1 : mouse.pressed ? 0.6 : mouse.containsMouse ? 0.8 : 0.7
                 rotation: 90
@@ -172,7 +172,7 @@ StyledRect {
 
                 anchors.centerIn: parent
                 text: "arrow_forward"
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.builders.medium.scale(root.centerScale * 1.2).build()
                 opacity: root.lock.pam.buffer ? 0 : 1
 

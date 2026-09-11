@@ -22,7 +22,7 @@ StyledRect {
     readonly property int nonAnimHeight: summary.implicitHeight + (root.expanded ? Tokens.spacing.extraSmall * 2 + appName.height + body.height + actions.height + actions.anchors.topMargin : bodyPreview.height) + inner.anchors.margins * 2
     property bool expanded: Config.notifs.openExpanded
 
-    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondaryContainer : Colours.tPalette.m3surfaceContainer
+    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer) : Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.large
 
     implicitHeight: inner.implicitHeight
@@ -117,7 +117,7 @@ StyledRect {
 
                 sourceComponent: StyledClippingRect {
                     radius: Tokens.rounding.full
-                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.modelData.urgency === NotificationUrgency.Low ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : Colours.palette.m3secondaryContainer
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : root.modelData.urgency === NotificationUrgency.Low ? Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 2) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
                     implicitWidth: TokenConfig.sizes.notifs.image
                     implicitHeight: TokenConfig.sizes.notifs.image
 
@@ -148,7 +148,7 @@ StyledRect {
 
                 sourceComponent: StyledRect {
                     radius: Tokens.rounding.full
-                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.modelData.urgency === NotificationUrgency.Low ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : Colours.palette.m3secondaryContainer
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : root.modelData.urgency === NotificationUrgency.Low ? Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 2) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
                     implicitWidth: root.hasImage ? Tokens.sizes.notifs.badge : TokenConfig.sizes.notifs.image
                     implicitHeight: root.hasImage ? Tokens.sizes.notifs.badge : TokenConfig.sizes.notifs.image
 
@@ -166,7 +166,7 @@ StyledRect {
                         sourceComponent: ColouredIcon {
                             anchors.fill: parent
                             source: Quickshell.iconPath(root.modelData.appIcon)
-                            colour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : root.modelData.urgency === NotificationUrgency.Low ? Colours.palette.m3onSurface : Colours.palette.m3onSecondaryContainer
+                            colour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : root.modelData.urgency === NotificationUrgency.Low ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                             layer.enabled: root.modelData.appIcon.endsWith("symbolic")
                         }
                     }
@@ -179,7 +179,7 @@ StyledRect {
 
                         sourceComponent: MaterialIcon {
                             text: Icons.getNotifIcon(root.modelData.summary, root.modelData.urgency)
-                            color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : root.modelData.urgency === NotificationUrgency.Low ? Colours.palette.m3onSurface : Colours.palette.m3onSecondaryContainer
+                            color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : root.modelData.urgency === NotificationUrgency.Low ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                             fontStyle: Tokens.font.icon.medium
                         }
                     }
@@ -200,7 +200,7 @@ StyledRect {
                     capStyle: ShapePath.RoundCap
                     fillColor: "transparent"
                     strokeWidth: 2
-                    strokeColor: Colours.palette.m3primary
+                    strokeColor: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
 
                     PathAngleArc {
                         id: progressArc
@@ -232,7 +232,7 @@ StyledRect {
                 animate: true
                 text: appNameMetrics.elidedText
                 maximumLineCount: 1
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.label.medium
 
                 opacity: root.expanded ? 1 : 0
@@ -315,7 +315,7 @@ StyledRect {
                 anchors.leftMargin: Tokens.spacing.small
 
                 text: "•"
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
 
                 states: State {
@@ -343,7 +343,7 @@ StyledRect {
                 animate: true
                 horizontalAlignment: Text.AlignLeft
                 text: root.modelData.timeStr
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
             }
 
@@ -359,7 +359,7 @@ StyledRect {
 
                 StateLayer {
                     radius: Tokens.rounding.full
-                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
+                    color: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                     onClicked: root.expanded = !root.expanded
                 }
 
@@ -393,7 +393,7 @@ StyledRect {
                 animate: true
                 textFormat: root.bodyTextFormat
                 text: bodyPreviewMetrics.elidedText
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
 
                 opacity: root.expanded ? 0 : 1
@@ -425,7 +425,7 @@ StyledRect {
                 animate: true
                 textFormat: root.bodyTextFormat
                 text: root.modelData.body
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 height: text ? implicitHeight : 0
@@ -468,8 +468,8 @@ StyledRect {
                     isRound: true
                     shapeMorph: true
                     fillWidth: root.modelData.actions.length === 0
-                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
-                    inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondary : Colours.palette.m3onSurfaceVariant
+                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 2)
+                    inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     icon: "close"
                     padding: Tokens.padding.extraSmall
                     onClicked: root.modelData.close()
@@ -484,8 +484,8 @@ StyledRect {
                         isRound: true
                         shapeMorph: true
                         fillWidth: true
-                        inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
-                        inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondary : Colours.palette.m3onSurfaceVariant
+                        inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 2)
+                        inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                         text: modelData.text
                         onClicked: modelData.invoke()
 
@@ -503,8 +503,8 @@ StyledRect {
                     isRound: true
                     shapeMorph: true
                     fillWidth: root.modelData.actions.length === 0
-                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3secondary : Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
-                    inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.palette.m3onSecondary : Colours.palette.m3onSurfaceVariant
+                    inactiveColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 2)
+                    inactiveOnColour: root.modelData.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     icon: copyTimer.running ? "inventory" : "content_copy"
                     padding: Tokens.padding.extraSmall
                     onClicked: {

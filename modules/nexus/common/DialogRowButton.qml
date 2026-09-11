@@ -45,7 +45,7 @@ Item {
     BlobGroup {
         id: blobGroup
 
-        color: root.open ? Colours.palette.m3surfaceContainerHighest : Colours.tPalette.m3surfaceContainer
+        color: root.open ? Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest) : Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
         Behavior on color {
             CAnim {}
@@ -191,7 +191,7 @@ Item {
                         active: root.separateContent
                         sourceComponent: StyledRect {
                             implicitHeight: 1
-                            color: Colours.palette.m3outline
+                            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                         }
                     }
 
@@ -209,7 +209,7 @@ Item {
                         active: root.separateContent
                         sourceComponent: StyledRect {
                             implicitHeight: 1
-                            color: Colours.palette.m3outline
+                            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                         }
                     }
 

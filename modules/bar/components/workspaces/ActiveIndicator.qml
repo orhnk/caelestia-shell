@@ -52,7 +52,7 @@ StyledRect {
 
     Colouriser {
         source: root.mask
-        sourceColor: Colours.palette.m3onSurface
+        sourceColor: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
         colorizationColor: Colours.on(Accents.ws(currentWsIdx))
 
         x: 0

@@ -75,7 +75,7 @@ Item {
 
         implicitSize: root.minSize + (index / root.count) * (root.maxSize - root.minSize)
         shape: root.shapePool[Math.floor(Math.random() * root.shapePool.length)]
-        color: [Colours.palette.m3primaryContainer, Colours.palette.m3secondaryContainer, Colours.palette.m3tertiaryContainer, Colours.palette.m3outlineVariant][colourIdx]
+        color: [Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer), Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer), Colours.pick(Colours.palette.m3base02, Colours.palette.m3tertiaryContainer), Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)][colourIdx]
         opacity: Colours.light ? root.lightOpacities[colourIdx] : root.darkOpacities[colourIdx]
         rotation: root.rand(0, 360)
 

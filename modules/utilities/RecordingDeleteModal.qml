@@ -45,7 +45,7 @@ Loader {
                 anchors.rightMargin: -parent.width * (1 - root.deformMatrix.m11) / 2 // Additional bit to account for deform
                 anchors.bottomMargin: -parent.height * 0.1 // Additional bit to account for overshoot
                 topLeftRadius: Tokens.rounding.extraLarge
-                color: Colours.palette.m3scrim
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3scrim)
             }
 
             Shape {
@@ -66,11 +66,11 @@ Loader {
 
                         GradientStop {
                             position: 0
-                            color: Qt.alpha(Colours.palette.m3scrim, 0)
+                            color: Qt.alpha(Colours.pick(Colours.palette.m3base00, Colours.palette.m3scrim), 0)
                         }
                         GradientStop {
                             position: 1
-                            color: Colours.palette.m3scrim
+                            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3scrim)
                         }
                     }
 
@@ -106,11 +106,11 @@ Loader {
 
                         GradientStop {
                             position: 0
-                            color: Qt.alpha(Colours.palette.m3scrim, 0)
+                            color: Qt.alpha(Colours.pick(Colours.palette.m3base00, Colours.palette.m3scrim), 0)
                         }
                         GradientStop {
                             position: 1
-                            color: Colours.palette.m3scrim
+                            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3scrim)
                         }
                     }
 
@@ -140,7 +140,7 @@ Loader {
         StyledRect {
             anchors.centerIn: parent
             radius: Tokens.rounding.extraLarge
-            color: Colours.palette.m3surfaceContainerHigh
+            color: Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh)
 
             scale: 0
             Component.onCompleted: scale = Qt.binding(() => root.props.recordingConfirmDelete ? 1 : 0)
@@ -175,7 +175,7 @@ Loader {
                 StyledText {
                     Layout.fillWidth: true
                     text: Tr.tr("Recording '%1' will be permanently deleted.").arg(deleteConfirmation.path)
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     font: Tokens.font.body.small
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 }

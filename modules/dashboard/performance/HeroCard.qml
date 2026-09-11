@@ -18,7 +18,7 @@ StyledRect {
     required property real usage
     required property real temperature
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.extraLarge
 
     implicitWidth: Tokens.sizes.dashboard.perfHeroCardWidth
@@ -47,7 +47,7 @@ StyledRect {
 
             anchors.centerIn: parent
             text: root.icon
-            color: root.accent
+            color: Accents.base07
             fontStyle: Tokens.font.icon.medium
         }
     }
@@ -69,7 +69,7 @@ StyledRect {
             Layout.fillWidth: true
             text: root.subLabel
             font: Tokens.font.body.small
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             elide: Text.ElideRight
         }
     }
@@ -89,7 +89,7 @@ StyledRect {
             MaterialIcon {
                 Layout.topMargin: Math.round(fontInfo.pointSize * 0.08)
                 text: root.temperature > 90 ? "thermometer_alert" : "thermometer"
-                color: root.temperature > 90 ? Colours.palette.m3error : root.accent
+                color: root.temperature > 90 ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : root.accent
                 fontStyle: Tokens.font.icon.medium
                 fill: 1
             }
@@ -116,7 +116,7 @@ StyledRect {
         anchors.margins: Tokens.padding.medium
 
         implicitSize: Tokens.sizes.dashboard.perfUsageShapeSize
-        color: Colours.palette.m3secondaryContainer
+        color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
         shape: {
             if (root.usage >= 0.8)
                 return MaterialShape.SoftBurst;
@@ -137,7 +137,7 @@ StyledRect {
 
             // TRANSLATORS: labels the CPU or GPU utilisation percentage shown below it
             text: Tr.trCtx("Usage", "resource usage")
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             font: Tokens.font.body.small
         }
 

@@ -26,21 +26,21 @@ PageBase {
             MaterialIcon {
                 Layout.alignment: Qt.AlignHCenter
                 text: "handyman"
-                color: Colours.palette.m3outlineVariant
+                color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                 fontStyle: Tokens.font.icon.extraLarge
             }
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
                 text: Tr.tr("Page under construction")
-                color: Colours.palette.m3outlineVariant
+                color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                 font: Tokens.font.title.large
             }
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
                 text: Tr.tr("This page will be available in a future update.")
-                color: Colours.palette.m3outlineVariant
+                color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                 font: Tokens.font.body.large
             }
         }

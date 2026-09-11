@@ -13,7 +13,7 @@ Item {
     id: root
 
     required property int centerWidth
-    readonly property color bgColour: Colours.tPalette.m3surfaceContainerHighest
+    readonly property color bgColour: Colours.pick(Colours.tPalette.m3base03, Colours.tPalette.m3surfaceContainerHighest)
 
     implicitWidth: Math.round(centerWidth * 0.7)
     implicitHeight: {
@@ -37,7 +37,7 @@ Item {
         anchors.centerIn: parent
 
         text: "person"
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         fontStyle: Tokens.font.icon.size(root.centerWidth / 4).build()
         visible: pfp.status !== Image.Ready
     }

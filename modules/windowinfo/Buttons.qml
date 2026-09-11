@@ -30,14 +30,14 @@ ColumnLayout {
         }
 
         StyledRect {
-            color: Colours.palette.m3primary
+            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
             radius: Tokens.rounding.medium
 
             implicitWidth: moveToWsIcon.implicitWidth + Tokens.padding.small
             implicitHeight: moveToWsIcon.implicitHeight + Tokens.padding.extraSmall
 
             StateLayer {
-                color: Colours.palette.m3onPrimary
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 onClicked: root.moveToWsExpanded = !root.moveToWsExpanded
             }
 
@@ -48,7 +48,7 @@ ColumnLayout {
 
                 animate: true
                 text: root.moveToWsExpanded ? "expand_more" : "keyboard_arrow_right"
-                color: Colours.palette.m3onPrimary
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 fontStyle: Tokens.font.icon.large
             }
         }
@@ -99,8 +99,8 @@ ColumnLayout {
                     Hypr.dispatch(Hypr.usingLua ? `hl.dsp.window.move({ window = "address:0x${root.client?.address}", workspace = "${wsId}", follow = true })` : `movetoworkspace ${wsId},address:0x${root.client?.address}`);
                 }
 
-                color: isCurrent ? Colours.tPalette.m3surfaceContainerHighest : Colours.palette.m3tertiaryContainer
-                onColor: isCurrent ? Colours.palette.m3onSurface : Colours.palette.m3onTertiaryContainer
+                color: isCurrent ? Colours.pick(Colours.tPalette.m3base03, Colours.tPalette.m3surfaceContainerHighest) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3tertiaryContainer)
+                onColor: isCurrent ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base0E, Colours.palette.m3onTertiaryContainer)
                 text: wsId
                 disabled: isCurrent
             }
@@ -116,8 +116,8 @@ ColumnLayout {
         spacing: root.client?.lastIpcObject.floating ? Tokens.spacing.medium : Tokens.spacing.small
 
         Button {
-            color: Colours.palette.m3secondaryContainer
-            onColor: Colours.palette.m3onSecondaryContainer
+            color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+            onColor: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
             text: root.client?.lastIpcObject.floating ? Tr.tr("Tile") : Tr.tr("Float")
             onClicked: Hypr.dispatch(Hypr.usingLua ? `hl.dsp.window.float({ window = "address:0x${root.client?.address}" })` : `togglefloating address:0x${root.client?.address}`)
         }
@@ -130,23 +130,23 @@ ColumnLayout {
             Layout.rightMargin: active ? 0 : -parent.spacing
 
             sourceComponent: Button {
-                color: Colours.palette.m3secondaryContainer
-                onColor: Colours.palette.m3onSecondaryContainer
+                color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+                onColor: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                 text: root.client?.lastIpcObject.pinned ? Tr.tr("Unpin") : Tr.tr("Pin")
                 onClicked: Hypr.dispatch(Hypr.usingLua ? `hl.dsp.window.pin({ window = "address:0x${root.client?.address}" })` : `pin address:0x${root.client?.address}`)
             }
         }
 
         Button {
-            color: Colours.palette.m3errorContainer
-            onColor: Colours.palette.m3onErrorContainer
+            color: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
+            onColor: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
             text: Tr.tr("Kill")
             onClicked: Hypr.dispatch(Hypr.usingLua ? `hl.dsp.window.kill({ window = "address:0x${root.client?.address}" })` : `killwindow address:0x${root.client?.address}`)
         }
     }
 
     component Button: StyledRect {
-        property color onColor: Colours.palette.m3onSurface
+        property color onColor: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
         property alias disabled: stateLayer.disabled
         property alias text: label.text
 

@@ -36,7 +36,7 @@ PageBase {
                 return Math.min(Math.round(cWidth * 0.4), cWidth / screen.width * screen.height);
             }
 
-            color: Colours.tPalette.m3surfaceContainer
+            color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
             radius: Tokens.rounding.large
 
             Loader {
@@ -50,14 +50,14 @@ PageBase {
                     MaterialIcon {
                         Layout.alignment: Qt.AlignHCenter
                         text: "hide_image"
-                        color: Colours.palette.m3onSurfaceVariant
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                         fontStyle: Tokens.font.icon.extraLarge
                     }
 
                     StyledText {
                         Layout.alignment: Qt.AlignHCenter
                         text: Tr.tr("Wallpaper disabled")
-                        color: Colours.palette.m3onSurfaceVariant
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                         font: Tokens.font.body.large
                     }
                 }
@@ -91,7 +91,7 @@ PageBase {
                         implicitWidth: wallLoadingIndicator.implicitSize + Tokens.padding.largeIncreased * 2
                         implicitHeight: wallLoadingIndicator.implicitSize + Tokens.padding.largeIncreased * 2
 
-                        color: Colours.palette.m3primaryContainer
+                        color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
                         radius: Tokens.rounding.full
 
                         LoadingIndicator {

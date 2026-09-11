@@ -6,7 +6,7 @@ import qs.services
 Shape {
     id: root
 
-    property color color: Colours.palette.m3surfaceContainer
+    property color color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer)
     property int waves: 4
     property real amplitude: 3
 

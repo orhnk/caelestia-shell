@@ -50,7 +50,7 @@ VerticalFadeFlickable {
                     return h % 2 === 0 ? h : h + 1;
                 }
 
-                color: isCurrentPage ? Colours.palette.m3secondaryContainer : Colours.layer(Colours.palette.m3surfaceContainerHigh, 2)
+                color: isCurrentPage ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 2)
 
                 topLeftRadius: stateLayer.pressed ? Tokens.rounding.medium : isCurrentPage ? Tokens.rounding.extraLargeIncreased : isCategoryStart ? Tokens.rounding.extraLarge : Tokens.rounding.extraSmall
                 topRightRadius: stateLayer.pressed ? Tokens.rounding.medium : isCurrentPage ? Tokens.rounding.extraLargeIncreased : isCategoryStart ? Tokens.rounding.extraLarge : Tokens.rounding.extraSmall
@@ -88,14 +88,14 @@ VerticalFadeFlickable {
                         implicitWidth: height
 
                         radius: Tokens.rounding.full
-                        color: item.isCurrentPage ? Colours.palette.m3primary : Colours.palette.m3secondaryContainer
+                        color: item.isCurrentPage ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
 
                         MaterialIcon {
                             anchors.centerIn: parent
                             anchors.verticalCenterOffset: 1
 
                             text: item.modelData.icon
-                            color: item.isCurrentPage ? Colours.palette.m3onPrimary : Colours.palette.m3onSecondaryContainer
+                            color: item.isCurrentPage ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                             fontStyle: Tokens.font.icon.builders.medium.weight(Font.Medium).build()
                             grade: 25
                             fill: item.modelData.noFill ? 0 : 1
@@ -116,7 +116,7 @@ VerticalFadeFlickable {
                         StyledText {
                             Layout.fillWidth: true
                             text: item.modelData.description
-                            color: Colours.palette.m3onSurfaceVariant
+                            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                             font: Tokens.font.label.small
                             elide: Text.ElideRight
                         }

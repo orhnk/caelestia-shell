@@ -48,7 +48,7 @@ ConnectedRect {
         MaterialIcon {
             id: iconLabel
 
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             fontStyle: Tokens.font.icon.medium
             fill: 1
         }
@@ -76,7 +76,7 @@ ConnectedRect {
                 anchors.right: parent.right
 
                 visible: text
-                color: Colours.palette.m3outline
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                 font: Tokens.font.label.small
                 elide: Text.ElideRight
             }
@@ -89,7 +89,7 @@ ConnectedRect {
 
             sourceComponent: MaterialIcon {
                 text: root.trailingIcon
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.medium
             }
         }

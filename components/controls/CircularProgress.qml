@@ -16,8 +16,8 @@ Item {
     property int strokeWidth: Tokens.padding.small
     property int padding: 0
     property int spacing: Tokens.spacing.small
-    property color fgColour: Colours.palette.m3primary
-    property color bgColour: Colours.palette.m3secondaryContainer
+    property color fgColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+    property color bgColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
     property alias hasEndIndicator: dot.active
 
     property bool wavy: false

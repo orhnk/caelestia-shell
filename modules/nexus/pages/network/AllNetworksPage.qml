@@ -163,7 +163,7 @@ PageBase {
         spacing: Tokens.spacing.extraSmall
 
         icon: ["check_indeterminate_small", "check", "close"][filterState]
-        inactiveColour: [Colours.palette.m3secondaryContainer, Colours.palette.m3secondary, Colours.palette.m3tertiary][filterState]
-        inactiveOnColour: [Colours.palette.m3onSecondaryContainer, Colours.palette.m3onSecondary, Colours.palette.m3onTertiary][filterState]
+        inactiveColour: [Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer), Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary), Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary)][filterState]
+        inactiveOnColour: [Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer), Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary), Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary)][filterState]
     }
 }

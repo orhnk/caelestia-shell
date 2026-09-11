@@ -17,7 +17,7 @@ StyledClippingRect {
 
     implicitHeight: layout.implicitHeight + layout.anchors.margins * 2
     radius: Tokens.rounding.extraLarge
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     FadeImage {
         anchors.fill: parent
@@ -35,7 +35,7 @@ StyledClippingRect {
 
         StyledRect {
             anchors.fill: parent
-            color: Colours.palette.m3surface
+            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface)
             opacity: 0.7
         }
 
@@ -69,7 +69,7 @@ StyledClippingRect {
             Layout.fillWidth: true
             animate: true
             text: (Players.active?.trackArtist ?? Tr.tr("Try playing some music!")) || Tr.tr("Unknown artist")
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             horizontalAlignment: Text.AlignHCenter
             font: Tokens.font.body.small
             elide: Text.ElideRight

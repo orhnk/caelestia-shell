@@ -58,7 +58,7 @@ StyledRect {
 
     clip: true
     radius: Tokens.rounding.large
-    color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+    color: Colours.layer(Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer), 2)
 
     Behavior on implicitHeight {
         Anim {}
@@ -102,7 +102,7 @@ StyledRect {
                 ColouredIcon {
                     implicitSize: Math.round(TokenConfig.sizes.notifs.image * 0.6)
                     source: Quickshell.iconPath(root.appIcon)
-                    colour: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : root.urgency === NotificationUrgency.Low ? Colours.palette.m3onSurface : Colours.palette.m3onSecondaryContainer
+                    colour: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : root.urgency === NotificationUrgency.Low ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                     layer.enabled: root.appIcon.endsWith("symbolic")
                 }
             }
@@ -112,14 +112,14 @@ StyledRect {
 
                 MaterialIcon {
                     text: Icons.getNotifIcon(root.activeNotifs[0]?.summary, root.urgency)
-                    color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : root.urgency === NotificationUrgency.Low ? Colours.palette.m3onSurface : Colours.palette.m3onSecondaryContainer
+                    color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : root.urgency === NotificationUrgency.Low ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                     fontStyle: Tokens.font.icon.medium
                 }
             }
 
             StyledClippingRect {
                 anchors.fill: parent
-                color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.urgency === NotificationUrgency.Low ? Colours.layer(Colours.palette.m3surfaceContainerHigh, 3) : Colours.palette.m3secondaryContainer
+                color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : root.urgency === NotificationUrgency.Low ? Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 3) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
                 radius: Tokens.rounding.full
 
                 Loader {
@@ -140,14 +140,14 @@ StyledRect {
                     implicitWidth: Tokens.sizes.notifs.badge
                     implicitHeight: Tokens.sizes.notifs.badge
 
-                    color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : root.urgency === NotificationUrgency.Low ? Colours.palette.m3surfaceContainerHigh : Colours.palette.m3secondaryContainer
+                    color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : root.urgency === NotificationUrgency.Low ? Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
                     radius: Tokens.rounding.full
 
                     ColouredIcon {
                         anchors.centerIn: parent
                         implicitSize: Math.round(Tokens.sizes.notifs.badge * 0.6)
                         source: Quickshell.iconPath(root.appIcon)
-                        colour: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : root.urgency === NotificationUrgency.Low ? Colours.palette.m3onSurface : Colours.palette.m3onSecondaryContainer
+                        colour: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : root.urgency === NotificationUrgency.Low ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                         layer.enabled: root.appIcon.endsWith("symbolic")
                     }
                 }
@@ -174,7 +174,7 @@ StyledRect {
                 StyledText {
                     Layout.fillWidth: true
                     text: root.modelData
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     font: Tokens.font.body.small
                     elide: Text.ElideRight
                 }
@@ -182,7 +182,7 @@ StyledRect {
                 StyledText {
                     animate: true
                     text: root.activeNotifs[0]?.timeStr ?? ""
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.small
                 }
 
@@ -190,11 +190,11 @@ StyledRect {
                     implicitWidth: expandBtn.implicitWidth + Tokens.padding.large
                     implicitHeight: groupCount.implicitHeight + Tokens.padding.extraSmall
 
-                    color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3error : Colours.layer(Colours.palette.m3surfaceContainerHigh, 3)
+                    color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 3)
                     radius: Tokens.rounding.full
 
                     StateLayer {
-                        color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : Colours.palette.m3onSurface
+                        color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                         onClicked: root.toggleExpand(!root.expanded)
                     }
 
@@ -210,14 +210,14 @@ StyledRect {
                             Layout.leftMargin: Tokens.padding.extraSmall / 2
                             animate: true
                             text: root.notifCount
-                            color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : Colours.palette.m3onSurfaceVariant
+                            color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                             font: Tokens.font.body.small
                         }
 
                         MaterialIcon {
                             Layout.rightMargin: -Tokens.padding.extraSmall / 2
                             text: "expand_more"
-                            color: root.urgency === NotificationUrgency.Critical ? Colours.palette.m3onError : Colours.palette.m3onSurfaceVariant
+                            color: root.urgency === NotificationUrgency.Critical ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                             rotation: root.expanded ? 180 : 0
                             Layout.topMargin: root.expanded ? -Math.floor(Tokens.padding.extraSmall) : 0
 

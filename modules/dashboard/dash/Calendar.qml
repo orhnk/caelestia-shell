@@ -117,7 +117,7 @@ CustomMouseArea {
                 implicitHeight: monthYearDisplay.implicitHeight + Tokens.padding.extraSmall * 2
 
                 StateLayer {
-                    color: Colours.palette.m3primary
+                    color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
                     radius: pressed ? Tokens.rounding.small : height / 2
                     disabled: {
                         const now = new Date();
@@ -142,7 +142,7 @@ CustomMouseArea {
 
                     anchors.centerIn: parent
                     text: grid.title
-                    color: Colours.palette.m3primary
+                    color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
                     font: Tokens.font.title.builders.small.capitalisation(Font.Capitalize).build()
                 }
             }
@@ -221,7 +221,7 @@ CustomMouseArea {
                             if (dayOfWeek === 0 || dayOfWeek === 6)
                                 return Accents.base0E;
 
-                            return Colours.palette.m3onSurfaceVariant;
+                            return Accents.at(Accents.weekColors, dayOfWeek - 1);
                         }
                         opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.4
                         font: Tokens.font.body.small
@@ -259,7 +259,7 @@ CustomMouseArea {
                     implicitHeight: grid.height
 
                     source: grid
-                    sourceColor: Colours.palette.m3onSurface
+                    sourceColor: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                     colorizationColor: Colours.on(Accents.base0F)
                 }
             }

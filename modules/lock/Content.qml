@@ -50,7 +50,7 @@ RowLayout {
 
             bottomRightRadius: Tokens.rounding.extraLarge
             radius: Tokens.rounding.medium
-            color: Colours.tPalette.m3surfaceContainer
+            color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
             NotifDock {
                 lock: root.lock

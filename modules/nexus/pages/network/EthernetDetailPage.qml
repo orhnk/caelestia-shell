@@ -124,8 +124,8 @@ PageBase {
                 fillWidth: true
                 shapeMorph: true
                 isRound: true
-                inactiveColour: root.device?.connected ? Colours.palette.m3primaryContainer : Colours.palette.m3secondaryContainer
-                inactiveOnColour: root.device?.connected ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSecondaryContainer
+                inactiveColour: root.device?.connected ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+                inactiveOnColour: root.device?.connected ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
 
                 implicitWidth: connectLayout.implicitWidth + Tokens.padding.extraLarge * 2
                 implicitHeight: connectLayout.implicitHeight + Tokens.padding.medium * 2
@@ -306,8 +306,8 @@ PageBase {
 
                 shapeMorph: true
                 isRound: true
-                inactiveColour: Colours.palette.m3primary
-                inactiveOnColour: Colours.palette.m3onPrimary
+                inactiveColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 stateLayer.disabled: !root.ipLoaded || root.savingIp
 
                 implicitWidth: applyContent.implicitWidth + Tokens.padding.extraLarge * 2

@@ -59,8 +59,8 @@ PageBase {
                 shapeMorph: true
                 isRound: true
 
-                inactiveColour: Colours.palette.m3errorContainer
-                inactiveOnColour: Colours.palette.m3onErrorContainer
+                inactiveColour: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
 
                 implicitWidth: forgetBtnLayout.implicitWidth + Tokens.padding.extraLarge * 2
                 implicitHeight: forgetBtnLayout.implicitHeight + Tokens.padding.medium * 2
@@ -98,8 +98,8 @@ PageBase {
                 shapeMorph: true
                 isRound: true
 
-                inactiveColour: Colours.palette.m3primaryContainer
-                inactiveOnColour: Colours.palette.m3onPrimaryContainer
+                inactiveColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
                 stateLayer.disabled: root.loading
 
                 implicitWidth: connectBtnContent.implicitWidth + Tokens.padding.extraLarge * 2
@@ -212,7 +212,7 @@ PageBase {
 
                     StyledText {
                         text: root.device?.batteryAvailable ? Strings.percentOne(root.device.battery) : Tr.trCtx("Unavailable", "bluetooth device state")
-                        color: Colours.palette.m3outline
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                         font: Tokens.font.body.small
                     }
                 }
@@ -252,7 +252,7 @@ PageBase {
 
                 StyledText {
                     text: root.device?.address ?? ""
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.small
                 }
             }

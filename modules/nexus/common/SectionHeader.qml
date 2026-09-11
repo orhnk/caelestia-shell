@@ -12,7 +12,7 @@ StyledText {
     Layout.bottomMargin: Tokens.spacing.extraSmall
     Layout.leftMargin: Tokens.padding.small
 
-    color: Colours.palette.m3onSurfaceVariant
+    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
     font: Tokens.font.label.medium
     elide: Text.ElideRight
 }

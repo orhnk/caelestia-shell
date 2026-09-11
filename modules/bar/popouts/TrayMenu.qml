@@ -86,7 +86,7 @@ StackView {
                 implicitHeight: modelData.isSeparator ? 1 : children.implicitHeight
 
                 radius: Tokens.rounding.full
-                color: modelData.isSeparator ? Colours.palette.m3outlineVariant : "transparent"
+                color: modelData.isSeparator ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant) : "transparent"
 
                 Loader {
                     id: children
@@ -145,7 +145,7 @@ StackView {
                             anchors.leftMargin: icon.active ? Tokens.spacing.medium : 0
 
                             text: labelMetrics.elidedText
-                            color: item.modelData.enabled ? Colours.palette.m3onSurface : Colours.palette.m3outline
+                            color: item.modelData.enabled ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                         }
 
                         TextMetrics {
@@ -169,7 +169,7 @@ StackView {
 
                             sourceComponent: MaterialIcon {
                                 text: "chevron_right"
-                                color: item.modelData.enabled ? Colours.palette.m3onSurface : Colours.palette.m3outline
+                                color: item.modelData.enabled ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                             }
                         }
                     }
@@ -197,11 +197,11 @@ StackView {
                         anchors.rightMargin: -Tokens.padding.large
 
                         radius: Tokens.rounding.full
-                        color: Colours.palette.m3secondaryContainer
+                        color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
 
                         StateLayer {
                             radius: parent.radius
-                            color: Colours.palette.m3onSecondaryContainer
+                            color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                             onClicked: root.pop()
                         }
                     }
@@ -214,13 +214,13 @@ StackView {
                         MaterialIcon {
                             anchors.verticalCenter: parent.verticalCenter
                             text: "chevron_left"
-                            color: Colours.palette.m3onSecondaryContainer
+                            color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                         }
 
                         StyledText {
                             anchors.verticalCenter: parent.verticalCenter
                             text: Tr.trCtx("Back", "button")
-                            color: Colours.palette.m3onSecondaryContainer
+                            color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                         }
                     }
                 }

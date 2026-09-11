@@ -10,7 +10,7 @@
 
 ## Right Menu:
 - right sound and brightness scrollers, respectively base0A and base0B
-- The shutdown menu should use: base0C, 0B, 0A and 09 from top to bottom. The backgrounds should also be colored like workspaces.
+- The shutdown menu should use: base0C, 0B, 0A and 09 from top to bottom. The backgrounds should also be colored like workspaces but the opacity here should be %10.
 - Every "Quick toggles" instance should have a index-based coloring from base08-base0D. Background-coloring enabled here also (depending on focusing, transparency changes)
 - icons in the bottom right menu (Keep Awake and Screen Recorder) should be in base0A
 - the list in Screen Recorder options should be color-indexed and focus-based like the workspace-implementation

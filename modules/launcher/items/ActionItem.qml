@@ -30,7 +30,7 @@ Item {
 
             anchors.verticalCenter: parent.verticalCenter
             text: root.modelData?.icon ?? ""
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
         }
 
@@ -54,7 +54,7 @@ Item {
 
                 text: root.modelData?.desc ?? ""
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
 
                 elide: Text.ElideRight
                 width: root.width - icon.width - Tokens.rounding.extraLargeIncreased

@@ -47,7 +47,7 @@ ColumnLayout {
         Layout.topMargin: visible ? Tokens.spacing.small : 0
         Layout.rightMargin: Tokens.padding.extraSmall
         text: Tr.trN("%n network available", "%n networks available", Nmcli.networks.length) // qmllint disable missing-property
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         font: Tokens.font.body.small
     }
 
@@ -95,7 +95,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: Icons.getNetworkIcon(networkItem.modelData.strength)
-                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.palette.m3onSurfaceVariant
+                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             MaterialIcon {
@@ -111,7 +111,7 @@ ColumnLayout {
                 text: networkItem.modelData.ssid
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(networkItem.modelData.active ? Font.Medium : Font.Normal).build()
-                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.palette.m3onSurface
+                color: networkItem.modelData.active ? Accents.popList(networkItem.index) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
             }
 
             StyledRect {
@@ -127,7 +127,7 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.palette.m3onSurface
+                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                     disabled: networkItem.loading || !Nmcli.wifiEnabled
 
                     onClicked: {
@@ -154,7 +154,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: networkItem.modelData.active ? "link_off" : "link"
-                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.palette.m3onSurface
+                    color: networkItem.modelData.active ? Colours.on(Accents.popList(networkItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
 
                     opacity: networkItem.loading ? 0 : 1
 
@@ -176,10 +176,10 @@ ColumnLayout {
         implicitHeight: rescanBtn.implicitHeight + Tokens.padding.small
 
         radius: Tokens.rounding.full
-        color: Colours.palette.m3primaryContainer
+        color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
 
         StateLayer {
-            color: Colours.palette.m3onPrimaryContainer
+            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
             disabled: Nmcli.scanning || !Nmcli.wifiEnabled
             onClicked: Nmcli.rescanWifi()
         }
@@ -197,13 +197,13 @@ ColumnLayout {
                 Layout.topMargin: Math.round(fontInfo.pointSize * 0.0575)
                 animate: true
                 text: "wifi_find"
-                color: Colours.palette.m3onPrimaryContainer
+                color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
             }
 
             StyledText {
                 Layout.topMargin: -Math.round(scanIcon.fontInfo.pointSize * 0.0575)
                 text: Tr.tr("Rescan networks")
-                color: Colours.palette.m3onPrimaryContainer
+                color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
             }
 
             Behavior on opacity {
@@ -238,7 +238,7 @@ ColumnLayout {
         Layout.topMargin: visible ? Tokens.spacing.small : 0
         Layout.rightMargin: Tokens.padding.extraSmall
         text: Tr.trN("%n device available", "%n devices available", Nmcli.ethernetDevices.length)
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         font: Tokens.font.body.small
     }
 
@@ -285,7 +285,7 @@ ColumnLayout {
 
             MaterialIcon {
                 text: "cable"
-                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.palette.m3onSurfaceVariant
+                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             StyledText {
@@ -295,7 +295,7 @@ ColumnLayout {
                 text: ethernetItem.modelData.iface || Tr.trCtx("Unknown", "unknown network interface")
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(ethernetItem.modelData.connected ? Font.Medium : Font.Normal).build()
-                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.palette.m3onSurface
+                color: ethernetItem.modelData.connected ? Accents.popList(ethernetItem.index) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
             }
 
             StyledRect {
@@ -311,7 +311,7 @@ ColumnLayout {
                 }
 
                 StateLayer {
-                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.palette.m3onSurface
+                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                     disabled: ethernetItem.loading
 
                     onClicked: {
@@ -329,7 +329,7 @@ ColumnLayout {
                     anchors.centerIn: parent
                     animate: true
                     text: ethernetItem.modelData.connected ? "link_off" : "link"
-                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.palette.m3onSurface
+                    color: ethernetItem.modelData.connected ? Colours.on(Accents.popList(ethernetItem.index)) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
 
                     opacity: ethernetItem.loading ? 0 : 1
 

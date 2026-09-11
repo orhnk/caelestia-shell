@@ -29,7 +29,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 text: "tune"
                 fontStyle: Tokens.font.icon.builders.extraLarge.scale(2).build()
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             StyledText {
@@ -37,14 +37,14 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 text: Tr.tr("No widgets enabled")
                 font: Tokens.font.title.large
-                color: Colours.palette.m3onSurface
+                color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
             }
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
                 text: Tr.tr("Enable widgets in the dashboard settings")
                 font: Tokens.font.body.small
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
         }
     }

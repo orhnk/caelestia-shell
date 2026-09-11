@@ -19,23 +19,23 @@ StyledRect {
     radius: Tokens.rounding.large
     color: {
         if (root.modelData.type === Toast.Success)
-            return Colours.palette.m3successContainer;
+            return Colours.pick(Colours.palette.m3base02, Colours.palette.m3successContainer);
         if (root.modelData.type === Toast.Warning)
-            return Colours.palette.m3secondary;
+            return Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary);
         if (root.modelData.type === Toast.Error)
-            return Colours.palette.m3errorContainer;
-        return Colours.palette.m3surface;
+            return Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer);
+        return Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface);
     }
 
     border.width: 1
     border.color: {
-        let colour = Colours.palette.m3outlineVariant;
+        let colour = Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant);
         if (root.modelData.type === Toast.Success)
-            colour = Colours.palette.m3success;
+            colour = Colours.pick(Colours.palette.m3base0B, Colours.palette.m3success);
         if (root.modelData.type === Toast.Warning)
-            colour = Colours.palette.m3secondaryContainer;
+            colour = Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer);
         if (root.modelData.type === Toast.Error)
-            colour = Colours.palette.m3error;
+            colour = Colours.pick(Colours.palette.m3base08, Colours.palette.m3error);
         return Qt.alpha(colour, 0.3);
     }
 
@@ -60,12 +60,12 @@ StyledRect {
             radius: Tokens.rounding.large
             color: {
                 if (root.modelData.type === Toast.Success)
-                    return Colours.palette.m3success;
+                    return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3success);
                 if (root.modelData.type === Toast.Warning)
-                    return Colours.palette.m3secondaryContainer;
+                    return Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer);
                 if (root.modelData.type === Toast.Error)
-                    return Colours.palette.m3error;
-                return Colours.palette.m3surfaceContainerHigh;
+                    return Colours.pick(Colours.palette.m3base08, Colours.palette.m3error);
+                return Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh);
             }
 
             implicitWidth: implicitHeight
@@ -78,12 +78,12 @@ StyledRect {
                 text: root.modelData.icon
                 color: {
                     if (root.modelData.type === Toast.Success)
-                        return Colours.palette.m3onSuccess;
+                        return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSuccess);
                     if (root.modelData.type === Toast.Warning)
-                        return Colours.palette.m3onSecondaryContainer;
+                        return Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer);
                     if (root.modelData.type === Toast.Error)
-                        return Colours.palette.m3onError;
-                    return Colours.palette.m3onSurfaceVariant;
+                        return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onError);
+                    return Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant);
                 }
                 fontStyle: Tokens.font.icon.builders.large.scale(1.2).build()
             }
@@ -100,12 +100,12 @@ StyledRect {
                 text: Tr.trMarked(root.modelData.title)
                 color: {
                     if (root.modelData.type === Toast.Success)
-                        return Colours.palette.m3onSuccessContainer;
+                        return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3onSuccessContainer);
                     if (root.modelData.type === Toast.Warning)
-                        return Colours.palette.m3onSecondary;
+                        return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary);
                     if (root.modelData.type === Toast.Error)
-                        return Colours.palette.m3onErrorContainer;
-                    return Colours.palette.m3onSurface;
+                        return Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer);
+                    return Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface);
                 }
                 font: Tokens.font.title.small
                 elide: Text.ElideRight
@@ -117,12 +117,12 @@ StyledRect {
                 text: Tr.trMarked(root.modelData.message)
                 color: {
                     if (root.modelData.type === Toast.Success)
-                        return Colours.palette.m3onSuccessContainer;
+                        return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3onSuccessContainer);
                     if (root.modelData.type === Toast.Warning)
-                        return Colours.palette.m3onSecondary;
+                        return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary);
                     if (root.modelData.type === Toast.Error)
-                        return Colours.palette.m3onErrorContainer;
-                    return Colours.palette.m3onSurface;
+                        return Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer);
+                    return Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface);
                 }
                 opacity: 0.8
                 elide: Text.ElideRight

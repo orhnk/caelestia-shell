@@ -34,7 +34,7 @@ StyledRect {
     implicitWidth: Tokens.sizes.bar.innerWidth
     implicitHeight: nonAnimHeight
 
-    color: Qt.alpha(Colours.tPalette.m3surfaceContainer, (Config.bar.tray.background && items.count > 0) ? Colours.tPalette.m3surfaceContainer.a : 0)
+    color: Qt.alpha(Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer), (Config.bar.tray.background && items.count > 0) ? Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer).a : 0)
     radius: Tokens.rounding.full
 
     Column {
@@ -105,7 +105,7 @@ StyledRect {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: Config.bar.tray.background ? Tokens.padding.extraSmall : -Tokens.padding.small
                 text: "expand_less"
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.medium
                 rotation: root.expanded ? 180 : 0
 

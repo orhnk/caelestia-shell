@@ -183,7 +183,7 @@ PageBase {
                         implicitWidth: implicitHeight
                         implicitHeight: providerIcon.implicitHeight + Tokens.padding.small * 2
                         radius: Tokens.rounding.full
-                        color: provider.isConnected ? Colours.palette.m3primaryContainer : provider.isSelected ? Colours.palette.m3secondaryContainer : Colours.palette.m3surfaceContainerHighest
+                        color: provider.isConnected ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer) : provider.isSelected ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer) : Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest)
 
                         MaterialIcon {
                             id: providerIcon
@@ -191,7 +191,7 @@ PageBase {
                             anchors.centerIn: parent
                             text: provider.isConnected || provider.isSelected ? "vpn_key" : "vpn_key_off"
                             fill: provider.isConnected ? 1 : 0
-                            color: provider.isConnected ? Colours.palette.m3onPrimaryContainer : provider.isSelected ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
+                            color: provider.isConnected ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer) : provider.isSelected ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                             fontStyle: Tokens.font.icon.medium
                             animate: true
                         }
@@ -230,15 +230,15 @@ PageBase {
                             }
                             color: {
                                 if (!provider.isSelected)
-                                    return Colours.palette.m3onSurfaceVariant;
+                                    return Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant);
                                 switch (VPN.status.state) {
                                 case "connected":
-                                    return Colours.palette.m3primary;
+                                    return Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary);
                                 case "needs-auth":
                                 case "error":
-                                    return Colours.palette.m3error;
+                                    return Colours.pick(Colours.palette.m3base08, Colours.palette.m3error);
                                 default:
-                                    return Colours.palette.m3secondary;
+                                    return Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary);
                                 }
                             }
                             font: Tokens.font.label.small
@@ -273,7 +273,7 @@ PageBase {
                                 StyledText {
                                     Layout.alignment: Qt.AlignRight
                                     text: Tr.trCtx("Interface", "network interface")
-                                    color: Colours.palette.m3onSurfaceVariant
+                                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                                     font: Tokens.font.label.small
                                     elide: Text.ElideRight
                                     horizontalAlignment: Text.AlignRight
@@ -282,7 +282,7 @@ PageBase {
                                 StyledText {
                                     Layout.alignment: Qt.AlignRight
                                     text: provider.modelData.iface
-                                    color: Colours.palette.m3outline
+                                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                                     font: Tokens.font.label.small
                                     elide: Text.ElideRight
                                     horizontalAlignment: Text.AlignRight
@@ -295,7 +295,7 @@ PageBase {
                                 StyledText {
                                     Layout.alignment: Qt.AlignRight
                                     text: Tr.trCtx("Current ping", "round-trip latency to the VPN endpoint")
-                                    color: Colours.palette.m3onSurfaceVariant
+                                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                                     font: Tokens.font.label.small
                                     elide: Text.ElideRight
                                     horizontalAlignment: Text.AlignRight
@@ -310,12 +310,12 @@ PageBase {
                                         implicitWidth: Math.round(Tokens.font.body.small.pointSize * 0.7)
                                         implicitHeight: implicitWidth
                                         radius: Tokens.rounding.full
-                                        color: VPN.pingMs <= 80 ? Colours.palette.m3primary : VPN.pingMs <= 150 ? Colours.palette.m3tertiary : Colours.palette.m3error
+                                        color: VPN.pingMs <= 80 ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : VPN.pingMs <= 150 ? Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary) : Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
                                     }
 
                                     StyledText {
                                         text: Tr.tr("%1 ms").arg(VPN.pingMs)
-                                        color: Colours.palette.m3outline
+                                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                                         font: Tokens.font.label.small
                                         elide: Text.ElideRight
                                         horizontalAlignment: Text.AlignRight

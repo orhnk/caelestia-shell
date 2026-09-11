@@ -51,7 +51,7 @@ Item {
             StyledText {
                 text: root.modelData?.description ?? ""
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
 
                 elide: Text.ElideRight
                 anchors.left: parent.left
@@ -70,7 +70,7 @@ Item {
 
             sourceComponent: MaterialIcon {
                 text: "check"
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.large
             }
         }

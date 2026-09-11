@@ -14,7 +14,7 @@ StyledRect {
     implicitWidth: inner.implicitWidth + Tokens.padding.medium * 2
     implicitHeight: inner.implicitHeight + Tokens.padding.medium * 2
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     RowLayout {
         id: inner
@@ -38,7 +38,7 @@ StyledRect {
 
                 anchors.centerIn: parent
                 text: "drive_folder_upload"
-                color: root.dialog.cwd.length === 1 ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                color: root.dialog.cwd.length === 1 ? Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                 grade: 200
             }
         }
@@ -47,7 +47,7 @@ StyledRect {
             Layout.fillWidth: true
 
             radius: Tokens.rounding.medium
-            color: Colours.tPalette.m3surfaceContainerHigh
+            color: Colours.pick(Colours.tPalette.m3base03, Colours.tPalette.m3surfaceContainerHigh)
 
             implicitHeight: pathComponents.implicitHeight + pathComponents.anchors.margins * 2
 
@@ -77,7 +77,7 @@ StyledRect {
                             active: folder.index > 0
                             sourceComponent: StyledText {
                                 text: "/"
-                                color: Colours.palette.m3onSurfaceVariant
+                                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                                 font: Tokens.font.body.builders.small.weight(Font.Bold).build()
                             }
                         }
@@ -111,7 +111,7 @@ StyledRect {
                                 active: folder.index === 0 && folder.modelData === "Home"
                                 sourceComponent: MaterialIcon {
                                     text: "home"
-                                    color: root.dialog.cwd.length === 1 ? Colours.palette.m3onSurface : Colours.palette.m3onSurfaceVariant
+                                    color: root.dialog.cwd.length === 1 ? Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                                     fill: 1
                                 }
                             }
@@ -124,7 +124,7 @@ StyledRect {
                                 anchors.leftMargin: homeIcon.active ? Tokens.padding.extraSmall : 0
 
                                 text: folder.modelData
-                                color: folder.index < root.dialog.cwd.length - 1 ? Colours.palette.m3onSurfaceVariant : Colours.palette.m3onSurface
+                                color: folder.index < root.dialog.cwd.length - 1 ? Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                                 font: Tokens.font.body.builders.small.weight(Font.Bold).build()
                             }
                         }

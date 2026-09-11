@@ -8,8 +8,8 @@ Item {
     readonly property real designWidth: 128
     readonly property real designHeight: 90.38
 
-    property color topColour: Colours.palette.m3primary
-    property color bottomColour: Colours.palette.m3onSurface
+    property color topColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+    property color bottomColour: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
 
     implicitWidth: designWidth
     implicitHeight: designHeight

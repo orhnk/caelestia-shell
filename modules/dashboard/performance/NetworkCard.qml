@@ -11,7 +11,7 @@ import qs.utils
 StyledRect {
     id: root
 
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.extraLarge
 
     implicitWidth: Tokens.sizes.dashboard.perfNetworkCardWidth
@@ -97,7 +97,7 @@ StyledRect {
                 anchors.centerIn: parent
                 text: Tr.tr("Collecting data...")
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                 visible: NetworkUsage.downloadBuffer.count < 2
             }
         }
@@ -116,7 +116,7 @@ StyledRect {
             StyledText {
                 text: Tr.trCtx("Download", "network throughput")
                 font: Tokens.font.body.small
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             Item {
@@ -147,7 +147,7 @@ StyledRect {
             StyledText {
                 text: Tr.trCtx("Upload", "network throughput")
                 font: Tokens.font.body.small
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             Item {
@@ -171,14 +171,14 @@ StyledRect {
 
             MaterialIcon {
                 text: "history"
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 fontStyle: Tokens.font.icon.medium
             }
 
             StyledText {
                 text: Tr.trCtx("Total", "total network data transferred")
                 font: Tokens.font.body.small
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
 
             Item {
@@ -195,7 +195,7 @@ StyledRect {
                     return Tr.tr("↓%1 ↑%2").arg(downText).arg(upText);
                 }
                 font: Tokens.font.body.small
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             }
         }
     }

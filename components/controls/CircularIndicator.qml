@@ -21,8 +21,8 @@ BusyIndicator {
 
     property real implicitSize: Tokens.font.body.medium.pointSize * 3
     property real strokeWidth: Tokens.padding.extraSmall
-    property color fgColour: Colours.palette.m3primary
-    property color bgColour: Colours.palette.m3secondaryContainer
+    property color fgColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+    property color bgColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
 
     property alias type: manager.indeterminateAnimationType
     readonly property alias progress: manager.progress

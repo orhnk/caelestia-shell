@@ -28,7 +28,7 @@ MouseArea {
 
         anchors.fill: parent
         source: Icons.getTrayIcon(root.modelData.id, root.modelData.icon)
-        colour: Colours.palette.m3secondary
+        colour: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
         layer.enabled: Config.bar.tray.recolour
     }
 }

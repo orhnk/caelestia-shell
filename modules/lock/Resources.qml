@@ -22,7 +22,7 @@ StyledRect {
 
     implicitHeight: layout.implicitHeight + layout.anchors.margins * 2
     radius: Tokens.rounding.extraLarge
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     ServiceRef {
         service: Cpu
@@ -49,9 +49,9 @@ StyledRect {
             icon: "memory"
             value: Strings.percentOne(Cpu.percentage)
             fillValue: Cpu.percentage
-            colour: Colours.palette.m3primary
-            shapeColour: Colours.palette.m3primaryContainer
-            fillColour: Qt.alpha(Colours.palette.m3secondary, 0.3)
+            colour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+            shapeColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+            fillColour: Qt.alpha(Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary), 0.3)
             shape: MaterialShape.Pentagon
 
             MaterialShape {
@@ -59,7 +59,7 @@ StyledRect {
                 y: cpu.mShape.pointAtAngle(45).y - implicitSize / 2
 
                 shape: Cpu.temperature > 90 ? MaterialShape.SoftBurst : MaterialShape.Circle
-                color: Cpu.temperature > 90 ? Colours.palette.m3errorContainer : Colours.palette.m3secondaryContainer
+                color: Cpu.temperature > 90 ? Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
                 implicitSize: {
                     const size = Math.round(tempLabel.implicitHeight * 2);
                     return size % 2 === 0 ? size : size + 1; // Ensure even size so center works properly
@@ -76,7 +76,7 @@ StyledRect {
                     anchors.verticalCenterOffset: Math.round(fontInfo.pointSize * 0.04)
 
                     text: Units.formatSensorTemp(Cpu.temperature)
-                    color: Cpu.temperature > 90 ? Colours.palette.m3onErrorContainer : Colours.palette.m3secondary
+                    color: Cpu.temperature > 90 ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
                     font: Tokens.font.title.builders.medium.scale(cpu.width / 112).width(50).build()
                 }
             }
@@ -86,9 +86,9 @@ StyledRect {
             icon: "memory_alt"
             value: Strings.percentOne(Memory.percentage)
             fillValue: Memory.percentage
-            colour: Colours.palette.m3tertiary
-            shapeColour: Colours.palette.m3onTertiary
-            fillColour: Qt.alpha(Colours.palette.m3tertiary, 0.3)
+            colour: Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary)
+            shapeColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary)
+            fillColour: Qt.alpha(Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary), 0.3)
             shape: MaterialShape.Slanted
         }
 
@@ -96,9 +96,9 @@ StyledRect {
             icon: "hard_disk"
             value: Strings.percentOne(Storage.percentage)
             fillValue: Storage.percentage
-            colour: Colours.palette.m3secondary
-            shapeColour: Colours.palette.m3secondaryContainer
-            fillColour: Qt.alpha(Colours.palette.m3secondary, 0.4)
+            colour: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
+            shapeColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+            fillColour: Qt.alpha(Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary), 0.4)
             shape: MaterialShape.Gem
         }
     }
@@ -162,7 +162,7 @@ StyledRect {
             MaterialIcon {
                 Layout.alignment: Qt.AlignHCenter
                 text: res.icon
-                color: Colours.palette.m3secondary
+                color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
                 fontStyle: Tokens.font.icon.builders.medium.scale(root.fontScale).build()
             }
 

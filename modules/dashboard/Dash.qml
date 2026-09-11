@@ -99,6 +99,6 @@ GridLayout {
     }
 
     component Rect: StyledRect {
-        color: Colours.tPalette.m3surfaceContainer
+        color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     }
 }

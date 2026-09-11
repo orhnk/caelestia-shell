@@ -51,7 +51,7 @@ Item {
 
         anchors.horizontalCenter: parent.horizontalCenter
         y: Tokens.padding.large
-        color: Colours.tPalette.m3surfaceContainer
+        color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
         radius: Tokens.rounding.large
 
         implicitWidth: Tokens.sizes.launcher.wallpaperWidth
@@ -60,7 +60,7 @@ Item {
         MaterialIcon {
             anchors.centerIn: parent
             text: "image"
-            color: Colours.tPalette.m3outline
+            color: Colours.pick(Colours.tPalette.m3base04, Colours.tPalette.m3outline)
             fontStyle: Tokens.font.icon.builders.extraLarge.scale(2).weight(Font.DemiBold).build()
         }
 

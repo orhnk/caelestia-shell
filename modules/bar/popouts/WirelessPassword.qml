@@ -131,7 +131,7 @@ ColumnLayout {
         Layout.preferredWidth: 400
         implicitHeight: content.implicitHeight + Tokens.padding.extraLargeIncreased
         radius: Tokens.rounding.large
-        color: Colours.tPalette.m3surfaceContainer
+        color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
         visible: root.shouldBeVisible || root.isClosing
         opacity: root.shouldBeVisible && !root.isClosing ? 1 : 0
         scale: root.shouldBeVisible && !root.isClosing ? 1 : 0.7
@@ -204,7 +204,7 @@ ColumnLayout {
                     }
                     return Tr.tr("Unknown network");
                 }
-                color: Colours.palette.m3outline
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                 font: Tokens.font.body.small
             }
 
@@ -252,7 +252,7 @@ ColumnLayout {
                     }
                     return "";
                 }
-                color: connectButton.hasError ? Colours.palette.m3error : Colours.palette.m3onSurfaceVariant
+                color: connectButton.hasError ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.builders.small.weight(Font.Normal).build()
                 wrapMode: Text.WordWrap
                 Layout.maximumWidth: parent.width - Tokens.padding.extraLargeIncreased
@@ -340,16 +340,16 @@ ColumnLayout {
                 StyledRect {
                     anchors.fill: parent
                     radius: Tokens.rounding.large
-                    color: passwordContainer.activeFocus ? Qt.lighter(Colours.tPalette.m3surfaceContainer, 1.05) : Colours.tPalette.m3surfaceContainer
+                    color: passwordContainer.activeFocus ? Qt.lighter(Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer), 1.05) : Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
                     border.width: passwordContainer.activeFocus || connectButton.hasError ? 4 : (root.shouldBeVisible ? 1 : 0)
                     border.color: {
                         if (connectButton.hasError) {
-                            return Colours.palette.m3error;
+                            return Colours.pick(Colours.palette.m3base08, Colours.palette.m3error);
                         }
                         if (passwordContainer.activeFocus) {
-                            return Colours.palette.m3primary;
+                            return Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary);
                         }
-                        return root.shouldBeVisible ? Colours.palette.m3outline : "transparent";
+                        return root.shouldBeVisible ? Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline) : "transparent";
                     }
 
                     Behavior on border.color {
@@ -377,7 +377,7 @@ ColumnLayout {
 
                     anchors.centerIn: parent
                     text: Tr.tr("Password")
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.mono.medium
                     opacity: passwordContainer.passwordBuffer ? 0 : 1
 
@@ -411,7 +411,7 @@ ColumnLayout {
                         implicitWidth: implicitHeight
                         implicitHeight: charList.implicitHeight
 
-                        color: Colours.palette.m3onSurface
+                        color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                         radius: Tokens.rounding.medium / 2
 
                         opacity: 0
@@ -479,8 +479,8 @@ ColumnLayout {
 
                     Layout.fillWidth: true
                     Layout.minimumHeight: Tokens.font.body.medium.pointSize + Tokens.padding.medium * 2
-                    inactiveColour: Colours.palette.m3secondaryContainer
-                    inactiveOnColour: Colours.palette.m3onSecondaryContainer
+                    inactiveColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+                    inactiveOnColour: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                     text: Tr.trCtx("Cancel", "button")
 
                     onClicked: root.closeDialog()
@@ -494,8 +494,8 @@ ColumnLayout {
 
                     Layout.fillWidth: true
                     Layout.minimumHeight: Tokens.font.body.medium.pointSize + Tokens.padding.medium * 2
-                    inactiveColour: Colours.palette.m3primary
-                    inactiveOnColour: Colours.palette.m3onPrimary
+                    inactiveColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+                    inactiveOnColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                     text: Tr.tr("Connect")
                     enabled: passwordContainer.passwordBuffer.length > 0 && !connecting
 

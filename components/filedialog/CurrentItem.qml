@@ -24,7 +24,7 @@ Item {
             readonly property real roundingY: flatten ? root.implicitHeight / 2 : rounding
 
             strokeWidth: -1
-            fillColor: Colours.tPalette.m3surfaceContainer
+            fillColor: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
             startX: root.implicitWidth
             startY: root.implicitHeight

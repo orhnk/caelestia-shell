@@ -106,7 +106,7 @@ MouseArea {
         StyledRect {
             anchors.fill: parent
             radius: parent.radius
-            color: Colours.palette.m3surfaceContainerLow
+            color: Colours.pick(Colours.palette.m3base01, Colours.palette.m3surfaceContainerLow)
 
             ColumnLayout {
                 id: column

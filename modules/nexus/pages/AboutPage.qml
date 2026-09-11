@@ -78,7 +78,7 @@ PageBase {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: CUtils.version ? `v${CUtils.version}` : "…"
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     font: Tokens.font.body.medium
                 }
             }

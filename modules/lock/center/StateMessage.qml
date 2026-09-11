@@ -148,7 +148,7 @@ Item {
 
         scale: root.stateMsgShouldBeVisible && !root.msg ? 1 : 0.7
         opacity: root.stateMsgShouldBeVisible && !root.msg ? 1 : 0
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
 
         font: Tokens.font.body.small
         horizontalAlignment: Qt.AlignHCenter
@@ -174,7 +174,7 @@ Item {
 
         scale: 0.7
         opacity: 0
-        color: Colours.palette.m3error
+        color: Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
 
         font: Tokens.font.body.small
         horizontalAlignment: Qt.AlignHCenter

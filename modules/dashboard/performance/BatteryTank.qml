@@ -13,7 +13,7 @@ StyledClippingRect {
 
     property real animPerc: UPower.displayDevice.percentage
 
-    color: Colours.palette.m3secondaryContainer
+    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
     radius: Tokens.rounding.large
 
     implicitWidth: Config.dashboard.performance.showCpu || (Config.dashboard.performance.showGpu && Gpu.type !== GpuType.None) || Config.dashboard.performance.showStorage || Config.dashboard.performance.showMemory ? Tokens.sizes.dashboard.perfBattWidth : Tokens.sizes.dashboard.perfBattWidthSingle
@@ -29,9 +29,9 @@ StyledClippingRect {
         anchors.fill: parent
         anchors.margins: Tokens.padding.medium
 
-        accentColour: Colours.palette.m3primary
-        textColour: Colours.palette.m3onSurface
-        subTextColour: Colours.palette.m3onSurfaceVariant
+        accentColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+        textColour: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+        subTextColour: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
     }
 
     StyledRect {
@@ -40,7 +40,7 @@ StyledClippingRect {
         anchors.bottom: parent.bottom
         implicitHeight: parent.height * root.animPerc
 
-        color: Colours.palette.m3secondary
+        color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
         radius: Tokens.rounding.extraSmall
         clip: true
 
@@ -51,9 +51,9 @@ StyledClippingRect {
             anchors.margins: layout.anchors.margins
             height: layout.height
 
-            accentColour: Colours.palette.m3primaryContainer
-            textColour: Colours.palette.m3onSecondary
-            subTextColour: Colours.palette.m3secondaryContainer
+            accentColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+            textColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary)
+            subTextColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
         }
     }
 

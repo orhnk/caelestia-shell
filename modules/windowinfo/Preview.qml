@@ -30,7 +30,7 @@ Item {
 
         implicitWidth: view.implicitWidth
 
-        color: Colours.tPalette.m3surfaceContainer
+        color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
         radius: Tokens.rounding.medium
 
         Loader {
@@ -44,21 +44,21 @@ Item {
                 MaterialIcon {
                     Layout.alignment: Qt.AlignHCenter
                     text: "web_asset_off"
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     fontStyle: Tokens.font.icon.builders.extraLarge.scale(3).build()
                 }
 
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Tr.tr("No active client")
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.builders.large.size(28).weight(Font.Medium).build()
                 }
 
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Tr.tr("Try switching to a window")
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.large
                 }
             }

@@ -30,7 +30,7 @@ Item {
     BlobGroup {
         id: blobGroup
 
-        color: Colours.palette.m3surfaceContainerHighest
+        color: Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest)
         smoothing: root.Tokens.rounding.medium
         cornerFill: false
 
@@ -120,7 +120,7 @@ Item {
 
             anchors.centerIn: parent
             text: "view_apps"
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             fontStyle: Tokens.font.icon.medium
         }
     }

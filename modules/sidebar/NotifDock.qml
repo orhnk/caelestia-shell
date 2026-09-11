@@ -44,7 +44,7 @@ Item {
             opacity: root.notifCount > 0 ? 1 : 0
 
             text: root.notifCount
-            color: Colours.palette.m3outline
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
             font: Tokens.font.label.large
 
             Behavior on anchors.leftMargin {
@@ -68,7 +68,7 @@ Item {
 
             // TRANSLATORS: the count itself is rendered separately, immediately to the left
             text: root.notifCount > 0 ? Tr.trCtxN("notification", "notifications", root.notifCount, "notification count label, number shown separately") : Tr.tr("Notifications")
-            color: Colours.palette.m3outline
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
             font: Tokens.font.label.large
             elide: Text.ElideRight
         }
@@ -103,7 +103,7 @@ Item {
 
                     layer.enabled: true
                     layer.effect: Colouriser {
-                        colorizationColor: Colours.palette.m3outlineVariant
+                        colorizationColor: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                         brightness: 1
                     }
                 }
@@ -111,7 +111,7 @@ Item {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Tr.tr("All up to date!")
-                    color: Colours.palette.m3outlineVariant
+                    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                     font: Tokens.font.headline.builders.small.width(90).build()
                 }
             }

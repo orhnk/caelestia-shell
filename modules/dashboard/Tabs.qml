@@ -107,7 +107,7 @@ Item {
         anchors.right: parent.right
 
         implicitHeight: 1
-        color: Colours.palette.m3outlineVariant
+        color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
     }
 
     component Tab: TabButton {

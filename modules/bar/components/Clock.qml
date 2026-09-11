@@ -20,7 +20,7 @@ StyledRect {
     implicitWidth: Tokens.sizes.bar.innerWidth
     implicitHeight: layout.implicitHeight + root.padding * 2
 
-    color: Qt.alpha(Colours.tPalette.m3surfaceContainer, Config.bar.clock.background ? Colours.tPalette.m3surfaceContainer.a : 0)
+    color: Qt.alpha(Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer), Config.bar.clock.background ? Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer).a : 0)
     radius: Tokens.rounding.full
 
     ColumnLayout {

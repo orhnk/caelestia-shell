@@ -23,8 +23,8 @@ ColumnLayout {
         placeholderText: Tr.tr("Search settings")
         font: Tokens.font.body.large
 
-        bg.color: Colours.tPalette.m3surfaceContainerLowest
-        bg.border.color: Colours.palette.m3outlineVariant
+        bg.color: Colours.pick(Colours.tPalette.m3base01, Colours.tPalette.m3surfaceContainerLowest)
+        bg.border.color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
         searchIcon.fontStyle: Tokens.font.icon.medium
         searchIcon.anchors.leftMargin: Tokens.padding.largeIncreased
         clearIcon.font: Tokens.font.icon.medium

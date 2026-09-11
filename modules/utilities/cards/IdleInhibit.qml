@@ -15,7 +15,7 @@ StyledRect {
     implicitHeight: nonAnimHeight
 
     radius: Tokens.rounding.large
-    color: Colours.tPalette.m3surfaceContainer
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     clip: true
 
     RowLayout {
@@ -32,14 +32,14 @@ StyledRect {
             implicitHeight: icon.implicitHeight + Tokens.padding.large
 
             radius: Tokens.rounding.full
-            color: IdleInhibitor.enabled ? Accents.base0A : Colours.palette.m3secondaryContainer
+            color: Accents.base0A
 
             MaterialIcon {
                 id: icon
 
                 anchors.centerIn: parent
                 text: "coffee"
-                color: IdleInhibitor.enabled ? Colours.on(Accents.base0A) : Colours.palette.m3onSecondaryContainer
+                color: Colours.on(Accents.base0A)
                 fontStyle: Tokens.font.icon.large
             }
         }
@@ -58,7 +58,7 @@ StyledRect {
             StyledText {
                 Layout.fillWidth: true
                 text: IdleInhibitor.enabled ? Tr.trCtx("Preventing sleep mode", "idle inhibitor") : Tr.trCtx("Normal power management", "idle inhibitor")
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
                 elide: Text.ElideRight
             }
@@ -90,7 +90,7 @@ StyledRect {
             implicitHeight: activeText.implicitHeight + Tokens.padding.small
 
             radius: Tokens.rounding.full
-            color: Colours.palette.m3primary
+            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
 
             StyledText {
                 id: activeText
@@ -98,7 +98,7 @@ StyledRect {
                 anchors.centerIn: parent
                 // TRANSLATORS: %1 = a clock time, e.g. 14:30
                 text: Tr.tr("Active since %1").arg(Qt.formatTime(IdleInhibitor.enabledSince, GlobalConfig.services.useTwelveHourClock ? "hh:mm a" : "hh:mm"))
-                color: Colours.palette.m3onPrimary
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                 font: Tokens.font.body.builders.small.size(Math.round(Tokens.font.body.small.pointSize * 0.9)).build()
             }
         }

@@ -16,7 +16,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
         animate: true
         text: Weather.description
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         font: Tokens.font.body.large
     }
 
@@ -29,14 +29,14 @@ ColumnLayout {
 
             animate: true
             text: Weather.temp
-            color: Colours.palette.m3primary
+            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
             font: Tokens.font.headline.builders.large.scale(1.5).weight(Font.DemiBold).width(80).build()
         }
 
         MaterialIcon {
             animate: true
             text: Weather.icon
-            color: Colours.palette.m3secondary
+            color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
             fontStyle: Tokens.font.headline.builders.large.scale(1.5).build()
         }
     }
@@ -47,7 +47,7 @@ ColumnLayout {
         animate: true
         // TRANSLATORS: %1 = apparent temperature, unit already included
         text: Tr.tr("Feels like %1").arg(Weather.temp)
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         font: Tokens.font.body.large
     }
 
@@ -60,7 +60,7 @@ ColumnLayout {
             // TRANSLATORS: %1/%2 = today's max and min temperature, units already included
             return Tr.tr("High %1 • Low %2").arg(Weather.formatTemp(today?.maxTempC)).arg(Weather.formatTemp(today?.minTempC));
         }
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         font: Tokens.font.body.medium
     }
 }

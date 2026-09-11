@@ -210,7 +210,7 @@ WlSessionLockSurface {
             id: lockBg
 
             anchors.fill: parent
-            color: Colours.palette.m3surface
+            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface)
             radius: parent.radius
             opacity: Colours.transparency.enabled ? Colours.transparency.base : 1
 
@@ -218,7 +218,7 @@ WlSessionLockSurface {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 blurMax: 15
-                shadowColor: Qt.alpha(Colours.palette.m3shadow, 0.7)
+                shadowColor: Qt.alpha(Colours.pick(Colours.palette.m3base00, Colours.palette.m3shadow), 0.7)
             }
         }
 

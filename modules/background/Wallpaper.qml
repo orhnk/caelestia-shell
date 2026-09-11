@@ -42,7 +42,7 @@ Item {
         active: root.completed && !root.source
 
         sourceComponent: StyledRect {
-            color: Colours.palette.m3surfaceContainer
+            color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer)
 
             Row {
                 anchors.centerIn: parent
@@ -50,7 +50,7 @@ Item {
 
                 MaterialIcon {
                     text: "sentiment_stressed"
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     fontStyle: Tokens.font.icon.builders.extraLarge.scale(5).build()
                 }
 
@@ -60,7 +60,7 @@ Item {
 
                     StyledText {
                         text: Tr.tr("Wallpaper missing?")
-                        color: Colours.palette.m3onSurfaceVariant
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                         font: Tokens.font.body.builders.large.size(28 * 2).weight(Font.Bold).build()
                     }
 
@@ -69,7 +69,7 @@ Item {
                         implicitHeight: selectWallText.implicitHeight + Tokens.padding.small
 
                         radius: Tokens.rounding.full
-                        color: Colours.palette.m3primary
+                        color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
 
                         FileDialog {
                             id: dialog
@@ -82,7 +82,7 @@ Item {
 
                         StateLayer {
                             radius: parent.radius
-                            color: Colours.palette.m3onPrimary
+                            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                             onClicked: dialog.open()
                         }
 
@@ -92,7 +92,7 @@ Item {
                             anchors.centerIn: parent
 
                             text: Tr.tr("Set it now!")
-                            color: Colours.palette.m3onPrimary
+                            color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
                             font: Tokens.font.body.large
                         }
                     }

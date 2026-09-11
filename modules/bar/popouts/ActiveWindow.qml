@@ -53,7 +53,7 @@ Item {
                 StyledText {
                     Layout.fillWidth: true
                     text: Hypr.activeToplevel?.lastIpcObject.class ?? ""
-                    color: Colours.palette.m3onSurfaceVariant
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     elide: Text.ElideRight
                 }
             }

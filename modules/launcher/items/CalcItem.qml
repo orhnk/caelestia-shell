@@ -52,10 +52,10 @@ Item {
 
             color: {
                 if (text.includes("error: ") || text.includes("warning: "))
-                    return Colours.palette.m3error;
+                    return Colours.pick(Colours.palette.m3base08, Colours.palette.m3error);
                 if (!root.math)
-                    return Colours.palette.m3onSurfaceVariant;
-                return Colours.palette.m3onSurface;
+                    return Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant);
+                return Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface);
             }
 
             text: root.math.length > 0 ? (Qalculator.result ? Tr.trMarked(Qalculator.result) : Tr.tr("Calculating...")) : Tr.tr("Type an expression to calculate")
@@ -66,7 +66,7 @@ Item {
         }
 
         StyledRect {
-            color: Colours.palette.m3tertiary
+            color: Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary)
             radius: Tokens.rounding.large
             clip: true
 
@@ -83,7 +83,7 @@ Item {
                     root.list.screenState.launcher = false;
                 }
 
-                color: Colours.palette.m3onTertiary
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary)
             }
 
             StyledText {
@@ -94,7 +94,7 @@ Item {
                 anchors.rightMargin: Tokens.spacing.small
 
                 text: Tr.tr("Open in calculator")
-                color: Colours.palette.m3onTertiary
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary)
                 font: Tokens.font.label.medium
 
                 opacity: stateLayer.containsMouse ? 1 : 0
@@ -114,7 +114,7 @@ Item {
                 anchors.rightMargin: Tokens.padding.medium
 
                 text: "open_in_new"
-                color: Colours.palette.m3onTertiary
+                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onTertiary)
                 fontStyle: Tokens.font.icon.large
             }
 

@@ -133,7 +133,7 @@ ColumnLayout {
         Layout.topMargin: Tokens.spacing.small
 
         implicitHeight: 1
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         opacity: 0.35
     }
 

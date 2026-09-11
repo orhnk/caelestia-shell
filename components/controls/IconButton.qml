@@ -12,17 +12,17 @@ ButtonBase {
     font: Tokens.font.icon.medium
     padding: type === IconButton.Text ? Tokens.padding.extraSmall / 2 : Tokens.padding.small
 
-    activeColour: type === IconButton.Filled ? Colours.palette.m3primary : Colours.palette.m3secondary
+    activeColour: type === IconButton.Filled ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
     inactiveColour: {
         if (!isToggle && type === IconButton.Filled)
-            return Colours.palette.m3primary;
-        return type === IconButton.Filled ? Colours.tPalette.m3surfaceContainer : Colours.palette.m3secondaryContainer;
+            return Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary);
+        return type === IconButton.Filled ? Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer);
     }
-    activeOnColour: type === IconButton.Filled ? Colours.palette.m3onPrimary : type === IconButton.Tonal ? Colours.palette.m3onSecondary : Colours.palette.m3primary
+    activeOnColour: type === IconButton.Filled ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary) : type === IconButton.Tonal ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary) : Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
     inactiveOnColour: {
         if (!isToggle && type === IconButton.Filled)
-            return Colours.palette.m3onPrimary;
-        return type === IconButton.Tonal ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant;
+            return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary);
+        return type === IconButton.Tonal ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant);
     }
 
     implicitWidth: implicitHeight

@@ -67,7 +67,7 @@ PageBase {
                     Layout.fillWidth: true
                     visible: text
                     text: (root.app?.comment || root.app?.genericName) ?? ""
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.small
                     wrapMode: Text.WordWrap
                 }
@@ -163,7 +163,7 @@ PageBase {
 
                 Layout.fillWidth: true
                 Layout.maximumWidth: implicitWidth + 1 // Whyyyyyyyyy
-                color: Colours.palette.m3onSurfaceVariant
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.small
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }

@@ -98,7 +98,7 @@ PageBase {
             Layout.leftMargin: Tokens.padding.small
             // TRANSLATORS: the four names in brackets are provider identifiers, leave them untranslated
             text: Tr.tr("Built-in names (wireguard, warp, tailscale, netbird) auto-fill their commands. For others, provide the connect/disconnect commands.")
-            color: Colours.palette.m3onSurfaceVariant
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
             font: Tokens.font.body.small
             wrapMode: Text.WordWrap
         }
@@ -181,8 +181,8 @@ PageBase {
                 isRound: true
                 horizontalPadding: Tokens.padding.extraLarge
                 verticalPadding: Tokens.padding.medium
-                inactiveColour: Colours.palette.m3errorContainer
-                inactiveOnColour: Colours.palette.m3onErrorContainer
+                inactiveColour: Colours.pick(Colours.palette.m3base03, Colours.palette.m3errorContainer)
+                inactiveOnColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3onErrorContainer)
                 iconLabel.fill: 1
                 iconLabel.grade: 25
                 icon: "delete_forever"

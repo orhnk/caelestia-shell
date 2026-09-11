@@ -22,7 +22,7 @@ StyledRect {
 
     radius: Tokens.rounding.medium
     color: {
-        const c = root.modelData?.urgency === "critical" ? Colours.palette.m3secondaryContainer : Colours.layer(Colours.palette.m3surfaceContainerHigh, 2);
+        const c = root.modelData?.urgency === "critical" ? Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 2);
         return expanded ? c : Qt.alpha(c, 0);
     }
 
@@ -63,7 +63,7 @@ StyledRect {
 
         width: parent.width
         text: root.modelData?.summary ?? ""
-        color: root.modelData?.urgency === "critical" ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
+        color: root.modelData?.urgency === "critical" ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         maximumLineCount: 1
@@ -90,7 +90,7 @@ StyledRect {
 
         sourceComponent: StyledText {
             text: String(root.modelData?.body ?? "").replace(/\n/g, " ")
-            color: root.modelData?.urgency === "critical" ? Colours.palette.m3secondary : Colours.palette.m3outline
+            color: root.modelData?.urgency === "critical" ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
             elide: Text.ElideRight
         }
     }
@@ -105,7 +105,7 @@ StyledRect {
         sourceComponent: StyledText {
             animate: true
             text: root.modelData?.timeStr ?? ""
-            color: Colours.palette.m3outline
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
             font: Tokens.font.body.small
         }
     }
@@ -137,7 +137,7 @@ StyledRect {
             Layout.fillWidth: true
             textFormat: Text.MarkdownText
             text: String(root.modelData?.body ?? "").replace(/(.)\n(?!\n)/g, "$1\n\n") || Tr.tr("No body here! :/")
-            color: root.modelData?.urgency === "critical" ? Colours.palette.m3secondary : Colours.palette.m3outline
+            color: root.modelData?.urgency === "critical" ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
             wrapMode: Text.WordWrap
 
             onLinkActivated: link => {

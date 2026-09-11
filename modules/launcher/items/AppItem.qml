@@ -62,7 +62,7 @@ Item {
 
                 text: (root.modelData?.comment || root.modelData?.genericName || root.modelData?.name) ?? ""
                 font: Tokens.font.body.small
-                color: Colours.palette.m3outline
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
 
                 elide: Text.ElideRight
                 width: root.width - icon.width - favouriteIcon.width - Tokens.rounding.extraLargeIncreased
@@ -82,7 +82,7 @@ Item {
             sourceComponent: MaterialIcon {
                 text: "favorite"
                 fill: 1
-                color: Colours.palette.m3primary
+                color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
             }
         }
     }

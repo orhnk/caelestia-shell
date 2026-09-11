@@ -107,14 +107,14 @@ PageBase {
                 MaterialIcon {
                     Layout.alignment: Qt.AlignHCenter
                     text: "map"
-                    color: Colours.palette.m3outlineVariant
+                    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                     fontStyle: Tokens.font.icon.extraLarge
                 }
 
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Tr.tr("Location picker coming soon")
-                    color: Colours.palette.m3outlineVariant
+                    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                     font: Tokens.font.title.small
                 }
 
@@ -123,7 +123,7 @@ PageBase {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     text: Tr.tr("Choose your weather location on a map in a future update")
-                    color: Colours.palette.m3outlineVariant
+                    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                     font: Tokens.font.body.small
                 }
             }

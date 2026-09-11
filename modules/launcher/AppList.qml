@@ -70,7 +70,7 @@ StyledListView {
     highlightFollowsCurrentItem: false
     highlight: StyledRect {
         radius: Tokens.rounding.large
-        color: Colours.palette.m3onSurface
+        color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
         opacity: 0.08
 
         y: root.currentItem?.y ?? 0

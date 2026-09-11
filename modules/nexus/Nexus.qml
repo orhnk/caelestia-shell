@@ -16,7 +16,7 @@ Item {
 
         onClose: root.close()
     }
-    property color blobColour: Colours.tPalette.m3surfaceContainerLow
+    property color blobColour: Colours.pick(Colours.tPalette.m3base01, Colours.tPalette.m3surfaceContainerLow)
 
     signal close
 
@@ -72,7 +72,7 @@ Item {
         icon: nState.isWindow ? "close" : "pip"
         type: IconButton.Text
         label.fill: 0
-        inactiveOnColour: hovered ? nState.isWindow ? Colours.palette.m3error : Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+        inactiveOnColour: hovered ? nState.isWindow ? Colours.pick(Colours.palette.m3base08, Colours.palette.m3error) : Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         stateLayer.opacity: 0
         onClicked: {
             if (!nState.isWindow)

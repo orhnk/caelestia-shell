@@ -69,7 +69,7 @@ Item {
         text: nonAnimPlaceholder.text
 
         animate: true
-        color: root.pam.passwd.active ? Colours.palette.m3secondary : Colours.palette.m3outline
+        color: root.pam.passwd.active ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
         font: Tokens.font.body.builders.medium.scale(root.centerScale).width(110).build()
 
         opacity: root.buffer ? 0 : 1
@@ -229,7 +229,7 @@ Item {
             anchors.centerIn: parent
             implicitSize: charList.implicitHeight * 1.5
             shape: root.shapeQueue[char.index % root.shapeQueue.length] ?? MaterialShape.Circle
-            color: Colours.palette.m3onSurface
+            color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
 
             opacity: root.showPassword ? 0 : 1
 

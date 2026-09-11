@@ -95,7 +95,7 @@ Item {
                         Layout.topMargin: (pathBounds().height - implicitSize) / 2
                         Layout.bottomMargin: (pathBounds().height - implicitSize) / 2 + Tokens.spacing.small
                         Layout.alignment: Qt.AlignHCenter
-                        color: Colours.palette.m3primaryContainer
+                        color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
                         implicitSize: icon.implicitHeight + Tokens.padding.extraLarge * 2
                         shape: MaterialShape.ClamShell
 
@@ -109,7 +109,7 @@ Item {
                             anchors.centerIn: parent
                             text: "queue_music"
                             fontStyle: Tokens.font.icon.builders.large.scale(2).build()
-                            color: Colours.palette.m3onPrimaryContainer
+                            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
                         }
                     }
 
@@ -121,7 +121,7 @@ Item {
 
                     StyledText {
                         text: Tr.tr("Play something for it to show up here!")
-                        color: Colours.palette.m3onSurfaceVariant
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                         font: Tokens.font.body.large
                     }
                 }

@@ -27,7 +27,7 @@ Singleton {
     readonly property list<color> wsColors: [base08, base09, base0A, base0B, base0C]
     readonly property list<color> statusColors: [base0E, base0D, base0C, base0B, base0A, base09, base08]
     readonly property list<color> popListColors: [base0B, base0C, base0D, base0E]
-    readonly property list<color> toggleColors: [base08, base09, base0A, base0B, base0C, base0D]
+    readonly property list<color> toggleColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
     readonly property list<color> topMenuColors: [base08, base09, base0A, base0B]
     readonly property list<color> sessionColors: [base0C, base0B, base0A, base09]
     readonly property list<color> weekColors: [base08, base09, base0A, base0B, base0C]
@@ -42,12 +42,12 @@ Singleton {
             return Qt.alpha(c, opacity);
         if (opacity >= 1)
             return Qt.rgba(c.r, c.g, c.b, 1);
-        return mix(c, Colours.palette.m3surface, 1 - opacity);
+        return mix(c, Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface), 1 - opacity);
     }
 
     function at(colors: var, index: int): color {
         if (!colors || colors.length === 0)
-            return Colours.palette.m3primary;
+            return Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary);
         const i = ((index % colors.length) + colors.length) % colors.length;
         return colors[i];
     }

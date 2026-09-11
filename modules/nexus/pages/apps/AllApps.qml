@@ -76,7 +76,7 @@ PageBase {
                             Layout.fillWidth: true
                             visible: text
                             text: (appItem.modelData.comment || appItem.modelData.genericName) ?? ""
-                            color: Colours.palette.m3outline
+                            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                             font: Tokens.font.label.small
                             elide: Text.ElideRight
                         }
@@ -86,13 +86,13 @@ PageBase {
                         visible: Strings.testRegexList(GlobalConfig.launcher.favouriteApps, appItem.modelData.id)
                         text: "favorite"
                         fill: 1
-                        color: Colours.palette.m3primary
+                        color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
                         fontStyle: Tokens.font.icon.small
                     }
 
                     MaterialIcon {
                         text: "chevron_right"
-                        color: Colours.palette.m3onSurfaceVariant
+                        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                         fontStyle: Tokens.font.icon.medium
                     }
                 }

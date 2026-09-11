@@ -16,14 +16,14 @@ Item {
     readonly property alias shape: shape
 
     property bool hadPrevious
-    property color fallbackColour: Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
+    property color fallbackColour: Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 2)
 
     // Slight glow to separate from bg
     layer.enabled: true
     layer.effect: MultiEffect {
         shadowEnabled: true
         blurMax: 1
-        shadowColor: Colours.palette.m3outline
+        shadowColor: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
         shadowOpacity: 0.3
     }
 
@@ -62,7 +62,7 @@ Item {
 
         grade: 200
         text: image.status === Image.Error ? "broken_image" : "art_track"
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         fontStyle: Tokens.font.icon.size((parent.width * 0.35) || 1).build()
         opacity: image.status === Image.Null || image.status === Image.Error ? 1 : 0
         animate: true
@@ -82,7 +82,7 @@ Item {
 
         sourceComponent: LoadingIndicator {
             implicitSize: root.width * 0.3
-            color: Colours.palette.m3primaryContainer
+            color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
         }
 
         Behavior on opacity {

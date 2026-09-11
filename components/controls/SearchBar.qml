@@ -24,7 +24,7 @@ TextFieldBase {
         id: bg
 
         anchors.fill: parent
-        color: Colours.tPalette.m3surfaceContainer
+        color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
         radius: Tokens.rounding.full
 
         StateLayer {
@@ -65,7 +65,7 @@ TextFieldBase {
         anchors.leftMargin: Tokens.padding.large
 
         text: "search"
-        color: Colours.palette.m3onSurfaceVariant
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
         fontStyle: Tokens.font.icon.builders.medium.scale(0.9).build()
     }
 

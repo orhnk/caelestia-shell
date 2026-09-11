@@ -120,9 +120,9 @@ ListView {
                 item.radiusLerpProg: 1
                 placeholder.opacity: 0.1
                 elevation.opacity: 1
-                itemBg.color: Colours.palette.m3primaryContainer
-                dragIcon.color: Colours.palette.m3onPrimaryContainer
-                label.color: Colours.palette.m3onPrimaryContainer
+                itemBg.color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+                dragIcon.color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
+                label.color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3onPrimaryContainer)
             }
         }
 
@@ -146,7 +146,7 @@ ListView {
             id: placeholder
 
             anchors.fill: parent
-            color: Colours.palette.m3primary
+            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
             radius: Tokens.rounding.extraSmall
             topLeftRadius: item.topRadius
             topRightRadius: item.topRadius
@@ -246,7 +246,7 @@ ListView {
                 id: itemBg
 
                 anchors.fill: parent
-                color: Colours.tPalette.m3surfaceContainer
+                color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
                 radius: item.lerpRadius(Tokens.rounding.extraSmall, Tokens.rounding.large)
                 topLeftRadius: item.lerpRadius(item.topRadius, Tokens.rounding.large)
                 topRightRadius: item.lerpRadius(item.topRadius, Tokens.rounding.large)
@@ -265,7 +265,7 @@ ListView {
                     radius: itemBg.radius
                     topLeftRadius: itemBg.topLeftRadius
                     topRightRadius: itemBg.topRightRadius
-                    color: Colours.palette.m3onSurface
+                    color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                     opacity: parent.containsMouse && !item.held ? 0.08 : 0
 
                     Behavior on opacity {
@@ -290,7 +290,7 @@ ListView {
                     id: dragIcon
 
                     text: "drag_indicator"
-                    color: Qt.alpha(Colours.palette.m3onSurfaceVariant, enabledSwitch.checked ? 1 : 0.5)
+                    color: Qt.alpha(Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant), enabledSwitch.checked ? 1 : 0.5)
                     fontStyle: Tokens.font.icon.medium
                 }
 
@@ -299,7 +299,7 @@ ListView {
 
                     Layout.fillWidth: true
                     text: root.labelFor(item.modelData)
-                    color: Qt.alpha(Colours.palette.m3onSurface, enabledSwitch.checked ? 1 : 0.5)
+                    color: Qt.alpha(Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface), enabledSwitch.checked ? 1 : 0.5)
                     elide: Text.ElideRight
                 }
 
@@ -315,7 +315,7 @@ ListView {
                     type: IconButton.Text
                     isRound: true
                     icon: "delete"
-                    inactiveOnColour: Colours.palette.m3error
+                    inactiveOnColour: Colours.pick(Colours.palette.m3base08, Colours.palette.m3error)
                     font: Tokens.font.icon.medium
                     label.fill: 0
 

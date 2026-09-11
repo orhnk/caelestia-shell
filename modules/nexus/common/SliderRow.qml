@@ -16,7 +16,7 @@ ConnectedRect {
     property alias label: label.text
     property alias valueLabel: valueLabel.text
     property real value
-    property color accent: Colours.palette.m3primary
+    property color accent: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
 
     signal moved(value: real)
 
@@ -57,7 +57,7 @@ ConnectedRect {
                 StyledText {
                     id: valueLabel
 
-                    color: Colours.palette.m3outline
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.small
                 }
             }
@@ -81,7 +81,7 @@ ConnectedRect {
                     implicitHeight: parent.implicitHeight
 
                     radius: Tokens.rounding.small
-                    fgColour: root.enabled ? root.accent : Qt.alpha(Colours.palette.m3onSurface, 0.38)
+                    fgColour: root.enabled ? root.accent : Qt.alpha(Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface), 0.38)
                     value: root.value
                     enabled: root.enabled
                     onInteraction: v => root.moved(v)

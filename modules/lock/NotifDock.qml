@@ -25,7 +25,7 @@ ColumnLayout {
     StyledText {
         Layout.fillWidth: true
         text: Notifs.list.length > 0 ? Tr.trN("%n notification", "%n notifications", Notifs.list.length) : Tr.tr("Notifications")
-        color: Colours.palette.m3outline
+        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
         font: Tokens.font.mono.builders.small.weight(Font.Medium).build()
         elide: Text.ElideRight
     }
@@ -56,7 +56,7 @@ ColumnLayout {
 
                     layer.enabled: true
                     layer.effect: Colouriser {
-                        colorizationColor: Colours.palette.m3outlineVariant
+                        colorizationColor: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                         brightness: 1
                     }
                 }
@@ -64,7 +64,7 @@ ColumnLayout {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Config.lock.hideNotifs ? Tr.tr("Unlock for notifications") : Tr.tr("No notifications")
-                    color: Colours.palette.m3outlineVariant
+                    color: Colours.pick(Colours.palette.m3base02, Colours.palette.m3outlineVariant)
                     font: Tokens.font.mono.builders.large.weight(Font.Medium).build()
                 }
             }

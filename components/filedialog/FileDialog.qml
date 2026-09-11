@@ -53,7 +53,7 @@ LazyLoader {
         implicitHeight: 600
         minimumSize.width: 400
         minimumSize.height: 300
-        color: Colours.tPalette.m3surface
+        color: Colours.pick(Colours.tPalette.m3base00, Colours.tPalette.m3surface)
         surfaceFormat.opaque: false
         title: loader.title
 

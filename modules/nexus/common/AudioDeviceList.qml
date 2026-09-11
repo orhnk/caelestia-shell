@@ -57,14 +57,14 @@ ItemList {
                 implicitWidth: implicitHeight
                 implicitHeight: devIcon.implicitHeight + Tokens.padding.small * 2
                 radius: Tokens.rounding.full
-                color: device.active ? Colours.palette.m3primary : Colours.palette.m3secondaryContainer
+                color: device.active ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
 
                 MaterialIcon {
                     id: devIcon
 
                     anchors.centerIn: parent
                     text: root.iconName
-                    color: device.active ? Colours.palette.m3onPrimary : Colours.palette.m3onSecondaryContainer
+                    color: device.active ? Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary) : Colours.pick(Colours.palette.m3base0C, Colours.palette.m3onSecondaryContainer)
                     fontStyle: Tokens.font.icon.medium
                     fill: device.active ? 1 : 0
 
@@ -83,7 +83,7 @@ ItemList {
 
             MaterialIcon {
                 text: "check"
-                color: Colours.palette.m3primary
+                color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
                 fontStyle: Tokens.font.icon.medium
                 opacity: device.active ? 1 : 0
 
