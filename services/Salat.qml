@@ -17,7 +17,6 @@ Singleton {
     property list<var> prayers
     property int nextIndex: -1
     property string day
-    property string hijri
     property bool isFriday: false
     property string nextIn
     property int nextHours
@@ -126,9 +125,6 @@ Singleton {
             if (!timings)
                 return;
 
-            const hijri = json.data?.date?.hijri;
-            if (hijri)
-                root.hijri = `${hijri.day} ${hijri.month?.en ?? ""} ${hijri.year}`;
             root.isFriday = json.data?.date?.gregorian?.weekday?.en === "Friday";
 
             prayers = names.map(n => {

@@ -31,16 +31,6 @@ Item {
             elide: Text.ElideRight
         }
 
-        StyledText {
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            visible: text.length > 0
-            text: Salat.hijri
-            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
-            font: Tokens.font.body.builders.small.letterSpacing(1).build()
-            elide: Text.ElideRight
-        }
-
         Repeater {
             model: Salat.prayers
 
