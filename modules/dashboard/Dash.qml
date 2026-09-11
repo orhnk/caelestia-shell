@@ -58,6 +58,13 @@ GridLayout {
             anchors.margins: Tokens.padding.small
             spacing: Tokens.spacing.small
 
+            PrayerTimes {
+                id: prayerTimes
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+
             DateTime {
                 id: countdown
 
@@ -65,13 +72,6 @@ GridLayout {
                 Layout.preferredHeight: countdown.implicitHeight
                 hour: Salat.nextNow || Salat.nextIndex < 0 ? Time.hourStr : String(Salat.nextHours)
                 minute: Salat.nextNow || Salat.nextIndex < 0 ? Time.minuteStr : String(Salat.nextMins).padStart(2, "0")
-            }
-
-            PrayerTimes {
-                id: prayerTimes
-
-                Layout.fillWidth: true
-                Layout.fillHeight: true
             }
         }
     }

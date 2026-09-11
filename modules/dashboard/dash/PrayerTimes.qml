@@ -87,7 +87,7 @@ Item {
                     StyledText {
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.mono.builders.medium.weight(Font.Medium).build()
+                        font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
                     }
                 }
             }

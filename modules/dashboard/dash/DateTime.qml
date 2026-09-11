@@ -16,44 +16,49 @@ Item {
     implicitWidth: layout.implicitWidth
     implicitHeight: layout.implicitHeight
 
-    RowLayout {
+    ColumnLayout {
         id: layout
 
         anchors.centerIn: parent
-        spacing: Tokens.spacing.extraSmall
+        spacing: 0
 
-        TextMetrics {
-            id: digitMetrics
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: Tokens.spacing.extraSmall
 
-            font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
-            text: "00"
-        }
+            TextMetrics {
+                id: digitMetrics
 
-        StyledText {
-            Layout.preferredWidth: digitMetrics.width
-            horizontalAlignment: Text.AlignHCenter
-            text: root.hour
-            color: Accents.base0A
-            font: digitMetrics.font
-        }
+                font: Tokens.font.clock.size(24).weight(Font.DemiBold).build()
+                text: "00"
+            }
 
-        StyledText {
-            text: "⋮"
-            color: Accents.base0F
-            font: Tokens.font.clock.size(24 * 0.9).weight(Font.DemiBold).build()
-        }
+            StyledText {
+                Layout.preferredWidth: digitMetrics.width
+                horizontalAlignment: Text.AlignHCenter
+                text: root.hour
+                color: Accents.base0A
+                font: digitMetrics.font
+            }
 
-        StyledText {
-            Layout.preferredWidth: digitMetrics.width
-            horizontalAlignment: Text.AlignHCenter
-            text: root.minute
-            color: Accents.base0A
-            font: digitMetrics.font
+            StyledText {
+                text: "⋮"
+                color: Accents.base0F
+                font: Tokens.font.clock.size(24 * 0.9).weight(Font.DemiBold).build()
+            }
+
+            StyledText {
+                Layout.preferredWidth: digitMetrics.width
+                horizontalAlignment: Text.AlignHCenter
+                text: root.minute
+                color: Accents.base0A
+                font: digitMetrics.font
+            }
         }
 
         Loader {
             asynchronous: true
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
 
             active: GlobalConfig.services.useTwelveHourClock
             visible: active
