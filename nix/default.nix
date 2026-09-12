@@ -123,6 +123,7 @@ in
         ./../shell.qml
         ./../assets
         ./../components
+        ./../data
         ./../modules
         ./../services
         ./../utils
