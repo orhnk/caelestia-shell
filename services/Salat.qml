@@ -325,6 +325,11 @@ Singleton {
             fetchTimings();
     }
 
+    function refresh(): void {
+        monthCache = ({});
+        fetchTimings();
+    }
+
     Connections {
         function onLocChanged(): void {
             monthCache = ({});
@@ -379,11 +384,21 @@ Singleton {
         interval: 1000
         onTriggered: salatStorage.setText(JSON.stringify({
             reminderMins: root.reminderMins,
+            method: root.method,
+            school: root.school,
             months: root.diskMonths
         }))
     }
 
     onReminderMinsChanged: settingsSaveTimer.restart()
+    onMethodChanged: {
+        settingsSaveTimer.restart();
+        refresh();
+    }
+    onSchoolChanged: {
+        settingsSaveTimer.restart();
+        refresh();
+    }
 
     FileView {
         id: salatStorage
@@ -395,6 +410,10 @@ Singleton {
                 const data = JSON.parse(text());
                 if (Number.isFinite(Number(data.reminderMins)))
                     root.reminderMins = Math.max(0, Math.min(60, Math.round(Number(data.reminderMins))));
+                if (Number.isFinite(Number(data.method)))
+                    root.method = Math.round(Number(data.method));
+                if (data.school === 0 || data.school === 1)
+                    root.school = data.school;
                 if (data.months && typeof data.months === "object")
                     root.diskMonths = data.months;
             } catch (error) {

@@ -37,6 +37,44 @@ PageBase {
         }
     ]
 
+    readonly property list<MenuItem> madhabItems: [
+        MenuItem {
+            text: Tr.tr("Shafi")
+            value: 0
+        },
+        MenuItem {
+            text: Tr.tr("Hanafi")
+            value: 1
+        }
+    ]
+
+    readonly property list<MenuItem> salatMethodItems: [
+        MenuItem {
+            text: Tr.tr("ISNA")
+            value: 2
+        },
+        MenuItem {
+            text: Tr.tr("Muslim World League")
+            value: 3
+        },
+        MenuItem {
+            text: Tr.tr("Karachi")
+            value: 1
+        },
+        MenuItem {
+            text: Tr.tr("Egypt")
+            value: 5
+        },
+        MenuItem {
+            text: Tr.tr("Turkey")
+            value: 13
+        },
+        MenuItem {
+            text: Tr.tr("Makkah")
+            value: 4
+        }
+    ]
+
     title: Tr.tr("Language & region")
 
     ColumnLayout {
@@ -127,6 +165,47 @@ PageBase {
                     font: Tokens.font.body.small
                 }
             }
+        }
+
+        // Prayer times
+        SectionHeader {
+            text: Tr.tr("Prayer times")
+        }
+
+        RowButton {
+            first: true
+            icon: "location_on"
+            text: Weather.city || Weather.loc || Tr.tr("Unknown location")
+            subtext: Tr.tr("Prayer location (follows weather location)")
+            trailingIcon: "refresh"
+            onClicked: {
+                Weather.reload();
+                Salat.refresh();
+            }
+        }
+
+        SelectRow {
+            label: Tr.tr("Madhab")
+            subtext: Tr.tr("Asr calculation (Hanafi uses a longer shadow)")
+            menuItems: root.madhabItems
+            active: root.madhabItems.find(i => i.value === Salat.school) ?? root.madhabItems[0]
+            onSelected: item => Salat.school = item.value
+        }
+
+        SelectRow {
+            label: Tr.tr("Calculation method")
+            subtext: Tr.tr("Fajr and Isha angles")
+            menuItems: root.salatMethodItems
+            active: root.salatMethodItems.find(i => i.value === Salat.method) ?? root.salatMethodItems[0]
+            onSelected: item => Salat.method = item.value
+        }
+
+        RowButton {
+            last: true
+            icon: "sync"
+            text: Tr.tr("Re-fetch times")
+            subtext: Tr.tr("Reload this month from Aladhan")
+            onClicked: Salat.refresh()
         }
 
         // Units
