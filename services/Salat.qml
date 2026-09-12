@@ -12,7 +12,9 @@ import qs.utils
 Singleton {
     id: root
 
+    // Aladhan calculation method id (2 = ISNA) and school (0 = Shafi, 1 = Hanafi)
     property int method: 2
+    property int school: 0
     property int reminderMins: 5
     property list<var> prayers
     property int nextIndex: -1
@@ -24,7 +26,25 @@ Singleton {
     property bool nextNow
     property string remindedKey
 
+    // "YYYY-M" -> { "DD-MM-YYYY": { fajr, dhuhr, asr, maghrib, isha } }
+    property var monthCache: ({})
+    property var diskMonths: ({})
+    property double lastRequestAt: 0
+    property var pendingFetch
+    property var pendingRetry
+
     readonly property list<string> names: ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
+    readonly property var retryableStatus: [408, 425, 429, 500, 502, 503, 504]
+
+    // Fajr/isha angles per method id; default = MWL (18/17)
+    readonly property var methodAngles: ({
+        1: [18, 18],
+        2: [15, 15],
+        3: [18, 17],
+        5: [19.5, 17.5],
+        7: [15, 15],
+        13: [18, 17]
+    })
 
     function label(name: string): string {
         if (name === "Dhuhr" && isFriday)
@@ -48,6 +68,24 @@ Singleton {
 
     function dayStamp(date: var): string {
         return `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth() + 1).padStart(2, "0")}-${date.getFullYear()}`;
+    }
+
+    function monthKey(date: var): string {
+        return `${date.getFullYear()}-${date.getMonth() + 1}`;
+    }
+
+    function locKey(): string {
+        const loc = Weather.loc;
+        if (!loc || loc.indexOf(",") === -1)
+            return "";
+        const [lat, lon] = loc.split(",").map(s => Number(s.trim()));
+        if (!Number.isFinite(lat) || !Number.isFinite(lon))
+            return "";
+        return `${lat.toFixed(4)},${lon.toFixed(4)}|`;
+    }
+
+    function cleanTime(raw: string): string {
+        return String(raw ?? "00:00").split(" ")[0];
     }
 
     function updateNext(): void {
@@ -103,44 +141,183 @@ Singleton {
         }
     }
 
-    function fetchTimings(): void {
+    function applyDay(): bool {
+        const now = new Date();
+        const stamp = dayStamp(now);
+        const key = locKey() + monthKey(now);
+        const entry = (monthCache[key] ?? {})[stamp] ?? (diskMonths[key] ?? {})[stamp];
+        if (!entry)
+            return false;
+
+        prayers = names.map(n => {
+            const time = entry[n.toLowerCase()] ?? "00:00";
+            return {
+                name: n,
+                time: time,
+                display: formatTime(time),
+                passed: false
+            };
+        });
+        day = stamp;
+        isFriday = now.getDay() === 5;
+        updateNext();
+        return true;
+    }
+
+    function calendarUrl(year: int, month: int, lat: string, lon: string): string {
+        return `https://api.aladhan.com/v1/calendar/${year}/${month}?latitude=${lat}&longitude=${lon}&method=${method}&school=${school}`;
+    }
+
+    function fetchMonth(year: int, month: int, attempt: int): void {
         const loc = Weather.loc;
         if (!loc || loc.indexOf(",") === -1)
             return;
 
-        const [lat, lon] = loc.split(",").map(s => s.trim());
-        const stamp = dayStamp(new Date());
-        const url = `https://api.aladhan.com/v1/timings/${stamp}?latitude=${lat}&longitude=${lon}&method=${method}`;
+        // Politeness pace: min 0.12s between upstream requests
+        const wait = 120 - (Date.now() - lastRequestAt);
+        if (wait > 0) {
+            pendingFetch = [year, month, attempt];
+            paceTimer.interval = wait;
+            paceTimer.restart();
+            return;
+        }
+        lastRequestAt = Date.now();
 
-        Requests.get(url, text => {
+        const [lat, lon] = loc.split(",").map(s => s.trim());
+        Requests.get(calendarUrl(year, month, lat, lon), text => {
             let json;
             try {
                 json = JSON.parse(text);
             } catch (error) {
                 console.warn(lc, `Unable to parse response from aladhan: ${error}`);
+                fetchFailed(year, month, attempt, -1);
                 return;
             }
 
-            const timings = json.data?.timings;
-            if (!timings)
+            const data = Array.isArray(json.data) ? json.data : null;
+            if (!data || !data.length) {
+                fetchFailed(year, month, attempt, -1);
                 return;
+            }
 
-            root.isFriday = json.data?.date?.gregorian?.weekday?.en === "Friday";
+            const schedules = {};
+            for (const e of data) {
+                const dateStr = String(e.date?.gregorian?.date ?? "");
+                if (!/^\d{2}-\d{2}-\d{4}$/.test(dateStr))
+                    continue;
+                const timings = e.timings ?? {};
+                const day = {};
+                let usable = true;
+                for (const n of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) {
+                    const raw = timings[n[0].toUpperCase() + n.slice(1)] ?? timings[n];
+                    if (!raw) {
+                        usable = false;
+                        break;
+                    }
+                    day[n] = cleanTime(raw);
+                }
+                if (usable)
+                    schedules[dateStr] = day;
+            }
+            if (!Object.keys(schedules).length) {
+                fetchFailed(year, month, attempt, -1);
+                return;
+            }
 
-            prayers = names.map(n => {
-                const time = String(timings[n] ?? "00:00").split(" ")[0];
-                return {
-                    name: n,
-                    time: time,
-                    display: formatTime(time),
-                    passed: false
-                };
-            });
-            day = stamp;
-            updateNext();
-        }, error => {
-            console.warn(lc, `Aladhan request failed: ${error}`);
+            const key = locKey() + `${year}-${month}`;
+            monthCache[key] = schedules;
+            diskMonths[key] = schedules;
+            settingsSaveTimer.restart();
+            applyDay();
+        }, (error, metadata) => {
+            fetchFailed(year, month, attempt, metadata?.statusCode ?? -1);
         });
+    }
+
+    function fetchFailed(year: int, month: int, attempt: int, status: int): void {
+        if ((retryableStatus.includes(status) || status === -1) && attempt < 2) {
+            pendingRetry = [year, month, attempt + 1];
+            retryTimer.interval = 600 * (attempt + 1);
+            retryTimer.restart();
+            return;
+        }
+        console.warn(lc, "Aladhan request failed, falling back to offline calculator");
+        offlineCompute();
+    }
+
+    function fetchTimings(): void {
+        if (applyDay())
+            return;
+        const now = new Date();
+        fetchMonth(now.getFullYear(), now.getMonth() + 1, 0);
+    }
+
+    function offlineCompute(): void {
+        const angles = methodAngles[method] ?? [18, 17];
+        const asrFactor = school === 1 ? 2 : 1;
+        const now = new Date();
+
+        const loc = Weather.loc;
+        let lat = 41.0, lon = 29.0;
+        if (loc && loc.indexOf(",") !== -1) {
+            const parts = loc.split(",").map(s => s.trim());
+            if (Number.isFinite(Number(parts[0])))
+                lat = Number(parts[0]);
+            if (Number.isFinite(Number(parts[1])))
+                lon = Number(parts[1]);
+        }
+
+        const clamp = v => Math.max(-1, Math.min(1, v));
+        const latR = lat * Math.PI / 180;
+        const tzHours = -new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTimezoneOffset() / 60;
+        const startOfYear = new Date(now.getFullYear(), 0, 0);
+        const n = Math.floor((now - startOfYear) / 86400000);
+        const declR = -23.44 * Math.cos(2 * Math.PI * (n + 10) / 365.25) * Math.PI / 180;
+        const b = 2 * Math.PI * (n - 81) / 364;
+        const eot = 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b);
+        const transit = 720 - eot - 4 * (lon - 15 * tzHours);
+
+        const hourOffset = altDeg => {
+            const aR = altDeg * Math.PI / 180;
+            const cosH = clamp((Math.sin(aR) - Math.sin(latR) * Math.sin(declR)) / (Math.cos(latR) * Math.cos(declR)));
+            return Math.acos(cosH) * 180 / Math.PI * 4;
+        };
+        const toTime = total => {
+            total = ((total % 1440) + 1440) % 1440;
+            let h = Math.floor(total / 60);
+            let m = Math.round(total % 60);
+            if (m === 60) {
+                m = 0;
+                h += 1;
+            }
+            return `${String(h % 24).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+        };
+
+        const sunOff = hourOffset(-0.833);
+        const fajrOff = hourOffset(-angles[0]);
+        const ishaOff = hourOffset(-angles[1]);
+        const zenith = Math.abs(lat - declR * 180 / Math.PI);
+        const asrAlt = Math.atan(1 / (Math.tan(zenith * Math.PI / 180) + asrFactor)) * 180 / Math.PI;
+
+        const times = {
+            fajr: toTime(transit - fajrOff),
+            dhuhr: toTime(transit),
+            asr: toTime(transit + hourOffset(asrAlt)),
+            maghrib: toTime(transit + sunOff),
+            isha: toTime(transit + ishaOff)
+        };
+        prayers = names.map(n => {
+            const time = times[n.toLowerCase()];
+            return {
+                name: n,
+                time: time,
+                display: formatTime(time),
+                passed: false
+            };
+        });
+        day = dayStamp(now);
+        isFriday = now.getDay() === 5;
+        updateNext();
     }
 
     function reload(): void {
@@ -150,6 +327,7 @@ Singleton {
 
     Connections {
         function onLocChanged(): void {
+            monthCache = ({});
             root.fetchTimings();
         }
 
@@ -170,11 +348,38 @@ Singleton {
     }
 
     Timer {
+        id: paceTimer
+
+        repeat: false
+        onTriggered: {
+            if (root.pendingFetch) {
+                const [year, month, attempt] = root.pendingFetch;
+                root.pendingFetch = null;
+                root.fetchMonth(year, month, attempt);
+            }
+        }
+    }
+
+    Timer {
+        id: retryTimer
+
+        repeat: false
+        onTriggered: {
+            if (root.pendingRetry) {
+                const [year, month, attempt] = root.pendingRetry;
+                root.pendingRetry = null;
+                root.fetchMonth(year, month, attempt);
+            }
+        }
+    }
+
+    Timer {
         id: settingsSaveTimer
 
         interval: 1000
         onTriggered: salatStorage.setText(JSON.stringify({
-            reminderMins: root.reminderMins
+            reminderMins: root.reminderMins,
+            months: root.diskMonths
         }))
     }
 
@@ -190,15 +395,19 @@ Singleton {
                 const data = JSON.parse(text());
                 if (Number.isFinite(Number(data.reminderMins)))
                     root.reminderMins = Math.max(0, Math.min(60, Math.round(Number(data.reminderMins))));
+                if (data.months && typeof data.months === "object")
+                    root.diskMonths = data.months;
             } catch (error) {
                 console.warn(lc, `Unable to parse saved salat settings: ${error}`);
             }
+            root.fetchTimings();
         }
         onLoadFailed: err => {
             if (err === FileViewError.FileNotFound)
                 Qt.callLater(() => setText("{}"));
             else
                 console.warn(lc, `Unable to load saved salat settings: ${err}`);
+            root.fetchTimings();
         }
     }
 

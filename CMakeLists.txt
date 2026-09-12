@@ -72,6 +72,27 @@ if("shell" IN_LIST ENABLE_MODULES)
         install(DIRECTORY ${dir} DESTINATION "${INSTALL_QSCONFDIR}")
     endforeach()
 
+    find_program(QSB_EXECUTABLE qsb REQUIRED)
+    file(GLOB SHELL_SHADER_SOURCES CONFIGURE_DEPENDS
+        "${CMAKE_SOURCE_DIR}/components/shaders/*.frag"
+        "${CMAKE_SOURCE_DIR}/components/shaders/*.vert")
+    set(SHELL_SHADER_OUTPUTS "")
+    foreach(src IN LISTS SHELL_SHADER_SOURCES)
+        get_filename_component(name "${src}" NAME)
+        set(out "${CMAKE_BINARY_DIR}/qml/shaders/${name}.qsb")
+        add_custom_command(
+            OUTPUT "${out}"
+            COMMAND "${QSB_EXECUTABLE}" --glsl "100 es,120,150" -o "${out}" "${src}"
+            DEPENDS "${src}"
+            COMMENT "Compiling QML shader ${name}"
+        )
+        list(APPEND SHELL_SHADER_OUTPUTS "${out}")
+    endforeach()
+    if(SHELL_SHADER_OUTPUTS)
+        add_custom_target(shell-shaders ALL DEPENDS ${SHELL_SHADER_OUTPUTS})
+        install(FILES ${SHELL_SHADER_OUTPUTS} DESTINATION "${INSTALL_QSCONFDIR}/components/shaders")
+    endif()
+
     install(PROGRAMS assets/wrap_term_launch.sh DESTINATION "${INSTALL_QSCONFDIR}/assets")
 
     file(READ shell.qml SHELL_QML)

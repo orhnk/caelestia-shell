@@ -168,11 +168,10 @@ Variants {
             asynchronous: true
             active: true
 
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: Tokens.padding.extraLargeIncreased
-            anchors.leftMargin: Tokens.padding.extraLargeIncreased
-            anchors.rightMargin: Tokens.padding.extraLargeIncreased
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: Tokens.padding.extraLargeIncreased * 2
+            anchors.rightMargin: Tokens.padding.extraLargeIncreased * 2
 
             sourceComponent: Ayah {
                 wallpaper: behindClock

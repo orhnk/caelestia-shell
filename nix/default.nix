@@ -130,7 +130,7 @@ in
       ];
     };
 
-    nativeBuildInputs = [cmake ninja makeWrapper qt6.wrapQtAppsHook];
+    nativeBuildInputs = [cmake ninja makeWrapper qt6.wrapQtAppsHook qt6.qtshadertools];
     buildInputs = [qs extras plugin xkeyboard-config qt6.qtbase];
     propagatedBuildInputs = runtimeDeps;
 
