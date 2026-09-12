@@ -40,10 +40,40 @@
 
     packages = eachSystem (system: let
       pkgs = pkgsOf.${system};
+
+      # Unicode Uthmani (Hafs) script used by the background ayah. Fetched here
+      # instead of committed so the repo carries no font binary. The glyph-based
+      # QPC fonts on QUL cannot be used for this: they map a whole word per
+      # glyph and need the matching per-page script.
+      quran-font = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+        pname = "kfgqpc-uthmanic-script-hafs";
+        version = "1.0.0";
+
+        src = pkgs.fetchurl {
+          url = "https://cdn.jsdelivr.net/npm/kfgqpc-uthmanic-script-hafs-regular@${finalAttrs.version}/arabic.otf";
+          hash = "sha256-WeILJANoemeFT9GZhhq+01KAaMA10miYmEZdX685uzE=";
+        };
+
+        dontUnpack = true;
+
+        installPhase = ''
+          install -Dm644 $src $out/share/fonts/opentype/KFGQPC-Uthmanic-Script-HAFS.otf
+        '';
+
+        meta = {
+          description = "KFGQPC Uthmanic Script HAFS (Unicode) Quran font";
+          homepage = "https://qul.tarteel.ai/resources/font/249";
+          license = pkgs.lib.licenses.isc;
+          platforms = pkgs.lib.platforms.all;
+        };
+      });
     in rec {
+      inherit quran-font;
+
       caelestia-shell = pkgs.callPackage ./nix {
         rev = self.rev or self.dirtyRev;
         stdenv = pkgs.clangStdenv;
+        inherit quran-font;
         quickshell = inputs.quickshell.packages.${system}.default.override {
           withX11 = false;
           withI3 = false;

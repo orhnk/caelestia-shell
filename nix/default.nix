@@ -7,6 +7,7 @@
   fish,
   ddcutil,
   brightnessctl,
+  hyprpicker,
   networkmanager,
   lm_sensors,
   swappy,
@@ -29,6 +30,7 @@
   pkg-config,
   caelestia-cli,
   m3shapes,
+  quran-font,
   debug ? false,
   withCli ? false,
   extraRuntimeDeps ? [],
@@ -42,6 +44,7 @@
       fish
       ddcutil
       brightnessctl
+      hyprpicker
       networkmanager
       lm_sensors
       swappy
@@ -54,7 +57,7 @@
     ++ lib.optional withCli caelestia-cli;
 
   fontconfig = makeFontsConf {
-    fontDirectories = [material-symbols rubik nerd-fonts.caskaydia-cove];
+    fontDirectories = [material-symbols rubik nerd-fonts.caskaydia-cove quran-font];
   };
 
   cmakeBuildType =
@@ -130,7 +133,7 @@ in
       ];
     };
 
-    nativeBuildInputs = [cmake ninja makeWrapper qt6.wrapQtAppsHook qt6.qtshadertools];
+    nativeBuildInputs = [cmake ninja makeWrapper qt6.wrapQtAppsHook];
     buildInputs = [qs extras plugin xkeyboard-config qt6.qtbase];
     propagatedBuildInputs = runtimeDeps;
 
