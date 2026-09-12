@@ -161,5 +161,24 @@ Variants {
                 absY: clockLoader.y
             }
         }
+
+        Loader {
+            id: ayahLoader
+
+            asynchronous: true
+            active: true
+
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: Tokens.padding.extraLargeIncreased
+            anchors.leftMargin: Tokens.padding.extraLargeIncreased
+            anchors.rightMargin: Tokens.padding.extraLargeIncreased
+
+            sourceComponent: Ayah {
+                wallpaper: behindClock
+                absX: ayahLoader.x
+                absY: ayahLoader.y
+            }
+        }
     }
 }

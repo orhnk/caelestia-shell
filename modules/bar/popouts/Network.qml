@@ -111,7 +111,7 @@ ColumnLayout {
                 text: networkItem.modelData.ssid
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(networkItem.modelData.active ? Font.Medium : Font.Normal).build()
-                color: Accents.popList(networkItem.index)
+                color: Accents.base07
             }
 
             StyledRect {
@@ -297,7 +297,7 @@ ColumnLayout {
                 text: ethernetItem.modelData.iface || Tr.trCtx("Unknown", "unknown network interface")
                 elide: Text.ElideRight
                 font: Tokens.font.body.builders.medium.weight(ethernetItem.modelData.connected ? Font.Medium : Font.Normal).build()
-                color: Accents.popList(ethernetItem.index)
+                color: Accents.base07
             }
 
             StyledRect {

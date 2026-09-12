@@ -106,7 +106,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 text: device.modelData.name
                 elide: Text.ElideRight
-                color: Accents.popList(device.index)
+                color: Accents.base07
             }
 
             MaterialIcon {

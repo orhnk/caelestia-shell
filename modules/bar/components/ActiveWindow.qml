@@ -12,7 +12,7 @@ Item {
 
     required property var bar
     required property Brightness.Monitor monitor
-    property color colour: Accents.base0A
+    property color colour: Accents.base07
 
     readonly property string windowTitle: {
         const title = Hypr.activeToplevel?.title;
