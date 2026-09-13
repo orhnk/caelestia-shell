@@ -42,7 +42,7 @@ StyledRect {
                 }
 
                 radius: Tokens.rounding.full
-                color: Accents.base0A
+                color: Colours.pick(Accents.base07, Colours.palette.m3secondaryContainer)
 
                 MaterialIcon {
                     id: icon
@@ -50,7 +50,7 @@ StyledRect {
                     anchors.centerIn: parent
                     anchors.verticalCenterOffset: 1
                     text: "screen_record"
-                    color: Colours.on(Accents.base0A)
+                    color: Colours.on(Accents.base07)
                     fontStyle: Tokens.font.icon.large
                 }
             }
@@ -78,8 +78,8 @@ StyledRect {
 
             SplitButton {
                 disabled: Recorder.running
-                colour: Accents.base0D
-                textColour: Accents.deep(Accents.base0D)
+                colour: Colours.pick(Accents.base0F, Colours.palette.m3tertiary)
+                textColour: Colours.on(Colours.pick(Accents.base0F, Colours.palette.m3tertiary))
 
                 active: menuItems.find(m => root.props.recordingMode === m.icon + m.text) ?? menuItems[0]
                 menu.onItemSelected: item => root.props.recordingMode = item.icon + item.text

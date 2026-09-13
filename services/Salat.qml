@@ -15,6 +15,12 @@ Singleton {
     // Aladhan calculation method id (2 = ISNA) and school (0 = Shafi, 1 = Hanafi)
     property int method: 2
     property int school: 0
+    // IP geolocation (ipapi.co, like dir3) is the primary location source;
+    // the weather service location is only a fallback.
+    property string ipLoc
+    property bool ipPending: false
+    property double ipBlockedUntil: 0
+    property double lastIpAttempt: 0
     property int reminderMins: 5
     property list<var> prayers
     property int nextIndex: -1
@@ -26,9 +32,11 @@ Singleton {
     property bool nextNow
     property string remindedKey
 
-    // "YYYY-M" -> { "DD-MM-YYYY": { fajr, dhuhr, asr, maghrib, isha } }
+    // "loc|m<method>s<school>|YYYY-M" -> { "DD-MM-YYYY": { fajr, dhuhr, asr, maghrib, isha } }
+    // The method/school tag keeps cached times from surviving a settings change.
     property var monthCache: ({})
     property var diskMonths: ({})
+    property bool ready: false
     property double lastRequestAt: 0
     property var pendingFetch
     property var pendingRetry
@@ -70,10 +78,6 @@ Singleton {
         return `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth() + 1).padStart(2, "0")}-${date.getFullYear()}`;
     }
 
-    function monthKey(date: var): string {
-        return `${date.getFullYear()}-${date.getMonth() + 1}`;
-    }
-
     function locKey(): string {
         const loc = Weather.loc;
         if (!loc || loc.indexOf(",") === -1)
@@ -82,6 +86,10 @@ Singleton {
         if (!Number.isFinite(lat) || !Number.isFinite(lon))
             return "";
         return `${lat.toFixed(4)},${lon.toFixed(4)}|`;
+    }
+
+    function cacheKey(year: int, month: int): string {
+        return `${locKey()}m${root.method}s${root.school}|${year}-${month}`;
     }
 
     function cleanTime(raw: string): string {
@@ -144,7 +152,9 @@ Singleton {
     function applyDay(): bool {
         const now = new Date();
         const stamp = dayStamp(now);
-        const key = locKey() + monthKey(now);
+        const key = cacheKey(now.getFullYear(), now.getMonth() + 1);
+        if (key.startsWith("|"))
+            return false;
         const entry = (monthCache[key] ?? {})[stamp] ?? (diskMonths[key] ?? {})[stamp];
         if (!entry)
             return false;
@@ -224,7 +234,7 @@ Singleton {
                 return;
             }
 
-            const key = locKey() + `${year}-${month}`;
+            const key = cacheKey(year, month);
             monthCache[key] = schedules;
             diskMonths[key] = schedules;
             settingsSaveTimer.restart();
@@ -326,7 +336,13 @@ Singleton {
     }
 
     function refresh(): void {
-        monthCache = ({});
+        const now = new Date();
+        const key = cacheKey(now.getFullYear(), now.getMonth() + 1);
+        delete monthCache[key];
+        monthCacheChanged();
+        delete diskMonths[key];
+        diskMonthsChanged();
+        settingsSaveTimer.restart();
         fetchTimings();
     }
 
@@ -382,22 +398,33 @@ Singleton {
         id: settingsSaveTimer
 
         interval: 1000
-        onTriggered: salatStorage.setText(JSON.stringify({
-            reminderMins: root.reminderMins,
-            method: root.method,
-            school: root.school,
-            months: root.diskMonths
-        }))
+        onTriggered: {
+            // Drop legacy cache entries saved without a method/school tag
+            // so stale timetables can never resurface after a settings change.
+            const months = {};
+            for (const k of Object.keys(root.diskMonths)) {
+                if (k.indexOf("|m") !== -1)
+                    months[k] = root.diskMonths[k];
+            }
+            salatStorage.setText(JSON.stringify({
+                reminderMins: root.reminderMins,
+                method: root.method,
+                school: root.school,
+                months: months
+            }));
+        }
     }
 
     onReminderMinsChanged: settingsSaveTimer.restart()
     onMethodChanged: {
         settingsSaveTimer.restart();
-        refresh();
+        if (root.ready)
+            refresh();
     }
     onSchoolChanged: {
         settingsSaveTimer.restart();
-        refresh();
+        if (root.ready)
+            refresh();
     }
 
     FileView {
@@ -419,6 +446,7 @@ Singleton {
             } catch (error) {
                 console.warn(lc, `Unable to parse saved salat settings: ${error}`);
             }
+            root.ready = true;
             root.fetchTimings();
         }
         onLoadFailed: err => {
@@ -426,6 +454,7 @@ Singleton {
                 Qt.callLater(() => setText("{}"));
             else
                 console.warn(lc, `Unable to load saved salat settings: ${err}`);
+            root.ready = true;
             root.fetchTimings();
         }
     }

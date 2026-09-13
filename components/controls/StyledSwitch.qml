@@ -21,7 +21,7 @@ Switch {
         color: {
             if (root.disabled)
                 return root.checked ? Qt.alpha(Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface), 0.12) : Qt.alpha(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), 0.38);
-            return root.checked ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), root.cLayer);
+            return root.checked ? Colours.pick(Colours.palette.m3base0B, Colours.palette.m3primary) : Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest), root.cLayer);
         }
 
         implicitWidth: implicitHeight * 1.7
@@ -46,7 +46,7 @@ Switch {
                 anchors.fill: parent
                 radius: parent.radius
 
-                color: root.checked ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+                color: root.checked ? Colours.pick(Colours.palette.m3base0B, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
                 opacity: root.pressed ? 0.1 : root.hovered ? 0.08 : 0
 
                 Behavior on opacity {
@@ -105,7 +105,7 @@ Switch {
                     strokeColor: {
                         if (root.disabled)
                             return root.checked ? Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline) : Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer);
-                        return root.checked ? Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest);
+                        return root.checked ? Colours.pick(Colours.palette.m3base0B, Colours.palette.m3primary) : Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHighest);
                     }
                     fillColor: "transparent"
                     capStyle: root.Tokens.rounding.scale === 0 ? ShapePath.SquareCap : ShapePath.RoundCap

@@ -32,14 +32,14 @@ StyledRect {
             implicitHeight: icon.implicitHeight + Tokens.padding.large
 
             radius: Tokens.rounding.full
-            color: Accents.base0A
+            color: Colours.pick(Accents.base07, Colours.palette.m3secondaryContainer)
 
             MaterialIcon {
                 id: icon
 
                 anchors.centerIn: parent
                 text: "coffee"
-                color: Colours.on(Accents.base0A)
+                color: Colours.on(Accents.base07)
                 fontStyle: Tokens.font.icon.large
             }
         }
@@ -90,7 +90,7 @@ StyledRect {
             implicitHeight: activeText.implicitHeight + Tokens.padding.small
 
             radius: Tokens.rounding.full
-            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+            color: Colours.pick(Accents.base0F, Colours.palette.m3tertiary)
 
             StyledText {
                 id: activeText
@@ -98,7 +98,7 @@ StyledRect {
                 anchors.centerIn: parent
                 // TRANSLATORS: %1 = a clock time, e.g. 14:30
                 text: Tr.tr("Active since %1").arg(Qt.formatTime(IdleInhibitor.enabledSince, GlobalConfig.services.useTwelveHourClock ? "hh:mm a" : "hh:mm"))
-                color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onPrimary)
+                color: Colours.on(Accents.base0F)
                 font: Tokens.font.body.builders.small.size(Math.round(Tokens.font.body.small.pointSize * 0.9)).build()
             }
         }

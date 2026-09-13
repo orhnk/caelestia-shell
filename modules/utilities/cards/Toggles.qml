@@ -2,10 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
 import Quickshell.Bluetooth
-import Quickshell.Io
-import Caelestia
 import Caelestia.Components
 import Caelestia.Config
 import Caelestia.I18n
@@ -124,7 +121,7 @@ StyledRect {
                         accentIndex: 3
                         icon: "colorize"
                         isToggle: false
-                        onClicked: pickProc.running = true
+                        onClicked: ColourPicker.pick()
                     }
                 }
                 DelegateChoice {
@@ -155,21 +152,6 @@ StyledRect {
                         isToggle: VPN.status.state !== "needs-auth" && VPN.status.state !== "error"
                         onClicked: VPN.toggle()
                     }
-                }
-            }
-        }
-    }
-
-    Process {
-        id: pickProc
-
-        command: ["hyprpicker", "-a", "-f", "hex"]
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const hex = text.trim();
-                if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
-                    Quickshell.clipboardText = hex;
-                    Toaster.toast(Tr.tr("Color copied"), hex, "colorize");
                 }
             }
         }

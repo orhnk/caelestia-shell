@@ -1,11 +1,11 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Layouts
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
@@ -16,28 +16,64 @@ Item {
 
     property real ayahScale: 1
 
-    readonly property color accent: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
     readonly property color ink: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
-    readonly property color borderColor: Colours.pick(Colours.palette.m3base03, Colours.palette.m3outline)
-    readonly property color shadowColor: Colours.pick(Colours.palette.m3base0B, Colours.palette.m3primary)
+    readonly property color fillLight: Colours.palette.m3base07
+    readonly property color fillDark: Colours.palette.m3base01
+
+    // Helix-mixed spectrum: hue winds around the base08-0F wheel several
+    // turns across the text instead of ramping once, left to right.
+    // Each surah still owns its starting phase via surahOffset.
+    readonly property real surahOffset: (((Quran.surah * 0.61803398875) % 1) + 1) % 1
+    readonly property int verseTurns: 2
+    readonly property int refTurns: 1
+
+    function helixAt(p: real, turns: int): color {
+        const n = Accents.charSpectrum.length;
+        const pos = (((root.surahOffset * n + p * turns * n) % n) + n) % n;
+        const i = Math.floor(pos) % n;
+        const j = (i + 1) % n;
+        return Accents.mix(Accents.charSpectrum[i], Accents.charSpectrum[j], pos - Math.floor(pos));
+    }
+
+    property Gradient verseGradient: Gradient {
+        orientation: Gradient.Horizontal
+        GradientStop { position: 0.0; color: root.helixAt(0.0, root.verseTurns) }
+        GradientStop { position: 0.125; color: root.helixAt(0.125, root.verseTurns) }
+        GradientStop { position: 0.25; color: root.helixAt(0.25, root.verseTurns) }
+        GradientStop { position: 0.375; color: root.helixAt(0.375, root.verseTurns) }
+        GradientStop { position: 0.5; color: root.helixAt(0.5, root.verseTurns) }
+        GradientStop { position: 0.625; color: root.helixAt(0.625, root.verseTurns) }
+        GradientStop { position: 0.75; color: root.helixAt(0.75, root.verseTurns) }
+        GradientStop { position: 0.875; color: root.helixAt(0.875, root.verseTurns) }
+        GradientStop { position: 1.0; color: root.helixAt(1.0, root.verseTurns) }
+    }
+
+    property Gradient refGradient: Gradient {
+        orientation: Gradient.Horizontal
+        GradientStop { position: 0.0; color: root.helixAt(0.0, root.refTurns) }
+        GradientStop { position: 0.25; color: root.helixAt(0.25, root.refTurns) }
+        GradientStop { position: 0.5; color: root.helixAt(0.5, root.refTurns) }
+        GradientStop { position: 0.75; color: root.helixAt(0.75, root.refTurns) }
+        GradientStop { position: 1.0; color: root.helixAt(1.0, root.refTurns) }
+    }
 
     readonly property real textScale: {
         const len = Quran.text.length;
         if (len <= 70)
-            return 1.4;
+            return 2.1;
         if (len <= 130)
-            return 1.2;
+            return 1.8;
         if (len <= 220)
-            return 1.0;
+            return 1.5;
         if (len <= 400)
-            return 0.85;
-        return 0.7;
+            return 1.3;
+        return 1.05;
     }
     readonly property int maxLines: Quran.text.length > 400 ? 7 : 5
 
-    readonly property real cardWidth: 640 * ayahScale
+    readonly property real cardWidth: parent ? Math.min(parent.width, 1100 * ayahScale) : 640 * ayahScale
 
-
+    anchors.centerIn: parent
 
     width: cardWidth
     height: layout.implicitHeight
@@ -51,45 +87,61 @@ Item {
         Anim {}
     }
 
+    ParallelAnimation {
+        id: verseFade
+
+        Anim {
+            target: layout
+            property: "opacity"
+            from: 0
+            to: 1
+        }
+        Anim {
+            target: layout
+            property: "scale"
+            from: 0.98
+            to: 1
+        }
+    }
+
+    Connections {
+        target: Quran
+        function onTextChanged(): void {
+            if (Quran.ready)
+                verseFade.restart();
+        }
+    }
+
     ColumnLayout {
         id: layout
 
         anchors.fill: parent
-        spacing: Tokens.spacing.small * root.ayahScale
+        spacing: 0
+        transformOrigin: Item.Center
 
-        layer.enabled: true
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: root.shadowColor
-            shadowBlur: 0.35
-            shadowOpacity: 0.9
-            shadowHorizontalOffset: 0
-            shadowVerticalOffset: 3 * root.ayahScale
-        }
-
-        StyledText {
+        GradientText {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            maximumLineCount: root.maxLines
-            elide: Text.ElideRight
             text: Quran.text
-            color: root.ink
-            style: Text.Outline
-            styleColor: root.borderColor
-            font: Tokens.font.headline.builders.small.scale(root.textScale * root.ayahScale).family("Noto Naskh Arabic").weight(Font.Medium).build()
-            lineHeight: 1.6
+            font: Tokens.font.headline.builders.small.scale(root.textScale * root.ayahScale).family("Noto Nastaliq Urdu").weight(Font.DemiBold).letterSpacing(0).build()
+            fill: root.fillLight
+            gradient: root.verseGradient
+            outlineWidth: 2.5 * root.ayahScale
+            auraWidth: 14 * root.ayahScale
+            auraStrength: 0.55
+            maximumLineCount: root.maxLines
+            lineH: 1.6
         }
 
-        StyledText {
+        GradientText {
             Layout.alignment: Qt.AlignHCenter
-            horizontalAlignment: Text.AlignHCenter
             text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
-            color: root.accent
-            style: Text.Outline
-            styleColor: root.borderColor
-            font: Tokens.font.label.builders.small.weight(Font.DemiBold).build()
+            font: Tokens.font.label.builders.medium.scale(1.5).weight(Font.DemiBold).letterSpacing(0).build()
+            fill: root.fillDark
+            gradient: root.refGradient
+            outlineWidth: 1.5 * root.ayahScale
+            auraWidth: 6 * root.ayahScale
+            auraStrength: 0.5
         }
     }
 }

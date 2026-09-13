@@ -40,7 +40,16 @@ StyledClippingRect {
         anchors.bottom: parent.bottom
         implicitHeight: parent.height * root.animPerc
 
-        color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Colours.pick(Accents.base0F, Colours.palette.m3secondary) }
+            GradientStop { position: 0.143; color: Colours.pick(Accents.base0E, Colours.palette.m3secondary) }
+            GradientStop { position: 0.286; color: Colours.pick(Accents.base0D, Colours.palette.m3secondary) }
+            GradientStop { position: 0.429; color: Colours.pick(Accents.base0C, Colours.palette.m3secondary) }
+            GradientStop { position: 0.571; color: Colours.pick(Accents.base0B, Colours.palette.m3secondary) }
+            GradientStop { position: 0.714; color: Colours.pick(Accents.base0A, Colours.palette.m3secondary) }
+            GradientStop { position: 0.857; color: Colours.pick(Accents.base09, Colours.palette.m3secondary) }
+            GradientStop { position: 1.0; color: Colours.pick(Accents.base08, Colours.palette.m3secondary) }
+        }
         radius: Tokens.rounding.extraSmall
         clip: true
 

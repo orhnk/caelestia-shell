@@ -170,7 +170,7 @@ Item {
                             Layout.alignment: Qt.AlignHCenter
                             text: forecastItem.index === 0 ? Tr.trCtx("Today", "forecast column") : new Date(forecastItem.modelData.date).toLocaleDateString(Qt.locale(), "ddd")
                             font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
-                            color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+                            color: Colours.pick(Accents.weekColors[(new Date(forecastItem.modelData.date).getDay() + 6) % 7], Colours.palette.m3primary)
                         }
 
                         StyledText {
@@ -186,7 +186,7 @@ Item {
                             Layout.alignment: Qt.AlignHCenter
                             text: forecastItem.modelData.icon
                             fontStyle: Tokens.font.icon.extraLarge
-                            color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
+                            color: Colours.pick(Colours.palette.m3base07, Colours.palette.m3onSurface)
                         }
 
                         StyledText {
@@ -197,7 +197,7 @@ Item {
                                 return Tr.trCtx("%1 / %2", "min/max temperature").arg(min).arg(max);
                             }
                             font: Tokens.font.body.builders.small.weight(Font.DemiBold).build()
-                            color: Colours.pick(Colours.palette.m3base0E, Colours.palette.m3tertiary)
+                            color: Colours.pick(Accents.weekColors[(new Date(forecastItem.modelData.date).getDay() + 6) % 7], Colours.palette.m3tertiary)
                         }
                     }
                 }

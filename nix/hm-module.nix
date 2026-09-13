@@ -85,9 +85,10 @@ in {
           Description = "Caelestia Shell Service";
           After = [cfg.systemd.target];
           PartOf = [cfg.systemd.target];
-          X-Restart-Triggers = lib.mkIf (cfg.settings != {}) [
-            "${config.xdg.configFile."caelestia/shell.json".source}"
-          ];
+          # Restart on package updates (e.g. flake input bump + rebuild,
+          # like Hyprland refreshes itself) as well as settings changes.
+          X-Restart-Triggers = [cfg.package]
+            ++ lib.optional (cfg.settings != {}) "${config.xdg.configFile."caelestia/shell.json".source}";
         };
 
         Service = {
