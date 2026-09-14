@@ -20,41 +20,36 @@ Item {
     readonly property color fillLight: Colours.palette.m3base07
     readonly property color fillDark: Colours.palette.m3base01
 
-    // Helix-mixed spectrum: hue winds around the base08-0F wheel several
-    // turns across the text instead of ramping once, left to right.
-    // Each surah still owns its starting phase via surahOffset.
-    readonly property real surahOffset: (((Quran.surah * 0.61803398875) % 1) + 1) % 1
-    readonly property int verseTurns: 2
-    readonly property int refTurns: 1
+    // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
+    // between neighboring hues only (short distances stay vivid, never gray).
+    // Each surah rotates the wheel to its own starting phase.
+    readonly property int phaseIdx: Quran.surah % Accents.charSpectrum.length
 
-    function helixAt(p: real, turns: int): color {
+    function wheelColor(k: int, step: int): color {
         const n = Accents.charSpectrum.length;
-        const pos = (((root.surahOffset * n + p * turns * n) % n) + n) % n;
-        const i = Math.floor(pos) % n;
-        const j = (i + 1) % n;
-        return Accents.mix(Accents.charSpectrum[i], Accents.charSpectrum[j], pos - Math.floor(pos));
+        return Accents.charSpectrum[(root.phaseIdx + k * step) % n];
     }
 
     property Gradient verseGradient: Gradient {
         orientation: Gradient.Horizontal
-        GradientStop { position: 0.0; color: root.helixAt(0.0, root.verseTurns) }
-        GradientStop { position: 0.125; color: root.helixAt(0.125, root.verseTurns) }
-        GradientStop { position: 0.25; color: root.helixAt(0.25, root.verseTurns) }
-        GradientStop { position: 0.375; color: root.helixAt(0.375, root.verseTurns) }
-        GradientStop { position: 0.5; color: root.helixAt(0.5, root.verseTurns) }
-        GradientStop { position: 0.625; color: root.helixAt(0.625, root.verseTurns) }
-        GradientStop { position: 0.75; color: root.helixAt(0.75, root.verseTurns) }
-        GradientStop { position: 0.875; color: root.helixAt(0.875, root.verseTurns) }
-        GradientStop { position: 1.0; color: root.helixAt(1.0, root.verseTurns) }
+        GradientStop { position: 0.0; color: root.wheelColor(0, 1) }
+        GradientStop { position: 0.125; color: root.wheelColor(1, 1) }
+        GradientStop { position: 0.25; color: root.wheelColor(2, 1) }
+        GradientStop { position: 0.375; color: root.wheelColor(3, 1) }
+        GradientStop { position: 0.5; color: root.wheelColor(4, 1) }
+        GradientStop { position: 0.625; color: root.wheelColor(5, 1) }
+        GradientStop { position: 0.75; color: root.wheelColor(6, 1) }
+        GradientStop { position: 0.875; color: root.wheelColor(7, 1) }
+        GradientStop { position: 1.0; color: root.wheelColor(8, 1) }
     }
 
     property Gradient refGradient: Gradient {
         orientation: Gradient.Horizontal
-        GradientStop { position: 0.0; color: root.helixAt(0.0, root.refTurns) }
-        GradientStop { position: 0.25; color: root.helixAt(0.25, root.refTurns) }
-        GradientStop { position: 0.5; color: root.helixAt(0.5, root.refTurns) }
-        GradientStop { position: 0.75; color: root.helixAt(0.75, root.refTurns) }
-        GradientStop { position: 1.0; color: root.helixAt(1.0, root.refTurns) }
+        GradientStop { position: 0.0; color: root.wheelColor(0, 2) }
+        GradientStop { position: 0.25; color: root.wheelColor(1, 2) }
+        GradientStop { position: 0.5; color: root.wheelColor(2, 2) }
+        GradientStop { position: 0.75; color: root.wheelColor(3, 2) }
+        GradientStop { position: 1.0; color: root.wheelColor(4, 2) }
     }
 
     readonly property real textScale: {

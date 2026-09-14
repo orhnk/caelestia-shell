@@ -122,12 +122,22 @@ Singleton {
         return oscillate(charSpectrum, index);
     }
 
-    function spectrum(t: real): color {
+    function gradient(colors: var, t: real): color {
         const cl = isNaN(t) ? 0 : Math.max(0, Math.min(1, t));
-        const segs = spectrumColors.length - 1;
+        const segs = colors.length - 1;
         const pos = cl * segs;
         const i = Math.min(Math.floor(pos), segs - 1);
-        return mix(spectrumColors[i], spectrumColors[i + 1], pos - i);
+        return mix(colors[i], colors[i + 1], pos - i);
+    }
+
+    function spectrum(t: real): color {
+        return gradient(spectrumColors, t);
+    }
+
+    readonly property list<color> batteryColors: [base08, base09, base0A, base0B]
+
+    function battery(t: real): color {
+        return gradient(batteryColors, t);
     }
 
     function tempColor(tempC: real): color {

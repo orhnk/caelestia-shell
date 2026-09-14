@@ -29,7 +29,7 @@ StyledClippingRect {
         anchors.fill: parent
         anchors.margins: Tokens.padding.medium
 
-        accentColour: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+        accentColour: Accents.battery(root.animPerc)
         textColour: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
         subTextColour: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
     }
@@ -40,16 +40,7 @@ StyledClippingRect {
         anchors.bottom: parent.bottom
         implicitHeight: parent.height * root.animPerc
 
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: Colours.pick(Accents.base0F, Colours.palette.m3secondary) }
-            GradientStop { position: 0.143; color: Colours.pick(Accents.base0E, Colours.palette.m3secondary) }
-            GradientStop { position: 0.286; color: Colours.pick(Accents.base0D, Colours.palette.m3secondary) }
-            GradientStop { position: 0.429; color: Colours.pick(Accents.base0C, Colours.palette.m3secondary) }
-            GradientStop { position: 0.571; color: Colours.pick(Accents.base0B, Colours.palette.m3secondary) }
-            GradientStop { position: 0.714; color: Colours.pick(Accents.base0A, Colours.palette.m3secondary) }
-            GradientStop { position: 0.857; color: Colours.pick(Accents.base09, Colours.palette.m3secondary) }
-            GradientStop { position: 1.0; color: Colours.pick(Accents.base08, Colours.palette.m3secondary) }
-        }
+        color: Accents.battery(root.animPerc)
         radius: Tokens.rounding.extraSmall
         clip: true
 
@@ -60,9 +51,9 @@ StyledClippingRect {
             anchors.margins: layout.anchors.margins
             height: layout.height
 
-            accentColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3primaryContainer)
+            accentColour: Accents.deep(Accents.battery(root.animPerc))
             textColour: Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSecondary)
-            subTextColour: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+            subTextColour: Accents.deep(Accents.battery(root.animPerc))
         }
     }
 
