@@ -224,7 +224,7 @@ Singleton {
             return `ok ${root.auraScale}`;
         }
 
-        function show(): string {
+        function status(): string {
             return root.describe();
         }
 

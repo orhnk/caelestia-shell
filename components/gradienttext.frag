@@ -7,6 +7,7 @@ layout(std140, binding = 0) uniform buf {
     vec4 fillColor;
     vec4 radii; // xy: outline uv radius, zw: aura uv radius
     vec4 misc; // x: aura strength
+    vec4 strokeColor; // rgb: flat stroke/aura override, a == 0 means gradient
 };
 layout(binding = 1) uniform sampler2D maskTex;
 layout(binding = 2) uniform sampler2D gradTex;
@@ -37,7 +38,8 @@ void main() {
     float outline = clamp(ring - m, 0.0, 1.0);
     float aura = clamp(halo - max(m, outline), 0.0, 1.0);
     vec3 g = texture(gradTex, uv).rgb;
-    vec3 col = fillColor.rgb * m + g * (outline + aura);
+    vec3 sc = strokeColor.a > 0.0 ? strokeColor.rgb : g;
+    vec3 col = fillColor.rgb * m + sc * (outline + aura);
     float alpha = max(m * fillColor.a, max(outline, aura));
     fragColor = vec4(col, alpha) * qt_Opacity;
 }

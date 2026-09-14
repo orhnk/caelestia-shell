@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# naqqash — live decorator for the Caelestia Quran wallpaper widget.
+# Talks to the shell over quickshell IPC (target: quran).
+#
+#   naqqash current                  show the current verse
+#   naqqash verse 2 20 | verse 2:20  jump to a verse
+#   naqqash random                   random verse
+#   naqqash mode random|daily|sequential
+#   naqqash font-size 1.2            scale 0.25..4 (1 = theme size)
+#   naqqash font-family "Noto Naskh Arabic" | default
+#   naqqash fg "#FB4934" | default   verse fill
+#   naqqash fg-ref "#3C3836" | default
+#   naqqash outline "#D65D0E" | default   flat stroke (default = spectrum gradient)
+#   naqqash aura 0.8                 glow 0..3 (0 = off)
+#   naqqash show                     dump all live values
+#
+# Instance selection: NAQQASH_IPC adds quickshell ipc selectors,
+# e.g. NAQQASH_IPC="--pid 1234" naqqash current
+# (default targets the oldest running instance)
+
+set -u
+
+QS_BIN="$(command -v quickshell || echo /nix/store/j5qz914jsip1nxhnw5za98992h0bcpfy-quickshell-wrapped-0.3.1/bin/quickshell)"
+if [ ! -x "$QS_BIN" ]; then
+    echo "naqqash: quickshell binary not found" >&2
+    exit 1
+fi
+
+# shellcheck disable=SC2206
+IPC_ARGS=(${NAQQASH_IPC:-})
+
+call() {
+    "$QS_BIN" ipc "${IPC_ARGS[@]}" call quran "$@"
+}
+
+usage() {
+    sed -n '2,/^$/p' "$0" | sed 's/^# \?//'
+}
+
+cmd="${1:-show}"
+case "$cmd" in
+-h | --help | help)
+    usage
+    ;;
+current)
+    call current
+    ;;
+verse)
+    ref="${2:-}"
+    if [[ "$ref" == *:* ]]; then
+        call verse "${ref%%:*}" "${ref##*:}"
+    elif [ $# -eq 3 ]; then
+        call verse "$2" "$3"
+    else
+        echo "usage: naqqash verse <surah> <ayah> | naqqash verse <surah:ayah>" >&2
+        exit 1
+    fi
+    ;;
+random)
+    call random
+    ;;
+mode)
+    call mode "${2:-}"
+    ;;
+font-size)
+    call fontSize "${2:-}"
+    ;;
+font-family)
+    call fontFamily "${2:-default}"
+    ;;
+fg)
+    call fg "${2:-default}"
+    ;;
+fg-ref)
+    call fgRef "${2:-default}"
+    ;;
+outline)
+    call outline "${2:-default}"
+    ;;
+aura)
+    call aura "${2:-}"
+    ;;
+show)
+    call status
+    ;;
+*)
+    echo "naqqash: unknown command '$cmd'" >&2
+    usage >&2
+    exit 1
+    ;;
+esac

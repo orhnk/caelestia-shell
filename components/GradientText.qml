@@ -13,6 +13,8 @@ Item {
     property font font
     property color fill: "white"
     property Gradient gradient
+    // Flat stroke/aura override. Transparent (default) keeps the gradient.
+    property color strokeColor: "transparent"
     property real outlineWidth: 1.5
     property real auraWidth: 10
     property real auraStrength: 0.55
@@ -30,6 +32,7 @@ Item {
         property var maskTex: maskSrc
         property var gradTex: gradSrc
         property color fillColor: "transparent"
+        property color strokeColor: root.strokeColor
         property vector4d radii: Qt.vector4d(root.outlineWidth / Math.max(1, width), root.outlineWidth / Math.max(1, height), root.auraWidth / Math.max(1, width), root.auraWidth / Math.max(1, height))
         property vector4d misc: Qt.vector4d(root.auraStrength, 0, 0, 0)
 

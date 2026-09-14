@@ -19,7 +19,7 @@ Item {
     readonly property color ink: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
     readonly property color fillLight: Colours.palette.m3base07
     readonly property color fillDark: Colours.palette.m3base01
-    property color outlineColor: Quran.outline === "" ? Qt.alpha(Colours.palette.m3base00, 0.85) : Quran.outline
+    readonly property color strokeFlat: Quran.outline === "" ? "transparent" : Quran.outline
 
     // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
     // between neighboring hues only (short distances stay vivid, never gray).
@@ -119,12 +119,13 @@ Item {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             text: Quran.text
-            font: Tokens.font.headline.builders.small.scale(root.textScale * root.ayahScale).family("Noto Nastaliq Urdu").weight(Font.DemiBold).letterSpacing(0).build()
-            fill: root.fillLight
+            font: Tokens.font.headline.builders.small.scale(root.textScale * root.ayahScale * Quran.fontScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
+            fill: Quran.fgVerse === "" ? root.fillLight : Quran.fgVerse
             gradient: root.verseGradient
+            strokeColor: root.strokeFlat
             outlineWidth: 2.5 * root.ayahScale
             auraWidth: 14 * root.ayahScale
-            auraStrength: 0.55
+            auraStrength: 0.55 * Quran.auraScale
             maximumLineCount: root.maxLines
             lineH: 1.6
         }
@@ -132,12 +133,13 @@ Item {
         GradientText {
             Layout.alignment: Qt.AlignHCenter
             text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
-            font: Tokens.font.label.builders.medium.scale(1.5).weight(Font.DemiBold).letterSpacing(0).build()
-            fill: root.fillDark
+            font: Tokens.font.label.builders.medium.scale(1.5 * Quran.fontScale).weight(Font.DemiBold).letterSpacing(0).build()
+            fill: Quran.fgRef === "" ? root.fillDark : Quran.fgRef
             gradient: root.refGradient
+            strokeColor: root.strokeFlat
             outlineWidth: 1.5 * root.ayahScale
             auraWidth: 6 * root.ayahScale
-            auraStrength: 0.5
+            auraStrength: 0.5 * Quran.auraScale
         }
     }
 }
