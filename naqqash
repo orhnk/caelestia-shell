@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # naqqash — live decorator for the Caelestia Quran wallpaper widget.
-# Talks to the shell over quickshell IPC (target: quran).
+# A friendly shortcut for `caelestia shell quran <fn> <args...>` (target: quran).
 #
 #   naqqash current                  show the current verse
 #   naqqash verse 2 20 | verse 2:20  jump to a verse
@@ -14,23 +14,34 @@
 #   naqqash aura 0.8                 glow 0..3 (0 = off)
 #   naqqash show                     dump all live values
 #
-# Instance selection: NAQQASH_IPC adds quickshell ipc selectors,
-# e.g. NAQQASH_IPC="--pid 1234" naqqash current
-# (default targets the oldest running instance)
+# Instance selection: NAQQASH_IPC uses raw quickshell ipc selectors instead
+# of `caelestia shell`, e.g. NAQQASH_IPC="--pid 1234" naqqash current
+# (handy for test instances; default targets the real shell)
 
 set -u
 
+CAELESTIA_BIN="$(command -v caelestia || true)"
 QS_BIN="$(command -v quickshell || echo /nix/store/j5qz914jsip1nxhnw5za98992h0bcpfy-quickshell-wrapped-0.3.1/bin/quickshell)"
-if [ ! -x "$QS_BIN" ]; then
-    echo "naqqash: quickshell binary not found" >&2
-    exit 1
-fi
 
-# shellcheck disable=SC2206
-IPC_ARGS=(${NAQQASH_IPC:-})
-
+# All commands are `caelestia shell quran <fn> <args...>` under the hood.
+# NAQQASH_IPC overrides instance selection with raw quickshell ipc args,
+# e.g. NAQQASH_IPC="--pid 1234" (used to target test instances).
 call() {
-    "$QS_BIN" ipc "${IPC_ARGS[@]}" call quran "$@"
+    if [ -n "${NAQQASH_IPC:-}" ]; then
+        if [ ! -x "$QS_BIN" ]; then
+            echo "naqqash: quickshell binary not found" >&2
+            exit 1
+        fi
+        # shellcheck disable=SC2206
+        local ipc_args=(${NAQQASH_IPC})
+        "$QS_BIN" ipc "${ipc_args[@]}" call quran "$@"
+    else
+        if [ -z "$CAELESTIA_BIN" ]; then
+            echo "naqqash: caelestia binary not found" >&2
+            exit 1
+        fi
+        "$CAELESTIA_BIN" shell quran "$@"
+    fi
 }
 
 usage() {
