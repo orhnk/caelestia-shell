@@ -34,7 +34,7 @@ StyledRect {
 
             MaterialIcon {
                 text: "swap_vert"
-                color: Accents.base08
+                color: Accents.base0B
                 fontStyle: Tokens.font.icon.medium
             }
 
@@ -59,7 +59,7 @@ StyledRect {
 
                 anchors.fill: parent
                 line1: NetworkUsage.uploadBuffer // qmllint disable missing-type
-                line1Color: Accents.base08
+                line1Color: Accents.base0B
                 line1FillAlpha: 0.15
                 line2: NetworkUsage.downloadBuffer // qmllint disable missing-type
                 line2Color: Accents.base0A
@@ -140,7 +140,7 @@ StyledRect {
 
             MaterialIcon {
                 text: "upload"
-                color: Accents.base08
+                color: Accents.base0B
                 fontStyle: Tokens.font.icon.medium
             }
 
@@ -160,7 +160,7 @@ StyledRect {
                     return fmt ? Strings.withDataUnit(fmt.value.toFixed(1), fmt.unit) : Strings.withDataUnit("0.0", "B/s");
                 }
                 font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
-                color: Accents.base08
+                color: Accents.base0B
             }
         }
 
