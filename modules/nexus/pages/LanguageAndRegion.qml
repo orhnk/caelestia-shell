@@ -201,11 +201,18 @@ PageBase {
         }
 
         RowButton {
-            last: true
             icon: "sync"
             text: Tr.tr("Re-fetch times")
             subtext: Tr.tr("Reload this month from Aladhan")
             onClicked: Salat.refresh()
+        }
+
+        RowButton {
+            last: true
+            icon: "delete_sweep"
+            text: Tr.tr("Clear cache")
+            subtext: Tr.tr("Drop all saved timetables and fetch again")
+            onClicked: Salat.clearCache()
         }
 
         // Units

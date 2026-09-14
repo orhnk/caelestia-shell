@@ -394,6 +394,13 @@ Singleton {
         fetchTimings();
     }
 
+    function clearCache(): void {
+        monthCache = ({});
+        diskMonths = ({});
+        settingsSaveTimer.restart();
+        fetchTimings();
+    }
+
     Connections {
         function onLocChanged(): void {
             monthCache = ({});
