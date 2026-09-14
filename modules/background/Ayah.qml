@@ -19,6 +19,7 @@ Item {
     readonly property color ink: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
     readonly property color fillLight: Colours.palette.m3base07
     readonly property color fillDark: Colours.palette.m3base01
+    property color outlineColor: Quran.outline === "" ? Qt.alpha(Colours.palette.m3base00, 0.85) : Quran.outline
 
     // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
     // between neighboring hues only (short distances stay vivid, never gray).
