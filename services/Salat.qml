@@ -44,7 +44,8 @@ Singleton {
     readonly property list<string> names: ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
     readonly property var retryableStatus: [408, 425, 429, 500, 502, 503, 504]
 
-    // Fajr/isha angles per method id; default = MWL (18/17)
+    // Fallback angles per method id; replaced by the live methods table
+    // (GET /v1/methods) whenever it can be fetched. Default = MWL (18/17).
     readonly property var methodAngles: ({
         1: [18, 18],
         2: [15, 15],
@@ -53,6 +54,56 @@ Singleton {
         7: [15, 15],
         13: [18, 17]
     })
+    // method id -> { fajr: angle|null, ishaAngle: angle|null, ishaInterval: mins|null }
+    property var methodParams: ({})
+
+    function parseMinutes(raw: var): int {
+        const m = String(raw ?? "").match(/(\d+(?:\.\d+)?)\s*min/);
+        return m ? Math.round(Number(m[1])) : -1;
+    }
+
+    function fetchMethods(): void {
+        Requests.get("https://api.aladhan.com/v1/methods", text => {
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch (error) {
+                console.warn(lc, `Unable to parse methods from aladhan: ${error}`);
+                return;
+            }
+            const data = json.data && typeof json.data === "object" ? json.data : null;
+            if (!data)
+                return;
+            const params = {};
+            for (const key of Object.keys(data)) {
+                const entry = data[key] ?? {};
+                if (!Number.isFinite(Number(entry.id)))
+                    continue;
+                const p = entry.params ?? {};
+                params[Math.round(Number(entry.id))] = {
+                    fajr: Number.isFinite(Number(p.Fajr)) ? Number(p.Fajr) : null,
+                    ishaAngle: Number.isFinite(Number(p.Isha)) ? Number(p.Isha) : null,
+                    ishaInterval: parseMinutes(p.Isha)
+                };
+            }
+            if (Object.keys(params).length)
+                methodParams = params;
+        }, error => {
+            console.warn(lc, `Aladhan methods request failed: ${error}`);
+        });
+    }
+
+    function anglesFor(id: int): var {
+        const live = methodParams[id];
+        if (live && (live.fajr !== null || live.ishaAngle !== null || live.ishaInterval >= 0))
+            return live;
+        const fallback = methodAngles[id] ?? [18, 17];
+        return {
+            fajr: fallback[0],
+            ishaAngle: fallback[1],
+            ishaInterval: -1
+        };
+    }
 
     function label(name: string): string {
         if (name === "Dhuhr" && isFriday)
@@ -309,7 +360,8 @@ Singleton {
     }
 
     function offlineCompute(): void {
-        const angles = methodAngles[method] ?? [18, 17];
+        const spec = anglesFor(method);
+        const fajrAngle = spec.fajr ?? 18;
         const asrFactor = school === 1 ? 2 : 1;
         const now = new Date();
 
@@ -350,17 +402,18 @@ Singleton {
         };
 
         const sunOff = hourOffset(-0.833);
-        const fajrOff = hourOffset(-angles[0]);
-        const ishaOff = hourOffset(-angles[1]);
+        const fajrOff = hourOffset(-fajrAngle);
+        const ishaOff = spec.ishaAngle !== null && spec.ishaAngle !== undefined ? hourOffset(-spec.ishaAngle) : -1;
         const zenith = Math.abs(lat - declR * 180 / Math.PI);
         const asrAlt = Math.atan(1 / (Math.tan(zenith * Math.PI / 180) + asrFactor)) * 180 / Math.PI;
 
+        const maghribMins = transit + sunOff;
         const times = {
             fajr: toTime(transit - fajrOff),
             dhuhr: toTime(transit),
             asr: toTime(transit + hourOffset(asrAlt)),
-            maghrib: toTime(transit + sunOff),
-            isha: toTime(transit + ishaOff)
+            maghrib: toTime(maghribMins),
+            isha: ishaOff >= 0 ? toTime(transit + ishaOff) : toTime(maghribMins + (spec.ishaInterval >= 0 ? spec.ishaInterval : 90))
         };
         prayers = names.map(n => {
             const time = times[n.toLowerCase()];
@@ -377,6 +430,7 @@ Singleton {
     }
 
     function reload(): void {
+        fetchMethods();
         if (activeLoc())
             fetchTimings();
         else
