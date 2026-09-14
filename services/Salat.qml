@@ -78,8 +78,52 @@ Singleton {
         return `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth() + 1).padStart(2, "0")}-${date.getFullYear()}`;
     }
 
+    function activeLoc(): string {
+        if (ipLoc && ipLoc.indexOf(",") !== -1)
+            return ipLoc;
+        return Weather.loc ?? "";
+    }
+
+    function fetchIpLoc(): void {
+        if (ipPending || Date.now() < ipBlockedUntil)
+            return;
+        // Skip when the last attempt was less than an hour ago
+        if (Date.now() - lastIpAttempt < 3600000 && ipLoc)
+            return;
+        ipPending = true;
+        lastIpAttempt = Date.now();
+
+        Requests.get("https://ipapi.co/json/", text => {
+            ipPending = false;
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch (error) {
+                console.warn(lc, `Unable to parse response from ipapi: ${error}`);
+                return;
+            }
+            const lat = Number(json.latitude);
+            const lon = Number(json.longitude);
+            if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+                console.warn(lc, `ipapi lookup failed: ${json.reason ?? "invalid response"}`);
+                return;
+            }
+            // ipapi.co rejects empty clients with 429 - a UA makes it work
+            ipLoc = `${lat},${lon}`;
+            fetchTimings();
+        }, (error, metadata) => {
+            ipPending = false;
+            if (metadata?.statusCode === 429)
+                ipBlockedUntil = Date.now() + 61000;
+            else
+                console.warn(lc, `ipapi request failed: ${error}`);
+        }, {
+            "User-Agent": `caelestia-shell/${CUtils.version} (+https://github.com/caelestia-dots/shell)`
+        });
+    }
+
     function locKey(): string {
-        const loc = Weather.loc;
+        const loc = activeLoc();
         if (!loc || loc.indexOf(",") === -1)
             return "";
         const [lat, lon] = loc.split(",").map(s => Number(s.trim()));
@@ -179,9 +223,11 @@ Singleton {
     }
 
     function fetchMonth(year: int, month: int, attempt: int): void {
-        const loc = Weather.loc;
-        if (!loc || loc.indexOf(",") === -1)
+        const loc = activeLoc();
+        if (!loc || loc.indexOf(",") === -1) {
+            fetchIpLoc();
             return;
+        }
 
         // Politeness pace: min 0.12s between upstream requests
         const wait = 120 - (Date.now() - lastRequestAt);
@@ -267,7 +313,7 @@ Singleton {
         const asrFactor = school === 1 ? 2 : 1;
         const now = new Date();
 
-        const loc = Weather.loc;
+        const loc = activeLoc();
         let lat = 41.0, lon = 29.0;
         if (loc && loc.indexOf(",") !== -1) {
             const parts = loc.split(",").map(s => s.trim());
@@ -331,8 +377,10 @@ Singleton {
     }
 
     function reload(): void {
-        if (Weather.loc)
+        if (activeLoc())
             fetchTimings();
+        else
+            fetchIpLoc();
     }
 
     function refresh(): void {
