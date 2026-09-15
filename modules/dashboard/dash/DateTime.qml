@@ -19,8 +19,7 @@ Item {
     ColumnLayout {
         id: layout
 
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         spacing: 0
 
         StyledText {

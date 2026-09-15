@@ -2,12 +2,14 @@ import QtQuick
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
 
     required property var modelData
     required property var list
+    required property int index
 
     implicitHeight: Tokens.sizes.launcher.itemHeight
 
@@ -30,7 +32,7 @@ Item {
 
             anchors.verticalCenter: parent.verticalCenter
             text: root.modelData?.icon ?? ""
-            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+            color: Accents.popList(root.index)
             fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
         }
 
