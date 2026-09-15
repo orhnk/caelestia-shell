@@ -15,6 +15,9 @@ Singleton {
     property bool hasFallback: false
     property bool pendingPick: false
 
+    property color lastColor: "transparent"
+    readonly property bool hasColor: lastColor.a > 0
+
     function pick(): void {
         if (pickProc.running || slurpProc.running || grimProc.running)
             return;
@@ -39,6 +42,7 @@ Singleton {
 
     function finish(hex: string): void {
         if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
+            root.lastColor = hex;
             Quickshell.clipboardText = hex;
             Toaster.toast(Tr.tr("Color copied"), hex, "colorize");
         }

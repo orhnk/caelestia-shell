@@ -121,6 +121,8 @@ StyledRect {
                         accentIndex: 3
                         icon: "colorize"
                         isToggle: false
+                        activeOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
+                        inactiveOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
                         onClicked: ColourPicker.pick()
                     }
                 }

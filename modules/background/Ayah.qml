@@ -44,17 +44,23 @@ Item {
     }
 
 
-    readonly property real textScale: {
-        const len = Quran.text.length;
-        if (len <= 70)
-            return 2.1;
-        if (len <= 130)
-            return 1.8;
-        if (len <= 220)
-            return 1.5;
-        if (len <= 400)
-            return 1.3;
-        return 1.05;
+    // Smart fullness sizing: measure the verse at base size, then take the
+    // largest scale that still fits maxLines within the card. Single-line
+    // verses keep the full user size; longer ones shrink just enough to fill
+    // the same box, preserving the fullness ratio.
+    TextMetrics {
+        id: meter
+
+        font: Tokens.font.headline.builders.small.family(Quran.fontFamily).weight(Font.DemiBold).build()
+        text: Quran.text
+    }
+
+    readonly property real fitScale: {
+        const adv = meter.advanceWidth;
+        if (adv <= 0)
+            return Quran.fontScale;
+        const s = 0.92 * root.maxLines * root.cardWidth / (adv * root.ayahScale);
+        return Math.min(Quran.fontScale, Math.max(s, 0.4));
     }
     readonly property int maxLines: Quran.text.length > 400 ? 7 : 5
 
@@ -110,7 +116,7 @@ Item {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             text: Quran.text
-            font: Tokens.font.headline.builders.small.scale(root.textScale * root.ayahScale * Quran.fontScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
+            font: Tokens.font.headline.builders.small.scale(root.fitScale * root.ayahScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
             fill: Quran.fgVerse === "" ? root.fillLight : Quran.fgVerse
             gradient: root.verseGradient
             strokeColor: root.strokeFlat
