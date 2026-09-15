@@ -7,10 +7,11 @@
 #   naqqash random                   random verse
 #   naqqash mode random|daily|sequential
 #   naqqash font-size 1.2            scale 0.25..4 (1 = theme size)
-#   naqqash font-family "Noto Naskh Arabic" | default
+#   naqqash font-family "Noto Naskh Arabic" | random | default
+#   naqqash fonts                    list the random-rotation font pool
 #   naqqash fg "#FB4934" | default   verse fill
 #   naqqash fg-ref "#3C3836" | default
-#   naqqash outline "#D65D0E" | default   flat stroke (default = spectrum gradient)
+#   naqqash outline "#D65D0E" | default   flat verse stroke (default = spectrum gradient)
 #   naqqash aura 0.8                 glow 0..3 (0 = off)
 #   naqqash show                     dump all live values
 #
@@ -78,6 +79,9 @@ font-size)
     ;;
 font-family)
     call fontFamily "${2:-default}"
+    ;;
+fonts)
+    call fonts
     ;;
 fg)
     call fg "${2:-default}"

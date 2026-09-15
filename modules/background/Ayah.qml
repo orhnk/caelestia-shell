@@ -18,7 +18,6 @@ Item {
 
     readonly property color ink: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
     readonly property color fillLight: Colours.palette.m3base07
-    readonly property color fillDark: Colours.palette.m3base01
     readonly property color strokeFlat: Quran.outline === "" ? "transparent" : Quran.outline
 
     // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
@@ -44,14 +43,6 @@ Item {
         GradientStop { position: 1.0; color: root.wheelColor(8, 1) }
     }
 
-    property Gradient refGradient: Gradient {
-        orientation: Gradient.Horizontal
-        GradientStop { position: 0.0; color: root.wheelColor(0, 2) }
-        GradientStop { position: 0.25; color: root.wheelColor(1, 2) }
-        GradientStop { position: 0.5; color: root.wheelColor(2, 2) }
-        GradientStop { position: 0.75; color: root.wheelColor(3, 2) }
-        GradientStop { position: 1.0; color: root.wheelColor(4, 2) }
-    }
 
     readonly property real textScale: {
         const len = Quran.text.length;
@@ -130,16 +121,12 @@ Item {
             lineH: 1.6
         }
 
-        GradientText {
+        StyledText {
             Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
-            font: Tokens.font.label.builders.medium.scale(1.5 * Quran.fontScale).weight(Font.DemiBold).letterSpacing(0).build()
-            fill: Quran.fgRef === "" ? root.fillDark : Quran.fgRef
-            gradient: root.refGradient
-            strokeColor: root.strokeFlat
-            outlineWidth: 1.5 * root.ayahScale
-            auraWidth: 6 * root.ayahScale
-            auraStrength: 0.5 * Quran.auraScale
+            color: Quran.fgRef === "" ? Colours.palette.m3base03 : Quran.fgRef
+            font: Tokens.font.label.builders.medium.scale(1.5 * Quran.fontScale).family("Aref Ruqaa").weight(Font.DemiBold).letterSpacing(0).build()
         }
     }
 }

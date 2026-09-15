@@ -67,13 +67,28 @@
           platforms = pkgs.lib.platforms.all;
         };
       });
+
+      # Arabic calligraphy pool for the background ayah widget. Vendored
+      # (unlike quran-font) because most of these faces are not in nixpkgs.
+      # All are OFL-licensed, see data/fonts/OFL.txt.
+      arabic-fonts = pkgs.stdenvNoCC.mkDerivation {
+        pname = "caelestia-arabic-fonts";
+        version = "1.0.0";
+
+        src = ./data/fonts;
+
+        installPhase = ''
+          mkdir -p $out/share/fonts/truetype
+          install -Dm644 $src/*.ttf $out/share/fonts/truetype/
+        '';
+      };
     in rec {
-      inherit quran-font;
+      inherit quran-font arabic-fonts;
 
       caelestia-shell = pkgs.callPackage ./nix {
         rev = self.rev or self.dirtyRev;
         stdenv = pkgs.clangStdenv;
-        inherit quran-font;
+        inherit quran-font arabic-fonts;
         quickshell = inputs.quickshell.packages.${system}.default.override {
           withX11 = false;
           withI3 = false;

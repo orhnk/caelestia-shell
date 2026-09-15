@@ -20,6 +20,20 @@ Singleton {
     // Live-decorated by naqqash (persisted, see saveTimer).
     property real fontScale: 1.0
     property string fontFamily: "Noto Nastaliq Urdu"
+    property bool fontRandom: true
+
+    // Every family here must cover Arabic (verified via `fc-list :lang=ar`).
+    readonly property list<string> fontPool: [
+        "Noto Naskh Arabic", "Noto Sans Arabic", "Noto Kufi Arabic", "Noto Nastaliq Urdu",
+        "IBM Plex Sans Arabic", "IBM Plex Sans Arabic Light", "IBM Plex Sans Arabic Medium",
+        "Scheherazade New", "Scheherazade New Medium",
+        "Amiri", "Amiri Quran",
+        "Reem Kufi", "Reem Kufi Medium", "Square Kufic",
+        "KFGQPC Kufi Extended", "KFGQPC Kufi Stylistic",
+        "IranNastaliq", "Diwani Letter", "Aref Ruqaa", "Samir_Khouaja_Maghribi", "Raqq",
+        "Islamic Palestine", "B Fantezy", "Sayeh2", "Mj_Faten", "Mj_Nova",
+        "Hamdy V2", "(A) Arslan Wessam B", "AGA Kyrawan V.2", "khalaad Abeer", "Old Antic Bold"
+    ]
     property string fgVerse: ""
     property string fgRef: ""
     property string outline: ""
@@ -82,6 +96,8 @@ Singleton {
         root.surahName = surahNames[v.surah - 1] ?? "";
         root.ref = `${v.surah}:${v.ayah}`;
         root.ready = true;
+        if (root.fontRandom)
+            rollFont();
         saveTimer.restart();
     }
 
@@ -137,8 +153,25 @@ Singleton {
     }
 
     function setFontFamily(f: string): void {
-        root.fontFamily = (f === "" || f === "default") ? "Noto Nastaliq Urdu" : f;
+        if (f === "random") {
+            root.fontRandom = true;
+            root.rollFont();
+        } else {
+            root.fontRandom = false;
+            root.fontFamily = (f === "" || f === "default") ? "Noto Nastaliq Urdu" : f;
+        }
         saveTimer.restart();
+    }
+
+    function rollFont(): void {
+        if (!fontPool.length)
+            return;
+        let f = fontPool[Math.floor(Math.random() * fontPool.length)];
+        if (fontPool.length > 1) {
+            while (f === root.fontFamily)
+                f = fontPool[Math.floor(Math.random() * fontPool.length)];
+        }
+        root.fontFamily = f;
     }
 
     function setPaint(which: string, c: string): void {
@@ -160,7 +193,7 @@ Singleton {
     }
 
     function describe(): string {
-        return `verse: ${root.surahName} ${root.ref}\nmode: ${root.mode}\nfont: ${root.fontFamily} x${root.fontScale}\nfg: ${root.fgVerse || "default"}\nfgRef: ${root.fgRef || "default"}\noutline: ${root.outline || "default"}\naura: ${root.auraScale}\ntext: ${root.text}`;
+        return `verse: ${root.surahName} ${root.ref}\nmode: ${root.mode}\nfont: ${root.fontFamily} x${root.fontScale}${root.fontRandom ? " (random)" : ""}\nfg: ${root.fgVerse || "default"}\nfgRef: ${root.fgRef || "default"}\noutline: ${root.outline || "default"}\naura: ${root.auraScale}\ntext: ${root.text}`;
     }
 
     IpcHandler {
@@ -228,6 +261,10 @@ Singleton {
             return root.describe();
         }
 
+        function fonts(): string {
+            return root.fontPool.join("\n");
+        }
+
         target: "quran"
     }
 
@@ -239,6 +276,7 @@ Singleton {
             index: root.index,
             fontScale: root.fontScale,
             fontFamily: root.fontFamily,
+            fontRandom: root.fontRandom,
             fgVerse: root.fgVerse,
             fgRef: root.fgRef,
             outline: root.outline,
@@ -261,6 +299,8 @@ Singleton {
                     root.fontScale = data.fontScale;
                 if (typeof data.fontFamily === "string" && data.fontFamily)
                     root.fontFamily = data.fontFamily;
+                if (data.fontRandom === true || data.fontRandom === false)
+                    root.fontRandom = data.fontRandom;
                 if (typeof data.fgVerse === "string")
                     root.fgVerse = data.fgVerse;
                 if (typeof data.fgRef === "string")

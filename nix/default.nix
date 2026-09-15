@@ -31,6 +31,8 @@
   caelestia-cli,
   m3shapes,
   quran-font,
+  arabic-fonts,
+  amiri,
   debug ? false,
   withCli ? false,
   extraRuntimeDeps ? [],
@@ -57,7 +59,7 @@
     ++ lib.optional withCli caelestia-cli;
 
   fontconfig = makeFontsConf {
-    fontDirectories = [material-symbols rubik nerd-fonts.caskaydia-cove quran-font];
+    fontDirectories = [material-symbols rubik nerd-fonts.caskaydia-cove quran-font arabic-fonts amiri];
   };
 
   cmakeBuildType =
