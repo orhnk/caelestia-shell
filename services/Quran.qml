@@ -168,6 +168,22 @@ Singleton {
         saveTimer.restart();
     }
 
+    // Compact faces fit dense verses better: the longer the ayah, the higher
+    // the small-font probability. Bands mirror maxLines so a 7-line verse
+    // almost always lands compact while a one-liner stays expressive.
+    function smallProb(): real {
+        const len = Quran.text.length;
+        if (len <= 70)
+            return 0.15;
+        if (len <= 130)
+            return 0.3;
+        if (len <= 220)
+            return 0.45;
+        if (len <= 400)
+            return 0.6;
+        return 0.8;
+    }
+
     function rollFont(): void {
         if (!fontPool.length)
             return;
@@ -177,7 +193,7 @@ Singleton {
         let f = root.fontFamily;
         let guard = 0;
         while (f === root.fontFamily && guard++ < 10)
-            f = Math.random() < 0.4 ? pickFrom(smallFonts) : pickFrom(big);
+            f = Math.random() < smallProb() ? pickFrom(smallFonts) : pickFrom(big);
         root.fontFamily = f;
     }
 
