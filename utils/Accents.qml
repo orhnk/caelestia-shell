@@ -119,7 +119,7 @@ Singleton {
     }
 
     function charColor(index: int): color {
-        return oscillate(charSpectrum, index);
+        return at(charSpectrum, index);
     }
 
     function gradient(colors: var, t: real): color {
