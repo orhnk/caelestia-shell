@@ -98,8 +98,7 @@ Singleton {
         borderAngle: 45,
         borderAlpha: "ff",
         shadowAngle: 45,
-        shadowAlpha: "08",
-        shadowInactiveAlpha: "08"
+        shadowAlpha: "08"
     })
 
     function hyprStops(alpha: string): var {
@@ -109,11 +108,10 @@ Singleton {
     function reloadHyprRules(): void {
         const stops = hyprStops(hyprDecor.borderAlpha);
         const shadowStops = hyprStops(hyprDecor.shadowAlpha);
-        const shadowInactiveStops = hyprStops(hyprDecor.shadowInactiveAlpha);
         const gradient = stops.map(h => `rgba(${h})`).join(" ");
         const luaColors = stops.map(h => `"rgba(${h})"`).join(",");
         const luaShadow = shadowStops.map(h => `"rgba(${h})"`).join(",");
-        const luaShadowInactive = shadowInactiveStops.map(h => `"rgba(${h})"`).join(",");
+
         const inactiveBorder = Accents.css(current.m3base02).slice(1);
         let rule, trEnabled, borderActive, borderInactive, shadowActive, shadowInactive;
         if (Hypr.usingLua) {
@@ -122,14 +120,14 @@ Singleton {
             borderActive = `eval hl.config({ general = { col = { active_border = { colors = {${luaColors}}, angle = ${hyprDecor.borderAngle} } } } })`;
             borderInactive = `eval hl.config({ general = { col = { inactive_border = "rgb(${inactiveBorder})" } } })`;
             shadowActive = `eval hl.config({ decoration = { shadow = { color = { colors = {${luaShadow}}, angle = ${hyprDecor.shadowAngle} } } } })`;
-            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = { colors = {${luaShadowInactive}}, angle = ${hyprDecor.shadowAngle} } } } })`;
+            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = "rgb(${Accents.css(current.m3base03).slice(1)})" } } })`;
         } else {
             rule = "keyword layerrule %1 %2, match:namespace caelestia-drawers";
             trEnabled = transparency.enabled ? 1 : 0;
             borderActive = `keyword general:col.active_border ${gradient} ${hyprDecor.borderAngle}deg`;
             borderInactive = `keyword general:col.inactive_border rgb(${inactiveBorder})`;
             shadowActive = `keyword decoration:shadow:color ${shadowStops.map(h => `rgba(${h})`).join(" ")} ${hyprDecor.shadowAngle}deg`;
-            shadowInactive = `keyword decoration:shadow:color_inactive ${shadowInactiveStops.map(h => `rgba(${h})`).join(" ")} ${hyprDecor.shadowAngle}deg`;
+            shadowInactive = `keyword decoration:shadow:color_inactive rgb(${Accents.css(current.m3base03).slice(1)})`;
         }
         // Borders/shadows only change with the scheme: re-sending identical
         // gradients on every transparency tick makes them flicker.
