@@ -173,6 +173,8 @@ Singleton {
     // almost always lands compact while a one-liner stays expressive.
     function smallProb(): real {
         const len = Quran.text.length;
+        if (len <= 30)
+            return 0.01;
         if (len <= 70)
             return 0.15;
         if (len <= 130)
