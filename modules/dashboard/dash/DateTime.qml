@@ -36,7 +36,7 @@ Item {
 
             StyledText {
                 Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignHCenter
                 text: root.hour
                 color: Accents.base0A
                 font: digitMetrics.font
