@@ -23,38 +23,12 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 0
 
-        RowLayout {
+        StyledText {
             Layout.alignment: Qt.AlignHCenter
-            spacing: Tokens.spacing.extraSmall
-
-            TextMetrics {
-                id: digitMetrics
-
-                font: Tokens.font.clock.size(32).weight(Font.Black).build()
-                text: "00"
-            }
-
-            StyledText {
-                Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignRight
-                text: root.hour
-                color: Accents.base0A
-                font: digitMetrics.font
-            }
-
-            StyledText {
-                text: "⋮"
-                color: Accents.base0F
-                font: Tokens.font.clock.size(32 * 0.9).weight(Font.Black).build()
-            }
-
-            StyledText {
-                Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignLeft
-                text: root.minute
-                color: Accents.base0A
-                font: digitMetrics.font
-            }
+            horizontalAlignment: Text.AlignHCenter
+            text: `${root.hour}:${root.minute}`
+            color: Accents.base0A
+            font: Tokens.font.clock.size(32).weight(Font.Black).build()
         }
 
         Loader {
