@@ -98,8 +98,8 @@ Singleton {
         borderAngle: 45,
         borderAlpha: "ff",
         shadowAngle: 45,
-        shadowAlpha: "ff",
-        shadowInactiveAlpha: "ff"
+        shadowAlpha: "08",
+        shadowInactiveAlpha: "08"
     })
 
     function hyprStops(alpha: string): var {
