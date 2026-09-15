@@ -96,10 +96,10 @@ Singleton {
     // Hypr decoration parameters, per focus state. Alpha is a hex suffix.
     readonly property var hyprDecor: ({
         borderAngle: 45,
-        borderAlpha: "08",
+        borderAlpha: "ff",
         shadowAngle: 45,
-        shadowAlpha: "08",
-        shadowInactiveAlpha: "08"
+        shadowAlpha: "ff",
+        shadowInactiveAlpha: "ff"
     })
 
     function hyprStops(alpha: string): var {
