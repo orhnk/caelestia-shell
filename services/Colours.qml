@@ -95,8 +95,8 @@ Singleton {
         // NOTE: plain `keyword` is rejected by the lua parser ("use eval"),
         // and `hl.keyword` does not exist - borders must go through hl.config.
         const stops = ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"].map(p => Accents.css(current[p]).slice(1));
-        const gradient = stops.map(h => `rgba(${h}99)`).join(" ");
-        const luaColors = stops.map(h => `"rgba(${h}99)"`).join(",");
+        const gradient = stops.map(h => `rgba(${h}08)`).join(" ");
+        const luaColors = stops.map(h => `"rgba(${h}08)"`).join(",");
         const inactiveBorder = Accents.css(current.m3base02).slice(1);
         let rule, trEnabled, borderActive, borderInactive, shadowActive, shadowInactive;
         if (Hypr.usingLua) {
