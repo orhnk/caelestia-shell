@@ -36,7 +36,7 @@ Item {
 
             StyledText {
                 Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignHCenter
+                horizontalAlignment: Text.AlignRight
                 text: root.hour
                 color: Accents.base0A
                 font: digitMetrics.font
@@ -50,7 +50,7 @@ Item {
 
             StyledText {
                 Layout.preferredWidth: digitMetrics.width
-                horizontalAlignment: Text.AlignHCenter
+                horizontalAlignment: Text.AlignLeft
                 text: root.minute
                 color: Accents.base0A
                 font: digitMetrics.font
