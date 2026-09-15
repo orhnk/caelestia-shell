@@ -94,23 +94,27 @@ Singleton {
     function reloadHyprRules(): void {
         // NOTE: plain `keyword` is rejected by the lua parser ("use eval"),
         // and `hl.keyword` does not exist - borders must go through hl.config.
-        const stops = ["m3base08", "m3base0D"].map(p => Accents.css(current[p]).slice(1));
-        const gradient = stops.map(h => `rgb(${h})`).join(" ");
-        const luaColors = stops.map(h => `"rgb(${h})"`).join(",");
+        const stops = ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"].map(p => Accents.css(current[p]).slice(1));
+        const gradient = stops.map(h => `rgba(${h}99)`).join(" ");
+        const luaColors = stops.map(h => `"rgba(${h}99)"`).join(",");
         const inactiveBorder = Accents.css(current.m3base02).slice(1);
-        let rule, trEnabled, borderActive, borderInactive;
+        let rule, trEnabled, borderActive, borderInactive, shadowActive, shadowInactive;
         if (Hypr.usingLua) {
             rule = `eval hl.layer_rule({ match = { namespace = "caelestia-drawers" }, %1 = %2 })`;
             trEnabled = transparency.enabled;
             borderActive = `eval hl.config({ general = { col = { active_border = { colors = {${luaColors}}, angle = 45 } } } })`;
             borderInactive = `eval hl.config({ general = { col = { inactive_border = "rgb(${inactiveBorder})" } } })`;
+            shadowActive = `eval hl.config({ decoration = { shadow = { color = { colors = {${luaColors}}, angle = 45 } } } })`;
+            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = "rgb(${inactiveBorder})" } } })`;
         } else {
             rule = "keyword layerrule %1 %2, match:namespace caelestia-drawers";
             trEnabled = transparency.enabled ? 1 : 0;
             borderActive = `keyword general:col.active_border ${gradient} 45deg`;
             borderInactive = `keyword general:col.inactive_border rgb(${inactiveBorder})`;
+            shadowActive = `keyword decoration:shadow:color ${gradient} 45deg`;
+            shadowInactive = `keyword decoration:shadow:color_inactive rgb(${inactiveBorder})`;
         }
-        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), borderActive, borderInactive]);
+        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), borderActive, borderInactive, shadowActive, shadowInactive]);
     }
 
     function requestReloadHyprRules(): void {
