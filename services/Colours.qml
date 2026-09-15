@@ -91,9 +91,9 @@ Singleton {
         Quickshell.execDetached(["caelestia", "scheme", "set", "--notify", "-m", mode]);
     }
 
+    property string lastBorderKey
+
     function reloadHyprRules(): void {
-        // NOTE: plain `keyword` is rejected by the lua parser ("use eval"),
-        // and `hl.keyword` does not exist - borders must go through hl.config.
         const stops = ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"].map(p => Accents.css(current[p]).slice(1));
         const gradient = stops.map(h => `rgba(${h}08)`).join(" ");
         const luaColors = stops.map(h => `"rgba(${h}08)"`).join(",");
@@ -114,7 +114,15 @@ Singleton {
             shadowActive = `keyword decoration:shadow:color ${gradient} 45deg`;
             shadowInactive = `keyword decoration:shadow:color_inactive rgb(${inactiveBorder})`;
         }
-        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), borderActive, borderInactive, shadowActive, shadowInactive]);
+        // Borders/shadows only change with the scheme: re-sending identical
+        // gradients on every transparency tick makes them flicker.
+        const messages = [rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))];
+        const borderKey = [borderActive, borderInactive, shadowActive, shadowInactive].join("\n");
+        if (borderKey !== lastBorderKey) {
+            lastBorderKey = borderKey;
+            messages.push(borderActive, borderInactive, shadowActive, shadowInactive);
+        }
+        Hypr.extras.batchMessage(messages);
     }
 
     function requestReloadHyprRules(): void {
