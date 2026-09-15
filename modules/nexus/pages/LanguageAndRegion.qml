@@ -48,32 +48,7 @@ PageBase {
         }
     ]
 
-    readonly property list<MenuItem> salatMethodItems: [
-        MenuItem {
-            text: Tr.tr("ISNA")
-            value: 2
-        },
-        MenuItem {
-            text: Tr.tr("Muslim World League")
-            value: 3
-        },
-        MenuItem {
-            text: Tr.tr("Karachi")
-            value: 1
-        },
-        MenuItem {
-            text: Tr.tr("Egypt")
-            value: 5
-        },
-        MenuItem {
-            text: Tr.tr("Turkey")
-            value: 13
-        },
-        MenuItem {
-            text: Tr.tr("Makkah")
-            value: 4
-        }
-    ]
+
 
     title: Tr.tr("Language & region")
 
@@ -194,10 +169,26 @@ PageBase {
 
         SelectRow {
             label: Tr.tr("Calculation method")
-            subtext: Tr.tr("Fajr and Isha angles")
-            menuItems: root.salatMethodItems
-            active: root.salatMethodItems.find(i => i.value === Salat.method) ?? root.salatMethodItems[0]
-            onSelected: item => Salat.method = item.value
+            subtext: Tr.tr("Fajr and Isha angles, from Aladhan")
+            menuItems: [...methodVariants.instances]
+            active: [...methodVariants.instances].find(i => i.value === Salat.method)
+            onSelected: item => {
+                if (Number.isFinite(item.value))
+                    Salat.method = item.value;
+            }
+
+            Variants {
+                id: methodVariants
+
+                model: Salat.methodList
+
+                MenuItem {
+                    required property var modelData
+
+                    text: modelData.name
+                    value: modelData.id
+                }
+            }
         }
 
         RowButton {

@@ -12,8 +12,8 @@ import qs.utils
 Singleton {
     id: root
 
-    // Aladhan calculation method id (2 = ISNA) and school (0 = Shafi, 1 = Hanafi)
-    property int method: 2
+    // Aladhan calculation method id (13 = Diyanet/Turkey) and school (0 = Shafi, 1 = Hanafi)
+    property int method: 13
     property int school: 0
     // IP geolocation (ipapi.co, like dir3) is the primary location source;
     // the weather service location is only a fallback.
@@ -56,6 +56,8 @@ Singleton {
     })
     // method id -> { fajr: angle|null, ishaAngle: angle|null, ishaInterval: mins|null }
     property var methodParams: ({})
+    // [{ id, name }] sorted by id, from the live table (persisted for offline)
+    property list<var> methodList
 
     function parseMinutes(raw: var): int {
         const m = String(raw ?? "").match(/(\d+(?:\.\d+)?)\s*min/);
@@ -75,19 +77,28 @@ Singleton {
             if (!data)
                 return;
             const params = {};
+            const list = [];
             for (const key of Object.keys(data)) {
                 const entry = data[key] ?? {};
                 if (!Number.isFinite(Number(entry.id)))
                     continue;
+                const id = Math.round(Number(entry.id));
                 const p = entry.params ?? {};
-                params[Math.round(Number(entry.id))] = {
+                params[id] = {
                     fajr: Number.isFinite(Number(p.Fajr)) ? Number(p.Fajr) : null,
                     ishaAngle: Number.isFinite(Number(p.Isha)) ? Number(p.Isha) : null,
                     ishaInterval: parseMinutes(p.Isha)
                 };
+                list.push({
+                    id: id,
+                    name: String(entry.name ?? key)
+                });
             }
-            if (Object.keys(params).length)
+            if (Object.keys(params).length) {
                 methodParams = params;
+                methodList = list.sort((a, b) => a.id - b.id);
+                settingsSaveTimer.restart();
+            }
         }, error => {
             console.warn(lc, `Aladhan methods request failed: ${error}`);
         });
@@ -519,7 +530,8 @@ Singleton {
                 reminderMins: root.reminderMins,
                 method: root.method,
                 school: root.school,
-                months: months
+                months: months,
+                methods: root.methodList
             }));
         }
     }
@@ -552,6 +564,8 @@ Singleton {
                     root.school = data.school;
                 if (data.months && typeof data.months === "object")
                     root.diskMonths = data.months;
+                if (Array.isArray(data.methods) && data.methods.length)
+                    root.methodList = data.methods.filter(m => Number.isFinite(Number(m?.id)));
             } catch (error) {
                 console.warn(lc, `Unable to parse saved salat settings: ${error}`);
             }
