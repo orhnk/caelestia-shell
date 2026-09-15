@@ -92,18 +92,18 @@ Singleton {
     }
 
     function reloadHyprRules(): void {
-        const activeBorder = Accents.css(current.m3base0D).slice(1);
+        const gradient = ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"].map(p => `rgb(${Accents.css(current[p]).slice(1)})`).join(" ");
         const inactiveBorder = Accents.css(current.m3base02).slice(1);
         let rule, trEnabled, borderActive, borderInactive;
         if (Hypr.usingLua) {
             rule = `eval hl.layer_rule({ match = { namespace = "caelestia-drawers" }, %1 = %2 })`;
             trEnabled = transparency.enabled;
-            borderActive = `eval hl.keyword("general:col.active_border", "rgb(${activeBorder})")`;
+            borderActive = `eval hl.keyword("general:col.active_border", "${gradient} 45deg")`;
             borderInactive = `eval hl.keyword("general:col.inactive_border", "rgb(${inactiveBorder})")`;
         } else {
             rule = "keyword layerrule %1 %2, match:namespace caelestia-drawers";
             trEnabled = transparency.enabled ? 1 : 0;
-            borderActive = `keyword general:col.active_border rgb(${activeBorder})`;
+            borderActive = `keyword general:col.active_border ${gradient} 45deg`;
             borderInactive = `keyword general:col.inactive_border rgb(${inactiveBorder})`;
         }
         Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), borderActive, borderInactive]);
