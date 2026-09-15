@@ -30,9 +30,14 @@ Singleton {
         "Amiri", "Amiri Quran",
         "Reem Kufi", "Reem Kufi Medium", "Square Kufic",
         "KFGQPC Kufi Extended", "KFGQPC Kufi Stylistic",
-        "IranNastaliq", "Diwani Letter", "Aref Ruqaa", "Samir_Khouaja_Maghribi", "Raqq",
-        "Islamic Palestine", "B Fantezy", "Sayeh2", "Mj_Faten", "Mj_Nova",
-        "Hamdy V2", "(A) Arslan Wessam B", "AGA Kyrawan V.2", "khalaad Abeer", "Old Antic Bold"
+        "IranNastaliq", "Diwani Letter", "Aref Ruqaa", "Raqq",
+        "Islamic Palestine", "B Fantezy", "Sayeh2", "Mj_Faten",
+        "(A) Arslan Wessam B", "AGA Kyrawan V.2", "khalaad Abeer", "Old Antic Bold"
+    ]
+
+    // Compact faces, picked with 40% probability (see TODO.md).
+    readonly property list<string> smallFonts: [
+        "IBM Plex Sans Arabic", "Noto Kufi Arabic", "Noto Sans Arabic"
     ]
     property string fgVerse: ""
     property string fgRef: ""
@@ -166,11 +171,13 @@ Singleton {
     function rollFont(): void {
         if (!fontPool.length)
             return;
-        let f = fontPool[Math.floor(Math.random() * fontPool.length)];
-        if (fontPool.length > 1) {
-            while (f === root.fontFamily)
-                f = fontPool[Math.floor(Math.random() * fontPool.length)];
-        }
+        const pickFrom = list => list[Math.floor(Math.random() * list.length)];
+        const rest = fontPool.filter(f => !smallFonts.includes(f));
+        const big = rest.length ? rest : fontPool;
+        let f = root.fontFamily;
+        let guard = 0;
+        while (f === root.fontFamily && guard++ < 10)
+            f = Math.random() < 0.4 ? pickFrom(smallFonts) : pickFrom(big);
         root.fontFamily = f;
     }
 
