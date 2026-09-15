@@ -109,7 +109,9 @@ Item {
         id: layout
 
         anchors.fill: parent
-        spacing: 0
+        // Pull the ref line up into the verse's descent whitespace,
+        // roughly halving the visible gap (auras overlap harmlessly).
+        spacing: -40 * root.ayahScale
         transformOrigin: Item.Center
 
         GradientText {
