@@ -94,23 +94,30 @@ Singleton {
     property string lastBorderKey
 
     // Hypr decoration parameters, per focus state. Alpha is a hex suffix.
+    readonly property list<string> hyprChroma: ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"]
+    readonly property list<string> hyprGray: ["m3base00", "m3base01", "m3base02", "m3base03", "m3base04", "m3base05", "m3base06", "m3base07"]
+
     readonly property var hyprDecor: ({
         borderAngle: 45,
         borderAlpha: "ff",
         shadowAngle: 45,
-        shadowAlpha: "08"
+        shadowAlpha: "08",
+        chroma: ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"],
+        gray: ["m3base00", "m3base01", "m3base02", "m3base03", "m3base04", "m3base05", "m3base06", "m3base07"]
     })
 
-    function hyprStops(alpha: string): var {
-        return ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"].map(p => Accents.css(current[p]).slice(1) + alpha);
+    function hyprStops(colors: var, alpha: string): var {
+        return colors.map(p => Accents.css(current[p]).slice(1) + alpha);
     }
 
     function reloadHyprRules(): void {
-        const stops = hyprStops(hyprDecor.borderAlpha);
-        const shadowStops = hyprStops(hyprDecor.shadowAlpha);
+        const stops = hyprStops(hyprDecor.chroma, hyprDecor.borderAlpha);
+        const shadowStops = hyprStops(hyprDecor.chroma, hyprDecor.shadowAlpha);
+        const shadowInactiveStops = hyprStops(hyprDecor.gray, hyprDecor.shadowAlpha);
         const gradient = stops.map(h => `rgba(${h})`).join(" ");
         const luaColors = stops.map(h => `"rgba(${h})"`).join(",");
         const luaShadow = shadowStops.map(h => `"rgba(${h})"`).join(",");
+        const luaShadowInactive = shadowInactiveStops.map(h => `"rgba(${h})"`).join(",");
 
         const inactiveBorder = Accents.css(current.m3base02).slice(1);
         let rule, trEnabled, borderActive, borderInactive, shadowActive, shadowInactive;
@@ -120,14 +127,14 @@ Singleton {
             borderActive = `eval hl.config({ general = { col = { active_border = { colors = {${luaColors}}, angle = ${hyprDecor.borderAngle} } } } })`;
             borderInactive = `eval hl.config({ general = { col = { inactive_border = "rgb(${inactiveBorder})" } } })`;
             shadowActive = `eval hl.config({ decoration = { shadow = { color = { colors = {${luaShadow}}, angle = ${hyprDecor.shadowAngle} } } } })`;
-            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = "rgb(${Accents.css(current.m3base03).slice(1)})" } } })`;
+            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = { colors = {${luaShadowInactive}}, angle = ${hyprDecor.shadowAngle} } } } })`;
         } else {
             rule = "keyword layerrule %1 %2, match:namespace caelestia-drawers";
             trEnabled = transparency.enabled ? 1 : 0;
             borderActive = `keyword general:col.active_border ${gradient} ${hyprDecor.borderAngle}deg`;
             borderInactive = `keyword general:col.inactive_border rgb(${inactiveBorder})`;
             shadowActive = `keyword decoration:shadow:color ${shadowStops.map(h => `rgba(${h})`).join(" ")} ${hyprDecor.shadowAngle}deg`;
-            shadowInactive = `keyword decoration:shadow:color_inactive rgb(${Accents.css(current.m3base03).slice(1)})`;
+            shadowInactive = `keyword decoration:shadow:color_inactive ${shadowInactiveStops.map(h => `rgba(${h})`).join(" ")} ${hyprDecor.shadowAngle}deg`;
         }
         // Borders/shadows only change with the scheme: re-sending identical
         // gradients on every transparency tick makes them flicker.
