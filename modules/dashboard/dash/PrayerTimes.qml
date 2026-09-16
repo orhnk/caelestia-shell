@@ -70,11 +70,14 @@ Item {
                     spacing: Tokens.spacing.extraSmall
 
                     StyledText {
-                        Layout.fillWidth: true
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
                         font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
                         elide: Text.ElideRight
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     StyledText {
