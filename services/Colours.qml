@@ -101,7 +101,7 @@ Singleton {
         borderAngle: 45,
         borderAlpha: "ff",
         shadowAngle: 45,
-        shadowAlpha: "08",
+        shadowAlpha: "4d",
         shadowInactiveAlpha: "4d",
         chroma: ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"],
         gray: ["m3base00", "m3base01", "m3base02", "m3base03", "m3base04", "m3base05", "m3base06", "m3base07"]
