@@ -31,8 +31,8 @@ Item {
             id: icon
 
             anchors.verticalCenter: parent.verticalCenter
-            text: root.modelData?.icon ?? ""
-            color: Accents.popList(root.index)
+                text: root.modelData?.icon ?? ""
+                color: Accents.idColor(Accents.popListColors, root.modelData?.name ?? "")
             fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
         }
 
