@@ -57,7 +57,7 @@ GridLayout {
 
             anchors.fill: parent
             anchors.margins: Tokens.padding.small
-            spacing: Tokens.spacing.small
+            spacing: 0
 
             PrayerTimes {
                 id: prayerTimes

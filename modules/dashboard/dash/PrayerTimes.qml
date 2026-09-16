@@ -21,7 +21,7 @@ Item {
         id: layout
 
         anchors.centerIn: parent
-        spacing: Tokens.spacing.extraSmall
+        spacing: 0
 
         StyledText {
             Layout.fillWidth: true
