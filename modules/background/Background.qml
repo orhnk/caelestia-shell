@@ -169,8 +169,8 @@ Variants {
             active: true
 
             anchors.centerIn: parent
-            width: parent.width * 0.7
-            height: parent.height * 0.7
+            width: parent.width * 0.85
+            height: parent.height * 0.85
 
             sourceComponent: Ayah {
                 wallpaper: behindClock

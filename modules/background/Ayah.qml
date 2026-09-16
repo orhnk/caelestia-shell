@@ -51,7 +51,7 @@ Item {
     TextMetrics {
         id: meter
 
-        font: Tokens.font.headline.builders.small.family(Quran.fontFamily).weight(Font.DemiBold).build()
+        font: Tokens.font.headline.builders.medium.family(Quran.fontFamily).weight(Font.DemiBold).build()
         text: Quran.text
     }
 
@@ -60,7 +60,7 @@ Item {
         if (adv <= 0)
             return Quran.fontScale;
         const s = 0.92 * root.maxLines * root.cardWidth / (adv * root.ayahScale);
-        return Math.min(Quran.fontScale, Math.max(s, 0.4));
+        return Math.min(Quran.fontScale, Math.max(s, 0.45));
     }
     readonly property int maxLines: Quran.text.length > 400 ? 7 : 5
 
@@ -118,7 +118,7 @@ Item {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             text: Quran.text
-            font: Tokens.font.headline.builders.small.scale(root.fitScale * root.ayahScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
+            font: Tokens.font.headline.builders.medium.scale(root.fitScale * root.ayahScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
             fill: Quran.fgVerse === "" ? root.fillLight : Quran.fgVerse
             gradient: root.verseGradient
             strokeColor: root.strokeFlat
