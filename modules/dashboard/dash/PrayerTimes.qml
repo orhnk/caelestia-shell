@@ -17,20 +17,6 @@ Item {
 
     Component.onCompleted: Salat.reload()
 
-    function arabicName(name: string): string {
-        if (name === "Dhuhr" && Salat.isFriday)
-            return "الجمعة";
-        const names = {
-            "Fajr": "الفجر",
-            "Sunrise": "الشروق",
-            "Dhuhr": "الظهر",
-            "Asr": "العصر",
-            "Maghrib": "المغرب",
-            "Isha": "العشاء"
-        };
-        return names[name] ?? name;
-    }
-
     ColumnLayout {
         id: layout
 
@@ -82,13 +68,11 @@ Item {
                     anchors.leftMargin: Tokens.padding.small
                     anchors.rightMargin: Tokens.padding.small
                     spacing: Tokens.spacing.extraSmall
-                    layoutDirection: Qt.RightToLeft
 
                     StyledText {
-                        text: root.arabicName(row.modelData.name)
-                        horizontalAlignment: Text.AlignRight
+                        text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.builders.medium.family("Noto Kufi Arabic").weight(Font.Black).build()
+                        font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
                         elide: Text.ElideRight
                     }
 
@@ -98,9 +82,8 @@ Item {
 
                     StyledText {
                         text: row.modelData.display
-                        horizontalAlignment: Text.AlignLeft
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.builders.medium.family("Noto Kufi Arabic").weight(Font.Black).build()
+                        font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
                     }
                 }
             }
