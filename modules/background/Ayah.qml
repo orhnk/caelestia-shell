@@ -55,9 +55,14 @@ Item {
         text: Quran.text
     }
 
-    // Letter count that ignores combining marks (tashkeel etc.) and counts
-    // code points, not UTF-16 units, so Arabic counts correctly.
-    readonly property int letterCount: [...Quran.text.replace(/\p{M}/gu, "")].length
+    // Letter count: strips tashkeel/diacritics (explicit ranges, no
+    // Unicode property escapes so every JS engine handles it), spaces and
+    // tatweel, then counts code points instead of UTF-16 units.
+    // E.g. 1:1 counts 19, not 39.
+    readonly property int letterCount: {
+        const stripped = (Quran.text ?? "").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, "").replace(/[\s\u0640]/g, "");
+        return [...stripped].length;
+    }
 
     // Lines grow with the text (~70 chars per line), the scale then fills
     // exactly maxLines across the card width. No magic gains or floors.
