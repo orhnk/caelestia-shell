@@ -45,8 +45,8 @@ GridLayout {
 
     Rect {
         Layout.row: 1
-        Layout.preferredWidth: Math.max(countdown.implicitWidth, prayerTimes.implicitWidth)
-        Layout.minimumWidth: prayerTimes.implicitWidth - Tokens.padding.small * 2
+        Layout.preferredWidth: Math.max(countdown.implicitWidth, prayerTimes.implicitWidth) + Tokens.padding.medium
+        Layout.minimumWidth: prayerTimes.implicitWidth
         Layout.fillHeight: true
         implicitHeight: clockColumn.implicitHeight + Tokens.padding.small * 2
 
@@ -57,7 +57,7 @@ GridLayout {
 
             anchors.fill: parent
             anchors.margins: Tokens.padding.small
-            spacing: Tokens.spacing.small
+            spacing: 0
 
             PrayerTimes {
                 id: prayerTimes

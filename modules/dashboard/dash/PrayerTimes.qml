@@ -21,7 +21,14 @@ Item {
         id: layout
 
         anchors.centerIn: parent
-        spacing: Tokens.spacing.extraSmall
+        spacing: 0
+
+        TextMetrics {
+            id: timeMetrics
+
+            font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
+            text: GlobalConfig.services.useTwelveHourClock ? "00:00 AM" : "00:00"
+        }
 
         StyledText {
             Layout.fillWidth: true
@@ -70,14 +77,19 @@ Item {
                     spacing: Tokens.spacing.extraSmall
 
                     StyledText {
-                        Layout.fillWidth: true
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
                         font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
                         elide: Text.ElideRight
                     }
 
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
                     StyledText {
+                        Layout.preferredWidth: timeMetrics.width
+                        horizontalAlignment: Text.AlignRight
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
                         font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
