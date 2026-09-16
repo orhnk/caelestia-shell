@@ -15,7 +15,29 @@ Item {
     implicitWidth: layout.implicitWidth + Tokens.padding.small * 2
     implicitHeight: layout.implicitHeight + Tokens.padding.small * 2
 
-    Component.onCompleted: Salat.reload()
+    Component.onCompleted: {
+        Salat.reload();
+        updateNameCol();
+    }
+
+    property real nameColWidth: 0
+
+    function updateNameCol(): void {
+        let w = 0;
+        for (const n of Salat.names) {
+            nameMetrics.text = Salat.label(n);
+            w = Math.max(w, nameMetrics.advanceWidth);
+        }
+        nameColWidth = w;
+    }
+
+    Connections {
+        target: Salat
+
+        function onPrayersChanged(): void {
+            root.updateNameCol();
+        }
+    }
 
     ColumnLayout {
         id: layout
@@ -28,6 +50,12 @@ Item {
 
             font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
             text: GlobalConfig.services.useTwelveHourClock ? "00:00 AM" : "00:00"
+        }
+
+        TextMetrics {
+            id: nameMetrics
+
+            font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
         }
 
         StyledText {
@@ -53,7 +81,9 @@ Item {
                 readonly property color prayerColor: Accents.prayerColor(index)
 
                 Layout.fillWidth: true
-                implicitWidth: rowLayout.implicitWidth
+                // rowLayout.implicitWidth excludes its own anchored margins;
+                // add them back so the highlight covers name and time fully.
+                implicitWidth: rowLayout.implicitWidth + Tokens.padding.small * 2
                 implicitHeight: rowLayout.implicitHeight + Tokens.padding.small * 2
 
                 StyledRect {
@@ -77,6 +107,7 @@ Item {
                     spacing: Tokens.spacing.extraSmall
 
                     StyledText {
+                        Layout.preferredWidth: root.nameColWidth
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
                         font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
