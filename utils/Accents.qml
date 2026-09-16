@@ -34,7 +34,7 @@ Singleton {
     readonly property list<color> djColors: [base08, base09, base0A, base0B, base0C, base0D, base0E]
     readonly property list<color> spectrumColors: [base0F, base0E, base0D, base0C, base0B, base0A, base09, base08]
     readonly property list<color> charSpectrum: [base08, base09, base0A, base0B, base0C, base0D, base0E, base0F]
-    readonly property list<color> prayerColors: [base08, base09, base0A, base0B, base0C]
+    readonly property list<color> prayerColors: [base08, base09, base0A, base0B, base0C, base0D]
 
     function mix(a: color, b: color, t: real): color {
         return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, 1);

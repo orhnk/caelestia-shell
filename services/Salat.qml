@@ -32,7 +32,7 @@ Singleton {
     property bool nextNow
     property string remindedKey
 
-    // "loc|m<method>s<school>|YYYY-M" -> { "DD-MM-YYYY": { fajr, dhuhr, asr, maghrib, isha } }
+    // "loc|m<method>s<school>|YYYY-M" -> { "DD-MM-YYYY": { fajr, sunrise, dhuhr, asr, maghrib, isha } }
     // The method/school tag keeps cached times from surviving a settings change.
     property var monthCache: ({})
     property var diskMonths: ({})
@@ -41,7 +41,7 @@ Singleton {
     property var pendingFetch
     property var pendingRetry
 
-    readonly property list<string> names: ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
+    readonly property list<string> names: ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
     readonly property var retryableStatus: [408, 425, 429, 500, 502, 503, 504]
 
     // Fallback angles per method id; replaced by the live methods table
@@ -121,6 +121,7 @@ Singleton {
             return Tr.tr("Jumu'ah");
         const labels = {
             "Fajr": Tr.tr("Fajr"),
+            "Sunrise": Tr.tr("Sunrise"),
             "Dhuhr": Tr.tr("Dhuhr"),
             "Asr": Tr.tr("Asr"),
             "Maghrib": Tr.tr("Maghrib"),
@@ -250,7 +251,8 @@ Singleton {
             if (remindedKey !== key) {
                 remindedKey = key;
                 const name = label(prayers[nextIndex].name);
-                Toaster.toast(name, left <= 0 ? Tr.tr("Time for prayer") : Tr.tr("In %1").arg(nextIn), `salat:${nextIndex}`);
+                const nowText = prayers[nextIndex].name === "Sunrise" ? Tr.tr("Sunrise") : Tr.tr("Time for prayer");
+                Toaster.toast(name, left <= 0 ? nowText : Tr.tr("In %1").arg(nextIn), `salat:${nextIndex}`);
             }
         }
     }
@@ -262,7 +264,9 @@ Singleton {
         if (key.startsWith("|"))
             return false;
         const entry = (monthCache[key] ?? {})[stamp] ?? (diskMonths[key] ?? {})[stamp];
-        if (!entry)
+        // Entries cached before sunrise was added are refetched instead of
+        // showing a 00:00 sunrise.
+        if (!entry || !entry.sunrise)
             return false;
 
         prayers = names.map(n => {
@@ -326,7 +330,7 @@ Singleton {
                 const timings = e.timings ?? {};
                 const day = {};
                 let usable = true;
-                for (const n of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) {
+                for (const n of ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"]) {
                     const raw = timings[n[0].toUpperCase() + n.slice(1)] ?? timings[n];
                     if (!raw) {
                         usable = false;
@@ -421,6 +425,7 @@ Singleton {
         const maghribMins = transit + sunOff;
         const times = {
             fajr: toTime(transit - fajrOff),
+            sunrise: toTime(transit - sunOff),
             dhuhr: toTime(transit),
             asr: toTime(transit + hourOffset(asrAlt)),
             maghrib: toTime(maghribMins),
