@@ -34,8 +34,10 @@ Searcher {
         // (the cli picker only looks at the top level).
         if (wallpapers.entries.length > 0) {
             const entry = wallpapers.entries[Math.floor(Math.random() * wallpapers.entries.length)];
+            console.log(`Wallpapers: random pick ${entry.path} (${wallpapers.entries.length} candidates)`);
             setWallpaper(entry.path);
         } else {
+            console.warn("Wallpapers: model empty, falling back to cli picker");
             Quickshell.execDetached(["caelestia", "wallpaper", "-r", ...smartArg]);
         }
     }
