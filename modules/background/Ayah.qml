@@ -55,14 +55,16 @@ Item {
         text: Quran.text
     }
 
+    // Lines grow with the text (~70 chars per line), the scale then fills
+    // exactly maxLines across the card width. No magic gains or floors.
+    readonly property int maxLines: Math.max(3, Math.min(9, Math.round(Quran.text.length / 70)))
+
     readonly property real fitScale: {
         const adv = meter.advanceWidth;
         if (adv <= 0)
             return Quran.fontScale;
-        const s = 0.92 * root.maxLines * root.cardWidth / (adv * root.ayahScale);
-        return Math.min(Quran.fontScale, Math.max(s, 0.45));
+        return Math.min(Quran.fontScale, Math.max(root.maxLines * root.cardWidth / (adv * root.ayahScale), 0.15));
     }
-    readonly property int maxLines: Quran.text.length > 400 ? 7 : 5
 
     readonly property real cardWidth: parent ? Math.min(parent.width, 1100 * ayahScale) : 640 * ayahScale
 
