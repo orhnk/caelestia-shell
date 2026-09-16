@@ -55,11 +55,17 @@ Item {
         text: Quran.text
     }
 
+    // Letter count that ignores combining marks (tashkeel etc.) and counts
+    // code points, not UTF-16 units, so Arabic counts correctly.
+    readonly property int letterCount: [...Quran.text.replace(/\p{M}/gu, "")].length
+
     // Lines grow with the text (~70 chars per line), the scale then fills
     // exactly maxLines across the card width. No magic gains or floors.
     readonly property int maxLines: Math.max(3, Math.min(9, Math.round(Quran.text.length / 70)))
 
     readonly property real fitScale: {
+        if (root.letterCount < 25)
+            return 2.3;
         const adv = meter.advanceWidth;
         if (adv <= 0)
             return Quran.fontScale;
