@@ -11,6 +11,7 @@ Item {
     required property Schemes.Scheme modelData
     required property var list
     required property int index
+    readonly property int stableIndex: Schemes.indexOf(root.modelData)
 
     implicitHeight: Tokens.sizes.launcher.itemHeight
 
@@ -96,7 +97,7 @@ Item {
 
             sourceComponent: MaterialIcon {
                 text: "check"
-                color: Accents.idColor(Accents.popListColors, `${root.modelData?.name ?? ""} ${root.modelData?.flavour ?? ""}`)
+                color: Accents.popList(root.stableIndex)
                 fontStyle: Tokens.font.icon.large
             }
         }

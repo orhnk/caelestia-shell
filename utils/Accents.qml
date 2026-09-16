@@ -59,20 +59,6 @@ Singleton {
         return colors[i];
     }
 
-    function idIndex(id: string): int {
-        let hash = 5381;
-        const s = id ?? "";
-        for (let i = 0; i < s.length; i++)
-            hash = ((hash * 33) ^ s.charCodeAt(i)) >>> 0;
-        return hash;
-    }
-
-    function idColor(colors: var, id: string): color {
-        if (!colors || colors.length === 0)
-            return Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary);
-        return colors[idIndex(id) % colors.length];
-    }
-
     function ws(index: int): color {
         return at(wsColors, index);
     }

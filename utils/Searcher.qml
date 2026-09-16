@@ -34,6 +34,10 @@ Singleton {
         return item[key];
     }
 
+    function indexOf(item: var): int {
+        return list.indexOf(item);
+    }
+
     function query(search: string): var {
         search = transformSearch(search.trim().replace(/\s+/g, " "));
         if (!search)

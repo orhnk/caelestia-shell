@@ -3,6 +3,7 @@ import Caelestia.Config
 import qs.components
 import qs.services
 import qs.utils
+import qs.modules.launcher.services
 
 Item {
     id: root
@@ -10,6 +11,7 @@ Item {
     required property var modelData
     required property var list
     required property int index
+    readonly property int stableIndex: Actions.indexOf(root.modelData)
 
     implicitHeight: Tokens.sizes.launcher.itemHeight
 
@@ -32,7 +34,7 @@ Item {
 
             anchors.verticalCenter: parent.verticalCenter
                 text: root.modelData?.icon ?? ""
-                color: Accents.idColor(Accents.popListColors, root.modelData?.name ?? "")
+                color: Accents.popList(root.stableIndex)
             fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
         }
 
