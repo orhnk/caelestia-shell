@@ -102,6 +102,7 @@ Singleton {
         borderAlpha: "ff",
         shadowAngle: 45,
         shadowAlpha: "08",
+        shadowInactiveAlpha: "4d",
         chroma: ["m3base08", "m3base09", "m3base0A", "m3base0B", "m3base0C", "m3base0D", "m3base0E", "m3base0F"],
         gray: ["m3base00", "m3base01", "m3base02", "m3base03", "m3base04", "m3base05", "m3base06", "m3base07"]
     })
@@ -127,14 +128,14 @@ Singleton {
             borderActive = `eval hl.config({ general = { col = { active_border = { colors = {${luaColors}}, angle = ${hyprDecor.borderAngle} } } } })`;
             borderInactive = `eval hl.config({ general = { col = { inactive_border = "rgb(${inactiveBorder})" } } })`;
             shadowActive = `eval hl.config({ decoration = { shadow = { color = { colors = {${luaShadow}}, angle = ${hyprDecor.shadowAngle} } } } })`;
-            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = "rgba(${Accents.css(current.m3base02).slice(1)}${hyprDecor.shadowAlpha})" } } })`;
+            shadowInactive = `eval hl.config({ decoration = { shadow = { color_inactive = "rgba(${Accents.css(current.m3base02).slice(1)}${hyprDecor.shadowInactiveAlpha})" } } })`;
         } else {
             rule = "keyword layerrule %1 %2, match:namespace caelestia-drawers";
             trEnabled = transparency.enabled ? 1 : 0;
             borderActive = `keyword general:col.active_border ${gradient} ${hyprDecor.borderAngle}deg`;
             borderInactive = `keyword general:col.inactive_border rgb(${inactiveBorder})`;
             shadowActive = `keyword decoration:shadow:color ${shadowStops.map(h => `rgba(${h})`).join(" ")} ${hyprDecor.shadowAngle}deg`;
-            shadowInactive = `keyword decoration:shadow:color_inactive rgba(${Accents.css(current.m3base02).slice(1)}${hyprDecor.shadowAlpha})`;
+            shadowInactive = `keyword decoration:shadow:color_inactive rgba(${Accents.css(current.m3base02).slice(1)}${hyprDecor.shadowInactiveAlpha})`;
         }
         // Borders/shadows only change with the scheme: re-sending identical
         // gradients on every transparency tick makes them flicker.
