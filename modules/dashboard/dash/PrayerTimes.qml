@@ -12,13 +12,27 @@ Item {
 
     clip: true
 
-    implicitWidth: layout.implicitWidth + Tokens.padding.small * 2
-    implicitHeight: layout.implicitHeight + Tokens.padding.small * 2
+    // Minimum breathing room of a row, per side. Rows stretch past this to fill
+    // the card, so this is the floor rather than the actual gap. Deliberately
+    // below the smallest Tokens value - the next-prayer highlight already
+    // separates the rows visually.
+    readonly property int rowVPadding: 2
+    readonly property int outerVPadding: Tokens.padding.extraSmall
 
-    Component.onCompleted: {
-        Salat.reload();
-        updateNameCol();
-    }
+    // Horizontal split around the next-prayer pill: the pill starts
+    // `outerHPadding` in from the widget edge, and the text sits `rowHPadding`
+    // inside the pill. Only their sum sets the widget's width, so the two trade
+    // against each other - widening the pill keeps the widget the same size.
+    readonly property int outerHPadding: Tokens.padding.extraSmall
+    readonly property int rowHPadding: Tokens.padding.medium
+
+    implicitWidth: layout.implicitWidth + outerHPadding * 2
+    implicitHeight: layout.implicitHeight + outerVPadding * 2
+
+    // Display only - Salat loads and refreshes itself. Size the name column up
+    // front so the first frame is not collapsed; later changes come through the
+    // prayersChanged connection below.
+    Component.onCompleted: updateNameCol()
 
     property real nameColWidth: 0
 
@@ -28,7 +42,14 @@ Item {
             nameMetrics.text = Salat.label(n);
             w = Math.max(w, nameMetrics.advanceWidth);
         }
-        nameColWidth = w;
+        // Salat.label() swaps Dhuhr for "Jumu'ah" on Fridays and that string is
+        // not in Salat.names, so without measuring it here the widest label of
+        // the week is the one column that is never sized for it - and since the
+        // name elides, the row would truncate every Friday. Measured through
+        // Salat.label isn't possible (it is not a key of the labels table), so
+        // ask the translation directly, same as the service does.
+        nameMetrics.text = Tr.tr("Jumu'ah");
+        nameColWidth = Math.max(w, nameMetrics.advanceWidth);
     }
 
     Connections {
@@ -42,7 +63,13 @@ Item {
     ColumnLayout {
         id: layout
 
-        anchors.centerIn: parent
+        // Fill instead of centre: the card hands us the height the countdown
+        // left over, and the rows stretch to use all of it.
+        anchors.fill: parent
+        anchors.leftMargin: root.outerHPadding
+        anchors.rightMargin: root.outerHPadding
+        anchors.topMargin: root.outerVPadding
+        anchors.bottomMargin: root.outerVPadding
         spacing: 0
 
         TextMetrics {
@@ -80,11 +107,21 @@ Item {
                 readonly property bool isNext: index === Salat.nextIndex
                 readonly property color prayerColor: Accents.prayerColor(index)
 
+                // Tightest a row is ever allowed to get.
+                readonly property int naturalHeight: rowLayout.implicitHeight + root.rowVPadding * 2
+
                 Layout.fillWidth: true
                 // rowLayout.implicitWidth excludes its own anchored margins;
                 // add them back so the highlight covers name and time fully.
-                implicitWidth: rowLayout.implicitWidth + Tokens.padding.small * 2
-                implicitHeight: rowLayout.implicitHeight + Tokens.padding.small * 2
+                implicitWidth: rowLayout.implicitWidth + root.rowHPadding * 2
+                implicitHeight: naturalHeight
+                // The layout spacing is 0, so a row's own padding is the entire
+                // gap between prayers. Stretching splits the height the card has
+                // left after the countdown evenly over the rows, so the margin
+                // grows with the card instead of being a fixed 2px, and the list
+                // ends flush with the clock.
+                Layout.fillHeight: true
+                Layout.minimumHeight: naturalHeight
 
                 StyledRect {
                     anchors.fill: parent
@@ -102,8 +139,8 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Tokens.padding.small
-                    anchors.rightMargin: Tokens.padding.small
+                    anchors.leftMargin: root.rowHPadding
+                    anchors.rightMargin: root.rowHPadding
                     spacing: Tokens.spacing.extraSmall
 
                     StyledText {
@@ -119,7 +156,10 @@ Item {
                     }
 
                     StyledText {
-                        Layout.preferredWidth: timeMetrics.width
+                        // advanceWidth, not width: the name column above is sized
+                        // by an advance too, and mixing the two metrics makes the
+                        // right edge of the row land differently from the left.
+                        Layout.preferredWidth: timeMetrics.advanceWidth
                         horizontalAlignment: Text.AlignRight
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor

@@ -46,7 +46,10 @@ GridLayout {
     Rect {
         Layout.row: 1
         Layout.preferredWidth: Math.max(countdown.implicitWidth, prayerTimes.implicitWidth) + Tokens.padding.medium
-        Layout.minimumWidth: prayerTimes.implicitWidth
+        // Must cover the countdown too, not just the prayer list: neither child
+        // elides, so letting the card shrink to the list's width squeezes the
+        // clock out of its own rounded rect.
+        Layout.minimumWidth: Math.max(countdown.implicitWidth, prayerTimes.implicitWidth)
         Layout.fillHeight: true
         implicitHeight: clockColumn.implicitHeight + Tokens.padding.small * 2
 
@@ -63,6 +66,10 @@ GridLayout {
                 id: prayerTimes
 
                 Layout.fillWidth: true
+                // Claims whatever height the countdown does not use - the prayer
+                // rows divide it evenly between them, so the list grows with the
+                // card instead of leaving dead space around the clock.
+                Layout.fillHeight: true
                 Layout.preferredHeight: prayerTimes.implicitHeight
             }
 
@@ -70,7 +77,9 @@ GridLayout {
                 id: countdown
 
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                // Deliberately NOT Layout.fillHeight: absorbing the slack here
+                // just pads the clock and keeps the prayers cramped. Its natural
+                // height is what the list above is measured against.
                 hour: Salat.nextNow || Salat.nextIndex < 0 ? Time.hourStr : String(Salat.nextHours)
                 minute: Salat.nextNow || Salat.nextIndex < 0 ? Time.minuteStr : String(Salat.nextMins).padStart(2, "0")
             }

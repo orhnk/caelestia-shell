@@ -219,7 +219,13 @@ Singleton {
                 name: p.name,
                 time: p.time,
                 display: p.display,
-                passed: mins <= nowMins
+                // Strictly less than, so the prayer whose minute has just
+                // arrived is still the current one. With <= the selected prayer
+                // always had left > 0, which meant the "now" state below
+                // (nextNow, nextIn = "now", the "Time for prayer" toast and the
+                // dashboard showing the live clock) could never be reached, and
+                // the highlight moved on a minute early.
+                passed: mins < nowMins
             };
         });
         for (let i = 0; i < prayers.length; i++) {
@@ -445,6 +451,12 @@ Singleton {
         updateNext();
     }
 
+    // Initial load, called from the storage FileView below once settings are
+    // restored. It lives here rather than in the dashboard widget: called from
+    // there it also ran on every dashboard open (the Loader recreates the
+    // content each time), so the static methods table was re-fetched over the
+    // network constantly - and if the dashboard was never opened, methodList
+    // stayed empty even though the nexus method picker reads it.
     function reload(): void {
         fetchMethods();
         if (activeLoc())
@@ -575,7 +587,7 @@ Singleton {
                 console.warn(lc, `Unable to parse saved salat settings: ${error}`);
             }
             root.ready = true;
-            root.fetchTimings();
+            root.reload();
         }
         onLoadFailed: err => {
             if (err === FileViewError.FileNotFound)
@@ -583,7 +595,7 @@ Singleton {
             else
                 console.warn(lc, `Unable to load saved salat settings: ${err}`);
             root.ready = true;
-            root.fetchTimings();
+            root.reload();
         }
     }
 
