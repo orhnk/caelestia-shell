@@ -70,7 +70,7 @@ Item {
 
     readonly property real fitScale: {
         if (root.letterCount < 25)
-            return 2.3;
+            return 2.7;
         const adv = meter.advanceWidth;
         if (adv <= 0)
             return Quran.fontScale;
