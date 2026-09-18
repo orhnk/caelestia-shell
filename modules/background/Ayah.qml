@@ -69,7 +69,7 @@ Item {
     readonly property int maxLines: Math.max(3, Math.min(9, Math.round(Quran.text.length / 70)))
 
     readonly property real fitScale: {
-        if (root.letterCount < 25)
+        if (root.letterCount < 45)
             return 2.7;
         const adv = meter.advanceWidth;
         if (adv <= 0)
