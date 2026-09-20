@@ -44,9 +44,11 @@ Item {
             implicitHeight: Tokens.sizes.osd.sliderHeight
 
             FilledSlider {
+                id: volumeSlider
+
                 anchors.fill: parent
 
-                fillColour: Accents.spectrum(root.volume / GlobalConfig.services.maxVolume)
+                fillColour: Accents.spectrum(volumeSlider.value / volumeSlider.to)
                 icon: Icons.getVolumeIcon(value, root.muted)
                 value: root.volume
                 to: GlobalConfig.services.maxVolume
@@ -70,9 +72,11 @@ Item {
                 implicitHeight: Tokens.sizes.osd.sliderHeight
 
                 FilledSlider {
+                    id: sourceSlider
+
                     anchors.fill: parent
 
-                    fillColour: Accents.spectrum(root.sourceVolume / GlobalConfig.services.maxVolume)
+                    fillColour: Accents.spectrum(sourceSlider.value / sourceSlider.to)
                     icon: Icons.getMicVolumeIcon(value, root.sourceMuted)
                     value: root.sourceVolume
                     to: GlobalConfig.services.maxVolume
@@ -100,9 +104,11 @@ Item {
                 implicitHeight: Tokens.sizes.osd.sliderHeight
 
                 FilledSlider {
+                    id: brightnessSlider
+
                     anchors.fill: parent
 
-                    fillColour: Accents.spectrum(value)
+                    fillColour: Accents.spectrum(brightnessSlider.value / brightnessSlider.to)
                     icon: `brightness_${(Math.round(value * 6) + 1)}`
                     value: root.brightness
                     onMoved: root.monitor?.setBrightness(value)
