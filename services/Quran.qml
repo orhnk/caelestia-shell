@@ -34,7 +34,7 @@ Singleton {
         // "IBM Plex Sans Arabic Light",
         // "IBM Plex Sans Arabic Medium",
         "IBM Plex Sans Arabic Bold",
-        "IranNastaliq",
+        "IranNastaliq", // BIG
         "Islamic Palestine",
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
@@ -51,8 +51,8 @@ Singleton {
         "Sayeh2",
         // "Scheherazade New Medium",
         "Scheherazade New",
-        "Square Kufic"
-        "khalaad Abeer",
+        "Square Kufic",
+        "khalaad Abeer"
         // "AGA Kayrawan Regular", // BROKEN
         // "MCS Hijaz S_U adorn.", // BROKEN
         // "Samir_Khouaja_Maghribi", // SEMI-WORKING FIX NEEDED
@@ -70,7 +70,7 @@ Singleton {
         // "IBM Plex Sans Arabic Light",
         // "IBM Plex Sans Arabic Medium",
         "IBM Plex Sans Arabic Bold",
-        "IranNastaliq",
+        "IranNastaliq", // BIG
         "Islamic Palestine",
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
@@ -87,8 +87,8 @@ Singleton {
         "Sayeh2",
         // "Scheherazade New Medium",
         "Scheherazade New",
-        "Square Kufic"
-        "khalaad Abeer",
+        "Square Kufic",
+        "khalaad Abeer"
         // "AGA Kayrawan Regular", // BROKEN
         // "MCS Hijaz S_U adorn.", // BROKEN
         // "Samir_Khouaja_Maghribi", // SEMI-WORKING FIX NEEDED
