@@ -24,84 +24,76 @@ Singleton {
 
     // Every family here must cover Arabic (verified via `fc-list :lang=ar`).
     readonly property list<string> fontPool: [
-       // "Noto Naskh Arabic",
-       // "Noto Sans Arabic",
-       // "Noto Kufi Arabic",
-       // "Noto Nastaliq Urdu",
-       // "IBM Plex Sans Arabic",
-       // "IBM Plex Sans Arabic Light",
-       // "IBM Plex Sans Arabic Medium",
-       // "Scheherazade New",
-       // "Scheherazade New Medium",
-       // "Amiri",
-       // "Amiri Quran",
-       // "Reem Kufi",
-       // "Reem Kufi Medium",
-       // "Square Kufic",
-       // "KFGQPC Kufi Extended",
-       // "KFGQPC Kufi Stylistic",
-       // "IranNastaliq",
-       // "Diwani Letter",
-       // "Aref Ruqaa",
-       // "Raqq",
-       // "Islamic Palestine",
-       // "B Fantezy",
-       // "Sayeh2", "Mj_Faten",
-       // "(A) Arslan Wessam B",
-       // "AGA Kyrawan V.2",
-       // "khalaad Abeer",
-       // "Old Antic Bold"
         "(A) Arslan Wessam B",
-        "AGA Kayrawan Regular",
-        "AGA Kyrawan V.2 قيروان,AGA Kyrawan V.2",
+        "AGA Kyrawan V.2",
+        "Amiri Quran",
+        "Amiri",
         "Aref Ruqaa",
         "B Fantezy",
         "Diwani Letter",
-        "IBM Plex Sans Arabic",
+        // "IBM Plex Sans Arabic Light",
+        // "IBM Plex Sans Arabic Medium",
+        "IBM Plex Sans Arabic Bold",
         "IranNastaliq",
         "Islamic Palestine",
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
-        "khalaad Abeer",
-        "MCS Hijaz S_U adorn.",
         "Mj_Faten",
         "Mj_Nova",
-        "Old Antic Bold",
+        "Noto Kufi Arabic",
+        "Noto Naskh Arabic",
+        "Noto Nastaliq Urdu",
+        "Noto Sans Arabic",
+        "Old Antic Bold"
         "Raqq",
+        "Reem Kufi Medium",
         "Reem Kufi",
-        "Samir_Khouaja_Maghribi",
         "Sayeh2",
+        // "Scheherazade New Medium",
+        "Scheherazade New",
         "Square Kufic"
-       
+        "khalaad Abeer",
+        // "AGA Kayrawan Regular", // BROKEN
+        // "MCS Hijaz S_U adorn.", // BROKEN
+        // "Samir_Khouaja_Maghribi", // SEMI-WORKING FIX NEEDED
     ]
 
     // Compact faces, picked with 40% probability (see TODO.md).
     readonly property list<string> smallFonts: [
-        // "IBM Plex Sans Arabic",
-        // "Noto Kufi Arabic",
-        // "Noto Sans Arabic"
         "(A) Arslan Wessam B",
-        "AGA Kayrawan Regular",
-        "AGA Kyrawan V.2 قيروان,AGA Kyrawan V.2",
+        "AGA Kyrawan V.2",
+        "Amiri Quran",
+        "Amiri",
         "Aref Ruqaa",
         "B Fantezy",
         "Diwani Letter",
-        "IBM Plex Sans Arabic",
+        // "IBM Plex Sans Arabic Light",
+        // "IBM Plex Sans Arabic Medium",
+        "IBM Plex Sans Arabic Bold",
         "IranNastaliq",
         "Islamic Palestine",
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
-        "khalaad Abeer",
-        "MCS Hijaz S_U adorn.",
         "Mj_Faten",
         "Mj_Nova",
-        "Old Antic Bold",
+        "Noto Kufi Arabic",
+        "Noto Naskh Arabic",
+        "Noto Nastaliq Urdu",
+        "Noto Sans Arabic",
+        "Old Antic Bold"
         "Raqq",
+        "Reem Kufi Medium",
         "Reem Kufi",
-        "Samir_Khouaja_Maghribi",
         "Sayeh2",
+        // "Scheherazade New Medium",
+        "Scheherazade New",
         "Square Kufic"
+        "khalaad Abeer",
+        // "AGA Kayrawan Regular", // BROKEN
+        // "MCS Hijaz S_U adorn.", // BROKEN
+        // "Samir_Khouaja_Maghribi", // SEMI-WORKING FIX NEEDED
     ]
+
     property string fgVerse: ""
     property string fgRef: ""
     property string outline: ""
