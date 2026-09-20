@@ -139,7 +139,7 @@ Item {
             auraWidth: 14 * root.ayahScale
             auraStrength: 0.55 * Quran.auraScale
             maximumLineCount: root.maxLines
-            lineH: 1
+            lineH: 1.0
         }
 
         StyledText {

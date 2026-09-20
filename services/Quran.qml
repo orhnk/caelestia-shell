@@ -51,26 +51,26 @@ Singleton {
        // "AGA Kyrawan V.2",
        // "khalaad Abeer",
        // "Old Antic Bold"
-        (A) Arslan Wessam B
-        "AGA Kayrawan Regular"
-        "AGA Kyrawan V.2 قيروان,AGA Kyrawan V.2"
-        "Aref Ruqaa"
-        "B Fantezy"
-        "Diwani Letter"
-        "IBM Plex Sans Arabic"
-        "IranNastaliq"
-        "Islamic Palestine"
-        "KFGQPC Kufi Extended"
-        "KFGQPC Kufi Stylistic"
-        "khalaad Abeer"
-        "MCS Hijaz S_U adorn."
-        "Mj_Faten"
-        "Mj_Nova"
-        "Old Antic Bold"
-        "Raqq"
-        "Reem Kufi"
-        "Samir_Khouaja_Maghribi"
-        "Sayeh2"
+        "(A) Arslan Wessam B",
+        "AGA Kayrawan Regular",
+        "AGA Kyrawan V.2 قيروان,AGA Kyrawan V.2",
+        "Aref Ruqaa",
+        "B Fantezy",
+        "Diwani Letter",
+        "IBM Plex Sans Arabic",
+        "IranNastaliq",
+        "Islamic Palestine",
+        "KFGQPC Kufi Extended",
+        "KFGQPC Kufi Stylistic",
+        "khalaad Abeer",
+        "MCS Hijaz S_U adorn.",
+        "Mj_Faten",
+        "Mj_Nova",
+        "Old Antic Bold",
+        "Raqq",
+        "Reem Kufi",
+        "Samir_Khouaja_Maghribi",
+        "Sayeh2",
         "Square Kufic"
        
     ]
@@ -80,26 +80,26 @@ Singleton {
         // "IBM Plex Sans Arabic",
         // "Noto Kufi Arabic",
         // "Noto Sans Arabic"
-        "(A) Arslan Wessam B"
-        "AGA Kayrawan Regular"
-        "AGA Kyrawan V.2 قيروان,AGA Kyrawan V.2"
-        "Aref Ruqaa"
-        "B Fantezy"
-        "Diwani Letter"
-        "IBM Plex Sans Arabic"
-        "IranNastaliq"
-        "Islamic Palestine"
-        "KFGQPC Kufi Extended"
-        "KFGQPC Kufi Stylistic"
-        "khalaad Abeer"
-        "MCS Hijaz S_U adorn."
-        "Mj_Faten"
-        "Mj_Nova"
-        "Old Antic Bold"
-        "Raqq"
-        "Reem Kufi"
-        "Samir_Khouaja_Maghribi"
-        "Sayeh2"
+        "(A) Arslan Wessam B",
+        "AGA Kayrawan Regular",
+        "AGA Kyrawan V.2 قيروان,AGA Kyrawan V.2",
+        "Aref Ruqaa",
+        "B Fantezy",
+        "Diwani Letter",
+        "IBM Plex Sans Arabic",
+        "IranNastaliq",
+        "Islamic Palestine",
+        "KFGQPC Kufi Extended",
+        "KFGQPC Kufi Stylistic",
+        "khalaad Abeer",
+        "MCS Hijaz S_U adorn.",
+        "Mj_Faten",
+        "Mj_Nova",
+        "Old Antic Bold",
+        "Raqq",
+        "Reem Kufi",
+        "Samir_Khouaja_Maghribi",
+        "Sayeh2",
         "Square Kufic"
     ]
     property string fgVerse: ""
