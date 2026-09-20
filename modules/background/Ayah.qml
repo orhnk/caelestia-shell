@@ -139,7 +139,7 @@ Item {
             auraWidth: 14 * root.ayahScale
             auraStrength: 0.55 * Quran.auraScale
             maximumLineCount: root.maxLines
-            lineH: 1.4
+            lineH: 1
         }
 
         StyledText {
@@ -147,7 +147,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
             color: Quran.fgRef === "" ? Colours.palette.m3base03 : Quran.fgRef
-            font: Tokens.font.label.builders.medium.scale(1.5 * Quran.fontScale).family("Aref Ruqaa").weight(Font.DemiBold).letterSpacing(0).build()
+            font: Tokens.font.label.builders.medium.scale(1.5).family("Aref Ruqaa").weight(Font.DemiBold).letterSpacing(0).build()
         }
     }
 }

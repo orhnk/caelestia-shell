@@ -15,6 +15,7 @@ StyledRect {
     required property string label
     required property string subLabel
     required property color accent
+    property color progressAccent: accent
     required property real usage
     required property real temperature
 
@@ -31,7 +32,7 @@ StyledRect {
         anchors.top: parent.top
         anchors.margins: Tokens.padding.large
 
-        fgColour: root.accent
+        fgColour: root.progressAccent
 
         spacing: Tokens.spacing.extraSmall
         strokeWidth: Tokens.padding.extraSmall
@@ -103,7 +104,7 @@ StyledRect {
         StyledProgressBar {
             value: root.temperature / 100
             implicitHeight: Tokens.padding.small
-            fgColour: root.accent
+            fgColour: root.progressAccent
             indeterminate: isNaN(root.usage) || isNaN(root.temperature)
         }
     }

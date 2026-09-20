@@ -11,9 +11,9 @@ StyledRect {
     id: root
 
     readonly property color dayColour: Accents.base0A
-    readonly property color numberColour: Accents.base0B
-    readonly property color sepColour: Accents.base0F
-    readonly property color clockColour: Accents.base09
+    readonly property color numberColour: Accents.base06
+    readonly property color sepColour: Accents.base0A
+    readonly property color clockColour: Accents.base06
     readonly property color colour: numberColour
     readonly property int padding: Config.bar.clock.background ? Tokens.padding.medium : Tokens.padding.extraSmall
     readonly property var font: Tokens.font.body.builders.small.scale(1.1)
