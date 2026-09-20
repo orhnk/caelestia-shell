@@ -39,7 +39,7 @@ Singleton {
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
         "Mj_Faten",
-        "Mj_Nova",
+        // "Mj_Nova",
         "Noto Kufi Arabic",
         "Noto Naskh Arabic",
         "Noto Nastaliq Urdu",
@@ -60,32 +60,14 @@ Singleton {
 
     // Compact faces, picked with 40% probability (see TODO.md).
     readonly property list<string> smallFonts: [
-        "(A) Arslan Wessam B",
-        "AGA Kyrawan V.2",
         "Amiri Quran",
         "Amiri",
         "Aref Ruqaa",
-        "B Fantezy",
-        "Diwani Letter",
         "IBM Plex Sans Arabic Bold",
-        "IranNastaliq", // BIG
-        "Islamic Palestine",
-        "KFGQPC Kufi Extended",
-        "KFGQPC Kufi Stylistic",
-        "Mj_Faten",
-        "Mj_Nova",
         "Noto Kufi Arabic",
         "Noto Naskh Arabic",
-        "Noto Nastaliq Urdu",
         "Noto Sans Arabic",
-        "Old Antic Bold",
-        "Raqq",
-        "Reem Kufi Medium",
-        "Reem Kufi",
-        "Sayeh2",
         "Scheherazade New",
-        "Square Kufic",
-        "khalaad Abeer"
     ]
 
     property string fgVerse: ""
@@ -225,14 +207,14 @@ Singleton {
         if (len <= 30)
             return 0.01;
         if (len <= 70)
-            return 0.15;
+            return 0.25;
         if (len <= 130)
-            return 0.3;
-        if (len <= 220)
-            return 0.45;
-        if (len <= 400)
             return 0.6;
-        return 0.8;
+        if (len <= 220)
+            return 0.85;
+        if (len <= 400)
+            return 0.9;
+        return 0.95;
     }
 
     function rollFont(): void {
