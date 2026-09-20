@@ -44,7 +44,7 @@ Singleton {
         "Noto Naskh Arabic",
         "Noto Nastaliq Urdu",
         "Noto Sans Arabic",
-        "Old Antic Bold"
+        "Old Antic Bold",
         "Raqq",
         "Reem Kufi Medium",
         "Reem Kufi",
@@ -67,8 +67,6 @@ Singleton {
         "Aref Ruqaa",
         "B Fantezy",
         "Diwani Letter",
-        // "IBM Plex Sans Arabic Light",
-        // "IBM Plex Sans Arabic Medium",
         "IBM Plex Sans Arabic Bold",
         "IranNastaliq", // BIG
         "Islamic Palestine",
@@ -80,18 +78,14 @@ Singleton {
         "Noto Naskh Arabic",
         "Noto Nastaliq Urdu",
         "Noto Sans Arabic",
-        "Old Antic Bold"
+        "Old Antic Bold",
         "Raqq",
         "Reem Kufi Medium",
         "Reem Kufi",
         "Sayeh2",
-        // "Scheherazade New Medium",
         "Scheherazade New",
         "Square Kufic",
         "khalaad Abeer"
-        // "AGA Kayrawan Regular", // BROKEN
-        // "MCS Hijaz S_U adorn.", // BROKEN
-        // "Samir_Khouaja_Maghribi", // SEMI-WORKING FIX NEEDED
     ]
 
     property string fgVerse: ""
