@@ -95,6 +95,18 @@ Item {
             elide: Text.ElideRight
         }
 
+        // Shown while times are an offline approximation (booted with no
+        // network); the service keeps retrying and swaps to online data.
+        StyledText {
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+            visible: Salat.nextIndex >= 0 && !Salat.onlineOk
+            text: Tr.tr("offline")
+            color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
+            font: Tokens.font.label.small
+            elide: Text.ElideRight
+        }
+
         Repeater {
             model: Salat.prayers
 

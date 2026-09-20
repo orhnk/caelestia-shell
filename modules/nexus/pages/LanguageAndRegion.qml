@@ -169,12 +169,23 @@ PageBase {
 
         SelectRow {
             label: Tr.tr("Calculation method")
-            subtext: Tr.tr("Fajr and Isha angles, from Aladhan")
-            menuItems: [...methodVariants.instances]
-            active: [...methodVariants.instances].find(i => i.value === Salat.method)
+            subtext: Salat.methodAuto ? Tr.tr("Auto: %1, from Aladhan").arg(Salat.methodName(Salat.method)) : Tr.tr("Fajr and Isha angles, from Aladhan")
+            menuItems: [autoMethod, ...methodVariants.instances]
+            active: Salat.methodAuto ? autoMethod : [...methodVariants.instances].find(i => i.value === Salat.method)
             onSelected: item => {
-                if (Number.isFinite(item.value))
+                if (item === autoMethod || item.value === -1) {
+                    Salat.methodAuto = true;
+                } else if (Number.isFinite(item.value)) {
+                    Salat.methodAuto = false;
                     Salat.method = item.value;
+                }
+            }
+
+            MenuItem {
+                id: autoMethod
+
+                text: Salat.methodAuto ? Tr.tr("Auto (%1)").arg(Salat.methodName(Salat.method)) : Tr.tr("Auto")
+                value: -1
             }
 
             Variants {

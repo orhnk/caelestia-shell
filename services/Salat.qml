@@ -12,9 +12,20 @@ import qs.utils
 Singleton {
     id: root
 
-    // Aladhan calculation method id (13 = Diyanet/Turkey) and school (0 = Shafi, 1 = Hanafi)
+    // Aladhan calculation method id. methodAuto picks the nearest authority
+    // from the live GET /v1/methods table by location (no hardcoding);
+    // an explicit method choice sets methodAuto=false. The default below
+    // is only a last-resort render value until the table loads.
+    // School: 0 = Shafi, 1 = Hanafi (madhab is not geo-derivable, stays manual).
     property int method: 13
     property int school: 0
+    property bool methodAuto: true
+    // Connectivity state: offline fallback fills prayers but must not stop
+    // the timer from retrying the network (boot race with no DNS otherwise
+    // sticks all day). lastOfflineAt throttles those retries to ~5 minutes.
+    property bool onlineOk: false
+    property string source: ""
+    property double lastOfflineAt: 0
     // IP geolocation (ipapi.co, like dir3) is the primary location source;
     // the weather service location is only a fallback.
     property string ipLoc
@@ -91,13 +102,16 @@ Singleton {
                 };
                 list.push({
                     id: id,
-                    name: String(entry.name ?? key)
+                    name: String(entry.name ?? key),
+                    lat: Number.isFinite(Number(entry.location?.latitude)) ? Number(entry.location.latitude) : null,
+                    lon: Number.isFinite(Number(entry.location?.longitude)) ? Number(entry.location.longitude) : null
                 });
             }
             if (Object.keys(params).length) {
                 methodParams = params;
                 methodList = list.sort((a, b) => a.id - b.id);
                 settingsSaveTimer.restart();
+                root.maybeAutoPick();
             }
         }, error => {
             console.warn(lc, `Aladhan methods request failed: ${error}`);
@@ -114,6 +128,62 @@ Singleton {
             ishaAngle: fallback[1],
             ishaInterval: -1
         };
+    }
+
+    function methodName(id: int): string {
+        const m = methodList.find(m => Number(m?.id) === id);
+        return m ? String(m.name ?? id) : `Method ${id}`;
+    }
+
+    function haversineKm(lat1: real, lon1: real, lat2: real, lon2: real): real {
+        const r = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        return 2 * r * Math.asin(Math.min(1, Math.sqrt(a)));
+    }
+
+    // Nearest authority from the live methods table (each entry carries the
+    // authority's reference location). Entries without a location
+    // (MOONSIGHTING, CUSTOM) are skipped. Returns -1 when undecidable.
+    function pickMethodForLoc(): int {
+        const loc = activeLoc();
+        if (!loc || loc.indexOf(",") === -1)
+            return -1;
+        const parts = loc.split(",").map(s => Number(s.trim()));
+        if (!Number.isFinite(parts[0]) || !Number.isFinite(parts[1]))
+            return -1;
+        let best = -1;
+        let bestD = Infinity;
+        for (const m of methodList) {
+            const mLat = Number(m?.lat);
+            const mLon = Number(m?.lon);
+            if (!Number.isFinite(mLat) || !Number.isFinite(mLon))
+                continue;
+            const d = haversineKm(parts[0], parts[1], mLat, mLon);
+            if (d < bestD) {
+                bestD = d;
+                best = Math.round(Number(m.id));
+            }
+        }
+        return best;
+    }
+
+    // Auto-selects the method when enabled and both inputs are present.
+    // Called after the methods table loads and whenever the location
+    // resolves/changes; assigning method triggers the normal refresh path.
+    function maybeAutoPick(): void {
+        if (!root.methodAuto || !root.ready || !methodList.length)
+            return;
+        const pick = pickMethodForLoc();
+        if (pick >= 0 && pick !== root.method) {
+            console.info(lc, `Auto method: ${methodName(root.method)} -> ${methodName(pick)} for ${activeLoc()}`);
+            root.method = pick;
+        }
+    }
+
+    function logState(where: string): void {
+        console.info(lc, `${where}: loc=${activeLoc()} method=${root.method} (${methodName(root.method)}) school=${root.school} source=${root.source} onlineOk=${root.onlineOk}`);
     }
 
     function label(name: string): string {
@@ -173,6 +243,7 @@ Singleton {
             }
             // ipapi.co rejects empty clients with 429 - a UA makes it work
             ipLoc = `${lat},${lon}`;
+            root.maybeAutoPick();
             fetchTimings();
         }, (error, metadata) => {
             ipPending = false;
@@ -357,6 +428,9 @@ Singleton {
             diskMonths[key] = schedules;
             settingsSaveTimer.restart();
             applyDay();
+            root.source = "aladhan";
+            root.onlineOk = true;
+            root.logState("fetch");
         }, (error, metadata) => {
             fetchFailed(year, month, attempt, metadata?.statusCode ?? -1);
         });
@@ -374,8 +448,12 @@ Singleton {
     }
 
     function fetchTimings(): void {
-        if (applyDay())
+        if (applyDay()) {
+            root.source = "cache";
+            root.onlineOk = true;
+            root.logState("cache");
             return;
+        }
         const now = new Date();
         fetchMonth(now.getFullYear(), now.getMonth() + 1, 0);
     }
@@ -449,6 +527,10 @@ Singleton {
         day = dayStamp(now);
         isFriday = now.getDay() === 5;
         updateNext();
+        root.source = "offline";
+        root.onlineOk = false;
+        root.lastOfflineAt = Date.now();
+        root.logState("offline");
     }
 
     // Initial load, called from the storage FileView below once settings are
@@ -473,6 +555,7 @@ Singleton {
         delete diskMonths[key];
         diskMonthsChanged();
         settingsSaveTimer.restart();
+        root.lastOfflineAt = 0;
         fetchTimings();
     }
 
@@ -480,12 +563,34 @@ Singleton {
         monthCache = ({});
         diskMonths = ({});
         settingsSaveTimer.restart();
+        root.lastOfflineAt = 0;
         fetchTimings();
+    }
+
+    onReminderMinsChanged: settingsSaveTimer.restart()
+
+    onMethodAutoChanged: {
+        settingsSaveTimer.restart();
+        if (root.ready)
+            maybeAutoPick();
+    }
+
+    onMethodChanged: {
+        settingsSaveTimer.restart();
+        if (root.ready)
+            refresh();
+    }
+
+    onSchoolChanged: {
+        settingsSaveTimer.restart();
+        if (root.ready)
+            refresh();
     }
 
     Connections {
         function onLocChanged(): void {
             monthCache = ({});
+            root.maybeAutoPick();
             root.fetchTimings();
         }
 
@@ -499,6 +604,8 @@ Singleton {
         triggeredOnStart: true
         onTriggered: {
             if (!root.prayers.length || root.day !== root.dayStamp(new Date()))
+                root.fetchTimings();
+            else if (!root.onlineOk && Date.now() - root.lastOfflineAt > 300000)
                 root.fetchTimings();
             else
                 root.updateNext();
@@ -546,23 +653,12 @@ Singleton {
             salatStorage.setText(JSON.stringify({
                 reminderMins: root.reminderMins,
                 method: root.method,
+                methodAuto: root.methodAuto,
                 school: root.school,
                 months: months,
                 methods: root.methodList
             }));
         }
-    }
-
-    onReminderMinsChanged: settingsSaveTimer.restart()
-    onMethodChanged: {
-        settingsSaveTimer.restart();
-        if (root.ready)
-            refresh();
-    }
-    onSchoolChanged: {
-        settingsSaveTimer.restart();
-        if (root.ready)
-            refresh();
     }
 
     FileView {
@@ -575,6 +671,12 @@ Singleton {
                 const data = JSON.parse(text());
                 if (Number.isFinite(Number(data.reminderMins)))
                     root.reminderMins = Math.max(0, Math.min(60, Math.round(Number(data.reminderMins))));
+                // A saved explicit method is respected (auto stays off);
+                // fresh state keeps the auto default.
+                if (typeof data.methodAuto === "boolean")
+                    root.methodAuto = data.methodAuto;
+                else if (Number.isFinite(Number(data.method)))
+                    root.methodAuto = false;
                 if (Number.isFinite(Number(data.method)))
                     root.method = Math.round(Number(data.method));
                 if (data.school === 0 || data.school === 1)
