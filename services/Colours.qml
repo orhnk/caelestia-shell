@@ -71,16 +71,130 @@ Singleton {
             previewLight = scheme.mode === "light";
         }
 
+        colours.hasBase16 = ["base00", "base01", "base02", "base03", "base04", "base05", "base06", "base07", "base08", "base09", "base0A", "base0B", "base0C", "base0D", "base0E", "base0F"].every(k => k in scheme.colours);
+
+        // Plain base16 schemes only carry the 16 base colours (plus terms).
+        // Derive the full Material palette from them so every surface/accent
+        // stays coherent instead of leaking colours from the previous scheme.
+        // Dynamic and full static schemes have no base16 keys and are untouched.
+        if (colours.hasBase16)
+            root.applyBase16(colours, scheme.colours);
+
         for (const [name, colour] of Object.entries(scheme.colours)) {
             const propName = name.startsWith("term") ? name : `m3${name}`;
             if (colours.hasOwnProperty(propName))
                 colours[propName] = `#${colour}`;
         }
 
-        colours.hasBase16 = ["base00", "base01", "base02", "base03", "base04", "base05", "base06", "base07", "base08", "base09", "base0A", "base0B", "base0C", "base0D", "base0E", "base0F"].every(k => k in scheme.colours);
-
         if (!isPreview)
             root.requestReloadHyprRules();
+    }
+
+    // Derive the whole M3 palette + terminal colours from plain base16.
+    // Canonical base16 roles: 00 default bg, 01 lighter bg, 02 selection bg,
+    // 03 comments, 04 dark fg, 05 default fg, 06 light fg, 07 light bg,
+    // 08 red, 09 orange, 0A yellow, 0B green, 0C cyan, 0D blue, 0E magenta,
+    // 0F brown. Accents: blue primary, cyan secondary, magenta tertiary.
+    function applyBase16(colours: var, src: var): void {
+        const c = (key: string): string => `#${src[key]}`;
+        const base00 = c("base00"), base01 = c("base01"), base02 = c("base02"), base03 = c("base03");
+        const base04 = c("base04"), base05 = c("base05");
+        const base08 = c("base08"), base0B = c("base0B"), base0C = c("base0C"), base0D = c("base0D"), base0E = c("base0E");
+
+        colours.m3base00 = base00;
+        colours.m3base01 = base01;
+        colours.m3base02 = base02;
+        colours.m3base03 = c("base03");
+        colours.m3base04 = base04;
+        colours.m3base05 = base05;
+        colours.m3base06 = c("base06");
+        colours.m3base07 = c("base07");
+        colours.m3base08 = base08;
+        colours.m3base09 = c("base09");
+        colours.m3base0A = c("base0A");
+        colours.m3base0B = base0B;
+        colours.m3base0C = base0C;
+        colours.m3base0D = base0D;
+        colours.m3base0E = base0E;
+        colours.m3base0F = c("base0F");
+
+        colours.m3background = base00;
+        colours.m3surface = base00;
+        colours.m3surfaceDim = base00;
+        colours.m3surfaceContainerLowest = base00;
+        colours.m3surfaceContainerLow = base01;
+        colours.m3surfaceContainer = base01;
+        colours.m3surfaceContainerHigh = base02;
+        colours.m3surfaceContainerHighest = base02;
+        colours.m3surfaceBright = base01;
+        colours.m3surfaceVariant = base02;
+        colours.m3onBackground = base05;
+        colours.m3onSurface = base05;
+        colours.m3onSurfaceVariant = base04;
+        colours.m3inverseSurface = base05;
+        colours.m3inverseOnSurface = base00;
+        colours.m3outline = base04;
+        colours.m3outlineVariant = base02;
+        colours.m3shadow = "#000000";
+        colours.m3scrim = "#000000";
+
+        colours.m3surfaceTint = base0D;
+        colours.m3primary = base0D;
+        colours.m3onPrimary = base00;
+        colours.m3primaryContainer = base0D;
+        colours.m3onPrimaryContainer = base00;
+        colours.m3inversePrimary = base0D;
+        colours.m3secondary = base0C;
+        colours.m3onSecondary = base00;
+        colours.m3secondaryContainer = base0C;
+        colours.m3onSecondaryContainer = base00;
+        colours.m3tertiary = base0E;
+        colours.m3onTertiary = base00;
+        colours.m3tertiaryContainer = base0E;
+        colours.m3onTertiaryContainer = base00;
+        colours.m3primary_paletteKeyColor = base0D;
+        colours.m3secondary_paletteKeyColor = base0C;
+        colours.m3tertiary_paletteKeyColor = base0E;
+        colours.m3neutral_paletteKeyColor = base05;
+        colours.m3neutral_variant_paletteKeyColor = base04;
+        colours.m3primaryFixed = base0D;
+        colours.m3primaryFixedDim = base0D;
+        colours.m3onPrimaryFixed = base00;
+        colours.m3onPrimaryFixedVariant = base03;
+        colours.m3secondaryFixed = base0C;
+        colours.m3secondaryFixedDim = base0C;
+        colours.m3onSecondaryFixed = base00;
+        colours.m3onSecondaryFixedVariant = base03;
+        colours.m3tertiaryFixed = base0E;
+        colours.m3tertiaryFixedDim = base0E;
+        colours.m3onTertiaryFixed = base00;
+        colours.m3onTertiaryFixedVariant = base03;
+
+        colours.m3error = base08;
+        colours.m3onError = base00;
+        colours.m3errorContainer = base08;
+        colours.m3onErrorContainer = base00;
+        colours.m3success = base0B;
+        colours.m3onSuccess = base00;
+        colours.m3successContainer = base0B;
+        colours.m3onSuccessContainer = base00;
+
+        colours.term0 = base00;
+        colours.term1 = base08;
+        colours.term2 = base0B;
+        colours.term3 = c("base0A");
+        colours.term4 = base0D;
+        colours.term5 = base0E;
+        colours.term6 = base0C;
+        colours.term7 = base05;
+        colours.term8 = c("base03");
+        colours.term9 = base08;
+        colours.term10 = base0B;
+        colours.term11 = c("base0A");
+        colours.term12 = base0D;
+        colours.term13 = base0E;
+        colours.term14 = base0C;
+        colours.term15 = c("base07");
     }
 
     function pick(base: color, fallback: color): color {
