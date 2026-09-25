@@ -5,10 +5,7 @@ Base16 colour schemes ported from [ifraaH](https://github.com/orhnk/ifraaH)
 in Caelestia CLI layout: `schemes/<scheme>/<flavour>/<mode>.txt` with
 space-separated `key hex` lines.
 
-- 347 ifraaH themes -> 322 schemes (248 dark, 99 light files), plus
-  vendored `phoenix/dark/dark.txt` (348 files total). Phoenix is not in
-  ifraaH; it is kept byte-identical from the CLI because upstream dropped
-  it and existing setups reference it. The port script never deletes it.
+- 347 ifraaH themes -> 322 schemes (248 dark, 99 light files).
 - Each scheme has flavour `default`. When an ifraaH `<base>-dark`/`-light`
   file pairs with an opposite-variant `<base>` file, both modes live under
   the `<base>` scheme (e.g. `atelier-cave` has `dark.txt` + `light.txt`).
