@@ -20,22 +20,52 @@ space-separated `key hex` lines.
 - Dynamic schemes (`dynamic` name with `default`/`hard` flavours) are
   generated from the wallpaper by the CLI and are unaffected by these files.
 
-## Regenerate
+## Nix packaging
+
+Like the fonts (`quran-font`, `arabic-fonts`), the schemes are a flake
+dependency build: `nix/schemes.nix` packages this directory to
+`$out/share/caelestia/schemes`, exposed as `packages.*.schemes`. Every
+`*.txt` (ported or user-supplied) is format-checked at build time by
+`nix/validate-schemes.py`, so palette mistakes fail the build instead of
+breaking `caelestia scheme set` at runtime.
+
+Because the CLI only reads schemes from its own package data dir, the flake
+also provides the merge helper and a pre-merged CLI:
+
+- `lib.withSchemes cli schemeTree` — returns `cli` with a scheme tree
+  merged into its data dir (built-ins and `dynamic` kept, new files added).
+- `packages.*.cli-with-schemes` — upstream CLI + the ported schemes.
+- `with-cli` and the home-manager module's `cli.package` default to the
+  merged CLI, so the launcher sees all schemes out of the box.
+
+## Adding your own palettes
+
+Drop `<scheme>/<flavour>/<mode>.txt` trees (same `key hex` format) in a
+directory and merge them in:
+
+```nix
+# flake.nix of your config
+let
+  mySchemes = caelestia-shell.packages.${system}.schemes.override {
+    extraSchemes = [ ./my-palettes ];
+  };
+in {
+  # CLI with ported schemes + yours:
+  programs.caelestia.cli.package =
+    caelestia-shell.lib.withSchemes caelestia-cli mySchemes;
+}
+```
+
+## Regenerate from ifraaH
 
 ```sh
 scripts/port-ifraah-schemes.py --src ~/src/ifraaH/themes --out schemes
 ```
 
-## Install (overlay onto the CLI scheme dir)
+## Imperative install (non-Nix test)
 
-The CLI reads schemes from its package data dir (`caelestia/data/schemes`),
-so the robust way to use these is a nix overlay on `caelestia-cli` that
-copies `schemes/*` over its `data/schemes` (this keeps `dynamic` and the
-hand-tuned built-ins, only adding new schemes).
-
-For a quick imperative test, copy them next to the installed CLI data
-(resolve the dir from the `caelestia` binary, e.g.
-`<cli>/lib/python3.13/site-packages/caelestia/data/schemes`) without
+Copy the trees next to the installed CLI data
+(`<cli>/lib/python3.*/site-packages/caelestia/data/schemes`) without
 clobbering existing files:
 
 ```sh

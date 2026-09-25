@@ -35,8 +35,28 @@
     pkgsOf = nixpkgs.legacyPackages;
     systems' = lists.intersectLists platforms.linux systems.flakeExposed;
     eachSystem = genAttrs systems';
+
+    # Merge a scheme tree (as produced by `packages.*.schemes`, i.e.
+    # `$out/share/caelestia/schemes`) into a Caelestia CLI package's data
+    # dir, so `caelestia scheme list/set` sees the extra schemes.
+    # Users can point this at their own palette set, e.g.:
+    #   withSchemes cli (schemes.override { extraSchemes = [ ./my-palettes ]; })
+    withSchemes = cli: schemeTree:
+      cli.overrideAttrs (old: {
+        postFixup =
+          (old.postFixup or "")
+          + ''
+            for schemeDir in "$out"/lib/python*/site-packages/caelestia/data/schemes; do
+              cp -r ${schemeTree}/share/caelestia/schemes/. "$schemeDir"/
+            done
+          '';
+      });
   in {
     formatter = eachSystem (system: pkgsOf.${system}.alejandra);
+
+    lib = {
+      inherit withSchemes;
+    };
 
     packages = eachSystem (system: let
       pkgs = pkgsOf.${system};
@@ -82,18 +102,29 @@
           install -Dm644 $src/*.ttf $out/share/fonts/truetype/
         '';
       };
+
+      # Base16 colour schemes ported from ifraaH (see schemes/ and
+      # scripts/port-ifraah-schemes.py) in CLI layout. Add your own
+      # palettes via `schemes.override { extraSchemes = [ ./my-palettes ]; }`.
+      schemes = pkgs.callPackage ./nix/schemes.nix {};
+
+      # Caelestia CLI with the ported (+ user) schemes merged into its data
+      # dir, so `caelestia scheme list/set` sees them out of the box.
+      cli-with-schemes = withSchemes inputs.caelestia-cli.packages.${system}.default schemes;
     in rec {
-      inherit quran-font arabic-fonts;
+      inherit quran-font arabic-fonts schemes cli-with-schemes;
 
       caelestia-shell = pkgs.callPackage ./nix {
         rev = self.rev or self.dirtyRev;
         stdenv = pkgs.clangStdenv;
         inherit quran-font arabic-fonts;
+        # Bundle the CLI with the ported schemes so `caelestia scheme`
+        # (used by the shell launcher) sees them out of the box.
+        caelestia-cli = cli-with-schemes;
         quickshell = inputs.quickshell.packages.${system}.default.override {
           withX11 = false;
           withI3 = false;
         };
-        caelestia-cli = inputs.caelestia-cli.packages.${system}.default;
         m3shapes = inputs.m3shapes.packages.${system}.default;
       };
       with-cli = caelestia-shell.override {withCli = true;};
