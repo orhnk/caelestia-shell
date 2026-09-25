@@ -96,7 +96,7 @@ Singleton {
     // 08 red, 09 orange, 0A yellow, 0B green, 0C cyan, 0D blue, 0E magenta,
     // 0F brown. Accents: blue primary, cyan secondary, magenta tertiary.
     function applyBase16(colours: var, src: var): void {
-        const c = (key: string): string => `#${src[key]}`;
+        const c = key => `#${src[key]}`;
         const base00 = c("base00"), base01 = c("base01"), base02 = c("base02"), base03 = c("base03");
         const base04 = c("base04"), base05 = c("base05");
         const base08 = c("base08"), base0B = c("base0B"), base0C = c("base0C"), base0D = c("base0D"), base0E = c("base0E");
