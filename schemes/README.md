@@ -56,10 +56,24 @@ in {
 }
 ```
 
-## Regenerate from ifraaH
+## Regenerate / update
+
+When ifraaH gains, changes or drops themes, re-run the port (use `--prune`
+so removed upstreams don't linger; it only ever deletes generated `*.txt`
+files, never anything else):
 
 ```sh
-scripts/port-ifraah-schemes.py --src ~/src/ifraaH/themes --out schemes
+git -C ~/src/ifraaH pull
+scripts/port-ifraah-schemes.py --src ~/src/ifraaH/themes --out schemes --prune
+```
+
+Nix only sees git-tracked files, so stage additions before rebuilding, then
+commit and rebuild:
+
+```sh
+git add schemes/
+nix build .#schemes   # sanity: validates every file, expect 347+
+git commit -m "chore(schemes): resync with ifraaH"
 ```
 
 ## Imperative install (non-Nix test)

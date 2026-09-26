@@ -22,6 +22,7 @@ keys such as ``$primary``/``$surface``).
 
 Usage:
     scripts/port-ifraah-schemes.py --src ~/src/ifraaH/themes --out schemes
+    scripts/port-ifraah-schemes.py --src ~/src/ifraaH/themes --out schemes --prune
 """
 
 import argparse
@@ -259,6 +260,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--src", required=True, help="ifraaH themes dir (YAML files)")
     ap.add_argument("--out", required=True, help="output schemes dir")
+    ap.add_argument("--prune", action="store_true",
+                    help="delete *.txt files in --out that no ifraaH theme "
+                         "generates anymore (never touches other files)")
     args = ap.parse_args()
 
     src = Path(args.src)
@@ -271,8 +275,10 @@ def main() -> int:
     themes = [parse_theme(f) for f in files]
     layout = plan_layout(themes)
 
+    expected: set[Path] = set()
     for (scheme, flavour, mode), palette in sorted(layout.items()):
         dest = out / scheme / flavour / f"{mode}.txt"
+        expected.add(dest.resolve())
         dest.parent.mkdir(parents=True, exist_ok=True)
         full = dict(palette)
         full.update(derive_aliases(palette))
@@ -281,11 +287,25 @@ def main() -> int:
             for key in ORDER + extra:
                 f.write(f"{key} {full[key]}\n")
 
+    pruned = 0
+    if args.prune and out.is_dir():
+        for stale in sorted(out.rglob("*.txt")):
+            if stale.resolve() not in expected:
+                stale.unlink()
+                pruned += 1
+        for empty in sorted((p for p in out.rglob("*") if p.is_dir() and p != out),
+                            key=lambda p: len(p.parts), reverse=True):
+            try:
+                empty.rmdir()
+            except OSError:
+                pass
+
     n_schemes = len({s for s, _, _ in layout})
     n_dark = sum(1 for _, _, m in layout if m == "dark")
     n_light = sum(1 for _, _, m in layout if m == "light")
     print(f"ported {len(files)} ifraaH themes -> {n_schemes} schemes "
-          f"({len(layout)} files: {n_dark} dark, {n_light} light) in {out}")
+          f"({len(layout)} files: {n_dark} dark, {n_light} light) in {out}"
+          + (f", pruned {pruned} stale files" if args.prune else ""))
     return 0
 
 
