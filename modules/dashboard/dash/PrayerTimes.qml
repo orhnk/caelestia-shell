@@ -10,6 +10,13 @@ import qs.utils
 Item {
     id: root
 
+    // Own faces, pinned here rather than taken from `appearance.font`,
+    // so the widget does not follow the theme fonts.
+    // Same approach as DateTime.clockFamily ("Rubik is the shell's own
+    // default clock face").
+    property string nameFamily: "Noto Kufi Arabic"
+    property string timeFamily: "Rubik"
+
     clip: true
 
     // Minimum breathing room of a row, per side. Rows stretch past this to fill
@@ -75,14 +82,14 @@ Item {
         TextMetrics {
             id: timeMetrics
 
-            font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
+            font: Tokens.font.mono.builders.medium.family(root.timeFamily).weight(Font.DemiBold).build()
             text: GlobalConfig.services.useTwelveHourClock ? "00:00 AM" : "00:00"
         }
 
         TextMetrics {
             id: nameMetrics
 
-            font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
+            font: Tokens.font.body.builders.medium.family(root.nameFamily).weight(Font.DemiBold).build()
         }
 
         StyledText {
@@ -159,7 +166,7 @@ Item {
                         Layout.preferredWidth: root.nameColWidth
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
+                        font: Tokens.font.body.builders.medium.family(root.nameFamily).weight(Font.DemiBold).build()
                         elide: Text.ElideRight
                     }
 
@@ -175,7 +182,7 @@ Item {
                         horizontalAlignment: Text.AlignRight
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.mono.builders.medium.weight(Font.DemiBold).build()
+                        font: Tokens.font.mono.builders.medium.family(root.timeFamily).weight(Font.DemiBold).build()
                     }
                 }
             }

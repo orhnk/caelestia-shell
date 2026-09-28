@@ -691,7 +691,6 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
     },
     "lock": {
         "enabled": true,
-        "useWallpaper": false,
         "recolourLogo": true,
         "enableFprint": true,
         "maxFprintTries": 3,

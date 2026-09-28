@@ -99,25 +99,15 @@ PageBase {
             Repeater {
                 id: localWalls
 
+                // Flat, scheme-independent view: all wallpapers together from
+                // ${WPPPATH} (Paths.wallsdir), not grouped by ${WPPPATH}/${THEME}
+                // subdir. Random pick (Wallpapers.setRandom) already uses the
+                // recursive model, so both pick and view are all together.
                 model: {
-                    const walls = Wallpapers.list;
-                    const baseDir = Paths.wallsdir;
-                    const categories = {};
-                    const list = [];
-                    for (const w of walls) {
-                        if (w.parentDir !== baseDir) {
-                            const category = Wallpapers.getCategoryFor(w);
-                            if (category && (!(category in categories) || categories[category].name.localeCompare(w.name) > 0))
-                                categories[category] = w;
-                        } else {
-                            list.push(w);
-                        }
-                    }
-                    list.push(...Object.values(categories));
-                    list.sort((a, b) => ((a.parentDir === baseDir) - (b.parentDir === baseDir)) || a.name.localeCompare(b.name));
-                    while (list.length < Config.nexus.wallpapersPerRow)
-                        list.push(null);
-                    return list;
+                    const walls = [...Wallpapers.list].sort((a, b) => a.relativePath.localeCompare(b.relativePath));
+                    while (walls.length < Config.nexus.wallpapersPerRow)
+                        walls.push(null);
+                    return walls;
                 }
 
                 WallItem {
@@ -128,24 +118,10 @@ PageBase {
                     enabled: modelData
 
                     source: String(modelData?.path ?? "")
-                    text: {
-                        if (!modelData)
-                            return "";
-
-                        if (modelData.parentDir !== Paths.wallsdir) {
-                            const category = Wallpapers.getCategoryFor(modelData);
-                            return category.slice(0, 1).toUpperCase() + category.slice(1);
-                        }
-                        return modelData.name;
-                    }
+                    text: modelData?.name ?? ""
                     onClicked: {
-                        if (modelData.parentDir !== Paths.wallsdir) {
-                            root.nState.selectedWallpaperCategory = Wallpapers.getCategoryFor(modelData);
-                            root.nState.openSubPage(2); // Category page
-                        } else {
-                            Wallpapers.setWallpaper(modelData.path);
-                            root.nState.closeSubPage();
-                        }
+                        Wallpapers.setWallpaper(modelData.path);
+                        root.nState.closeSubPage();
                     }
                 }
             }

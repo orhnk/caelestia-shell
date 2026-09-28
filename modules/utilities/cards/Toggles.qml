@@ -121,8 +121,10 @@ StyledRect {
                         accentIndex: 3
                         icon: "colorize"
                         isToggle: false
-                        activeOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
-                        inactiveOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
+                        activeColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
+                        inactiveColour: ColourPicker.hasColor ? ColourPicker.lastColor : Accents.toggleBg(accentIndex, checked)
+                        activeOnColour: ColourPicker.hasColor ? Colours.on(ColourPicker.lastColor) : accent
+                        inactiveOnColour: ColourPicker.hasColor ? Colours.on(ColourPicker.lastColor) : accent
                         onClicked: ColourPicker.pick()
                     }
                 }
