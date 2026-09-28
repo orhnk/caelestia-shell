@@ -25,16 +25,16 @@ Singleton {
     // Every family here must cover Arabic (verified via `fc-list :lang=ar`).
     readonly property list<string> fontPool: [
         "(A) Arslan Wessam B",
-        "AGA Kyrawan V.2",
+        "AGA Kyrawan V.2", // TODO: x2
         "Amiri Quran",
         "Amiri",
         "Aref Ruqaa",
-        "B Fantezy",
+        "B Fantezy", // TODO: x1.5
         "Diwani Letter",
         // "IBM Plex Sans Arabic Light",
         // "IBM Plex Sans Arabic Medium",
         "IBM Plex Sans Arabic Bold",
-        "IranNastaliq", // BIG
+        "IranNastaliq", // TODO: Small font: Make it x2 when selected.
         "Islamic Palestine",
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
@@ -44,7 +44,7 @@ Singleton {
         "Noto Naskh Arabic",
         "Noto Nastaliq Urdu",
         "Noto Sans Arabic",
-        "Old Antic Bold",
+        "Old Antic Bold", // TODO: Make x1.5
         "Raqq",
         "Reem Kufi Medium",
         "Reem Kufi",

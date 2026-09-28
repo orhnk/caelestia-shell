@@ -22,12 +22,30 @@ Item {
     property int elide: Text.ElideRight
     property real lineH: 1.0
 
+    // The shader paints the stroke and aura outwards from the glyph edges, and
+    // several faces in Quran.fontPool draw marks that reach well past the text
+    // box (stacked diacritics, Nastaliq swashes, deep descenders). Everything
+    // is therefore rendered on a surface that overflows the item by the effect
+    // reach plus a slice of the font's line height, so no glyph part and no
+    // glow is ever clipped by the shader texture. The overflow is invisible.
+    readonly property real overscan: Math.ceil(root.outlineWidth + root.auraWidth + Math.max(0, fm.height) * 0.4)
+    // Shader/capture area: always the item plus the overscan on every side.
+    readonly property size surfaceSize: Qt.size(Math.max(1, root.width + 2 * root.overscan), Math.max(1, root.height + 2 * root.overscan))
+
     implicitWidth: mask.implicitWidth
     implicitHeight: mask.implicitHeight
 
-    // Painted first (behind the fill text below).
+    FontMetrics {
+        id: fm
+
+        font: root.font
+    }
+
+    // Painted first (behind the fill text below). Overflows the item bounds;
+    // nothing between here and the window clips, so the glow renders freely.
     ShaderEffect {
         anchors.fill: parent
+        anchors.margins: -root.overscan
 
         property var maskTex: maskSrc
         property var gradTex: gradSrc
@@ -63,21 +81,26 @@ Item {
 
     // NOTE: never put layer.enabled on mask/gradRect: a layer plate breaks
     // hideSource capture and the raw sources leak through as rectangles.
-    // The mask is captured supersampled for smooth dilation edges.
+    // The mask is captured supersampled for smooth dilation edges. Both are
+    // captured over the full shader surface (sourceRect may exceed the item),
+    // so the mask's stroke/aura neighbourhood is present at every glyph edge.
     ShaderEffectSource {
         id: maskSrc
 
         sourceItem: mask
+        sourceRect: Qt.rect(-root.overscan, -root.overscan, root.surfaceSize.width, root.surfaceSize.height)
         hideSource: false
         live: true
-        textureSize: Qt.size(Math.max(1, mask.width * 2), Math.max(1, mask.height * 2))
+        textureSize: Qt.size(root.surfaceSize.width * 2, root.surfaceSize.height * 2)
     }
 
     ShaderEffectSource {
         id: gradSrc
 
         sourceItem: gradRect
+        sourceRect: Qt.rect(-root.overscan, -root.overscan, root.surfaceSize.width, root.surfaceSize.height)
         hideSource: true
         live: true
+        textureSize: root.surfaceSize
     }
 }
