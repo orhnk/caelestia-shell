@@ -76,7 +76,7 @@ Singleton {
         // Plain base16 schemes only carry the 16 base colours (plus terms).
         // Derive the full Material palette from them so every surface/accent
         // stays coherent instead of leaking colours from the previous scheme.
-        // Dynamic and full static schemes have no base16 keys and are untouched.
+        // Explicit keys in the file still win via the overlay below.
         if (colours.hasBase16)
             root.applyBase16(colours, scheme.colours);
 
@@ -86,8 +86,38 @@ Singleton {
                 colours[propName] = `#${colour}`;
         }
 
+        // Schemes without base16 keys (dynamic, full static) leave the 16
+        // m3base colours untouched — but a previous base16 scheme may have
+        // overwritten them by value, breaking their default live bindings
+        // to the M3 roles (see M3Palette). Re-derive them from the freshly
+        // loaded M3 values so accents and Hypr rules follow every switch.
+        // A plain copy is exact: nothing else mutates the palette between
+        // loads.
+        if (!colours.hasBase16)
+            root.applyBase16Fallback(colours);
+
         if (!isPreview)
             root.requestReloadHyprRules();
+    }
+
+    // Mirror of the M3Palette m3base defaults. See component M3Palette.
+    function applyBase16Fallback(colours: var): void {
+        colours.m3base00 = colours.m3surface;
+        colours.m3base01 = colours.m3surfaceContainer;
+        colours.m3base02 = colours.m3surfaceContainerHigh;
+        colours.m3base03 = colours.m3outline;
+        colours.m3base04 = colours.m3onSurfaceVariant;
+        colours.m3base05 = colours.m3onSurface;
+        colours.m3base06 = colours.m3onSurface;
+        colours.m3base07 = colours.m3onSurface;
+        colours.m3base08 = colours.m3error;
+        colours.m3base09 = colours.m3tertiary;
+        colours.m3base0A = colours.m3primary;
+        colours.m3base0B = colours.m3secondary;
+        colours.m3base0C = colours.m3tertiary;
+        colours.m3base0D = colours.m3primary;
+        colours.m3base0E = colours.m3secondary;
+        colours.m3base0F = colours.m3primary;
     }
 
     // Derive the whole M3 palette + terminal colours from plain base16.
