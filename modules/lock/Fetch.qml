@@ -17,6 +17,10 @@ StyledRect {
     required property real rootHeight
     readonly property int cBoxSize: Tokens.font.body.medium.pointSize * 2
 
+    // Rolled by the system info repeater below (its count sets the run length),
+    // so it is filled in when the rows first appear.
+    property var infoRun: []
+
     implicitHeight: layout.implicitHeight + layout.anchors.topMargin + layout.anchors.margins
     radius: Tokens.rounding.medium
     color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
@@ -89,6 +93,11 @@ StyledRect {
                 spacing: Tokens.spacing.medium
 
                 Repeater {
+                    // One random run of consecutive base08-0F hues, as long as the
+                    // visible row count: the rows then read top to bottom through
+                    // the run instead of sharing one theme colour.
+                    onCountChanged: root.infoRun = Accents.spectrumRun(count)
+
                     model: {
                         const items = [];
                         const hasBatt = UPower.displayDevice.isLaptopBattery;
@@ -121,9 +130,11 @@ StyledRect {
 
                     MonoText {
                         required property string modelData
+                        required property int index
 
                         Layout.fillWidth: true
                         text: modelData
+                        color: Accents.runAt(root.infoRun, index)
                         elide: Text.ElideRight
                     }
                 }

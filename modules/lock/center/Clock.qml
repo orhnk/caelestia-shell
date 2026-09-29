@@ -4,11 +4,17 @@ import QtQuick
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 Item {
     id: root
 
     required property real centerScale
+
+    // Two consecutive hues out of the base08-0F run, rolled per lock screen, so
+    // the clock is not the same pair of theme colours every time: the hours take
+    // the first, the minutes the second.
+    readonly property var clockRun: Accents.spectrumRun(2)
 
     function calcTopOff(metrics: TextMetrics): real {
         return metrics.tightBoundingRect.y - metrics.boundingRect.y;
@@ -22,7 +28,7 @@ Item {
 
         y: -root.calcTopOff(hourMetrics)
         text: Time.hourStr
-        color: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
+        color: Accents.runAt(root.clockRun, 0)
         font: Tokens.font.headline.builders.large.scale(7 * root.centerScale).width(30).build()
 
         TextMetrics {
@@ -40,7 +46,7 @@ Item {
         y: -root.calcTopOff(minuteMetrics)
 
         text: Time.minuteStr
-        color: Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary)
+        color: Accents.runAt(root.clockRun, 1)
         font: Tokens.font.headline.builders.large.scale((GlobalConfig.services.useTwelveHourClock ? 3.8 : 7) * root.centerScale).width(30).build()
 
         TextMetrics {

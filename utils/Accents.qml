@@ -122,6 +122,31 @@ Singleton {
         return at(charSpectrum, index);
     }
 
+    // A random *run* of the base08-0F spectrum: `count` consecutive hues started
+    // at a random entry, wrapping around the end so any count works. Neighbours
+    // in the run are neighbours on screen, which is what keeps a list of them
+    // reading as one spectrum rather than as unrelated accents.
+    //
+    // Call it once and keep the result (a binding re-evaluates when the palette
+    // changes, which re-rolls the run - that is usually what you want, but do
+    // not call it inside a per-item binding that re-evaluates often).
+    function spectrumRun(count: int): var {
+        const n = charSpectrum.length;
+        const len = Math.max(1, count);
+        const start = Math.floor(Math.random() * n);
+        const run = [];
+        for (let i = 0; i < len; i++)
+            run.push(charSpectrum[(start + i) % n]);
+        return run;
+    }
+
+    // The i-th hue of a run, safe for an empty run and for wrapping past its end.
+    function runAt(run: var, index: int): color {
+        if (!run || run.length === 0)
+            return at(charSpectrum, index);
+        return run[((index % run.length) + run.length) % run.length];
+    }
+
     function gradient(colors: var, t: real): color {
         const cl = isNaN(t) ? 0 : Math.max(0, Math.min(1, t));
         const segs = colors.length - 1;

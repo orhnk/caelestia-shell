@@ -6,6 +6,7 @@ import Quickshell.Wayland
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 WlSessionLockSurface {
     id: root
@@ -14,6 +15,10 @@ WlSessionLockSurface {
     required property Pam pam
 
     readonly property alias unlocking: unlockAnim.running
+
+    // One random hue out of the base08-0F run, rolled per lock screen, for the
+    // icon that spins while the lock comes up.
+    readonly property var lockRun: Accents.spectrumRun(1)
 
     contentItem.Config.screen: screen.name
     contentItem.Tokens.screen: screen.name
@@ -206,6 +211,7 @@ WlSessionLockSurface {
 
             anchors.centerIn: parent
             text: "lock"
+            color: Accents.runAt(root.lockRun, 0)
             fontStyle: Tokens.font.icon.builders.extraLarge.scale(4).weight(Font.Bold).build()
             rotation: 180
         }
