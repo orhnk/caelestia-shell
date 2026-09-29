@@ -44,7 +44,9 @@ Singleton {
         if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
             root.lastColor = hex;
             Quickshell.clipboardText = hex;
-            Toaster.toast(Tr.tr("Color copied"), hex, "colorize");
+            // The icon carries the pick as "color:#rrggbb", which is what colours
+            // the icon tile of the toast (see ToastItem).
+            Toaster.toast(Tr.tr("Color copied"), hex, `color:${hex}`);
         }
     }
 

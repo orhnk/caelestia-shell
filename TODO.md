@@ -37,11 +37,14 @@ wallpapers, picker bg"). No further code changes were needed.
 
 - [x] The color picker icon background should get coloured after picking a
       color.
-  - `modules/utilities/cards/Toggles.qml:124` — the colorize toggle now sets
-    `activeColour`/`inactiveColour` (the button background) from
-    `ColourPicker.lastColor`, not only the icon (`On`) colours, with
-    `Colours.on(...)` for a readable foreground; before a pick it falls back to
-    `accent` / `Accents.toggleBg(accentIndex, checked)`.
+  - This is the icon tile of the **toast**, not the quick-toggle button: the
+    button keeps the theme's structure, with only its icon wearing the last
+    pick (`modules/utilities/cards/Toggles.qml:124`).
+  - `services/ColourPicker.qml:47` passes the pick to the toast as a
+    `color:#rrggbb` icon, and `modules/utilities/toasts/ToastItem.qml:16-22`
+    paints the toast's icon tile with it, the glyph on top taking
+    `Colours.on(...)` so it stays readable on any colour. This mirrors the
+    existing `salat:<index>` icon, which colours salat toasts.
 
 ## Notes / possible follow-ups
 

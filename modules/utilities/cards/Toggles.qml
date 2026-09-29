@@ -121,10 +121,10 @@ StyledRect {
                         accentIndex: 3
                         icon: "colorize"
                         isToggle: false
-                        activeColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
-                        inactiveColour: ColourPicker.hasColor ? ColourPicker.lastColor : Accents.toggleBg(accentIndex, checked)
-                        activeOnColour: ColourPicker.hasColor ? Colours.on(ColourPicker.lastColor) : accent
-                        inactiveOnColour: ColourPicker.hasColor ? Colours.on(ColourPicker.lastColor) : accent
+                        // Only the icon wears the last pick; the button itself keeps
+                        // the theme's structure like every other toggle.
+                        activeOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
+                        inactiveOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
                         onClicked: ColourPicker.pick()
                     }
                 }

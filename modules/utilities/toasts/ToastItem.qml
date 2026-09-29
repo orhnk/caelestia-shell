@@ -17,6 +17,11 @@ StyledRect {
     readonly property int salatIndex: isSalat ? Number(root.modelData.icon.slice(6)) : -1
     readonly property color salatColor: root.salatIndex >= 0 ? Accents.prayerColor(root.salatIndex) : Accents.base0D
 
+    // The colour picker hands its colour along the same way, as "color:#rrggbb",
+    // so the icon tile can show the pick itself instead of the toast's accent.
+    readonly property bool isPicked: root.modelData.icon.startsWith("color:")
+    readonly property color pickedColor: root.isPicked ? root.modelData.icon.slice(6) : "transparent"
+
     anchors.left: parent.left
     anchors.right: parent.right
     implicitHeight: layout.implicitHeight + Tokens.padding.large
@@ -70,6 +75,8 @@ StyledRect {
             color: {
                 if (root.isSalat)
                     return root.salatColor;
+                if (root.isPicked)
+                    return root.pickedColor;
                 if (root.modelData.type === Toast.Success)
                     return Colours.pick(Colours.palette.m3base0B, Colours.palette.m3success);
                 if (root.modelData.type === Toast.Warning)
@@ -86,10 +93,18 @@ StyledRect {
                 id: icon
 
                 anchors.centerIn: parent
-                text: root.isSalat ? "mosque" : root.modelData.icon
+                text: {
+                    if (root.isSalat)
+                        return "mosque";
+                    if (root.isPicked)
+                        return "colorize";
+                    return root.modelData.icon;
+                }
                 color: {
                     if (root.isSalat)
                         return Accents.deep(root.salatColor);
+                    if (root.isPicked)
+                        return Colours.on(root.pickedColor);
                     if (root.modelData.type === Toast.Success)
                         return Colours.pick(Colours.palette.m3base00, Colours.palette.m3onSuccess);
                     if (root.modelData.type === Toast.Warning)
