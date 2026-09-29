@@ -6,6 +6,7 @@ import Quickshell.Wayland
 import Caelestia.Config
 import qs.components
 import qs.services
+import qs.utils
 
 WlSessionLockSurface {
     id: root
@@ -192,6 +193,8 @@ WlSessionLockSurface {
             color: Colours.pick(Colours.palette.m3base00, Colours.palette.m3surface)
             radius: parent.radius
             opacity: Colours.transparency.enabled ? Colours.transparency.base : 1
+            border.width: 1
+            border.color: Accents.opaque(Accents.charColor(6), 0.45)
 
             layer.enabled: true
             layer.effect: MultiEffect {
@@ -206,6 +209,7 @@ WlSessionLockSurface {
 
             anchors.centerIn: parent
             text: "lock"
+            color: Accents.charColor(6)
             fontStyle: Tokens.font.icon.builders.extraLarge.scale(4).weight(Font.Bold).build()
             rotation: 180
         }

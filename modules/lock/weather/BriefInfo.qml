@@ -4,6 +4,7 @@ import Caelestia.Config
 import Caelestia.I18n
 import qs.components
 import qs.services
+import qs.utils
 
 ColumnLayout {
     id: root
@@ -16,7 +17,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
         animate: true
         text: Weather.description
-        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+        color: Accents.ink(4, 0.4)
         font: Tokens.font.body.large
     }
 
@@ -47,7 +48,7 @@ ColumnLayout {
         animate: true
         // TRANSLATORS: %1 = apparent temperature, unit already included
         text: Tr.tr("Feels like %1").arg(Weather.temp)
-        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+        color: Accents.ink(4, 0.4)
         font: Tokens.font.body.large
     }
 
@@ -60,7 +61,7 @@ ColumnLayout {
             // TRANSLATORS: %1/%2 = today's max and min temperature, units already included
             return Tr.tr("High %1 • Low %2").arg(Weather.formatTemp(today?.maxTempC)).arg(Weather.formatTemp(today?.minTempC));
         }
-        color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
+        color: Accents.ink(4, 0.4)
         font: Tokens.font.body.medium
     }
 }

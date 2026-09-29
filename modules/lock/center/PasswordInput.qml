@@ -22,7 +22,7 @@ StyledRect {
     }
     implicitHeight: input.implicitHeight + Tokens.padding.small
 
-    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
+    color: Accents.wash(5, 0.2)
     radius: Tokens.rounding.full
     border.width: activeFocus ? 2 : 0
     border.color: Accents.base0D
