@@ -21,6 +21,11 @@ Item {
     property int maximumLineCount: 2147483647
     property int elide: Text.ElideRight
     property real lineH: 1.0
+    // Slant of the gradient, in degrees. 0 keeps the straight horizontal fill;
+    // a small value tilts the stroke/aura spectrum diagonally.
+    property real gradientAngle: 0
+
+    readonly property real gradientRad: root.gradientAngle * Math.PI / 180
 
     // The shader paints the stroke and aura outwards from the glyph edges, and
     // several faces in Quran.fontPool draw marks that reach well past the text
@@ -72,11 +77,25 @@ Item {
         renderType: Text.NativeRendering
     }
 
-    Rectangle {
-        id: gradRect
+    // Wrapper so the gradient rectangle's rotation is captured: ShaderEffectSource
+    // renders the source item's subtree (child transforms included), but not the
+    // source item's own transform.
+    Item {
+        id: gradWrap
 
         anchors.fill: parent
-        gradient: root.gradient
+
+        Rectangle {
+            id: gradRect
+
+            // Enlarged to the rotated bounding box so the rotated gradient still
+            // covers the whole item (at 0 this is exactly parent.width/height).
+            anchors.centerIn: parent
+            width: parent.width * Math.abs(Math.cos(root.gradientRad)) + parent.height * Math.abs(Math.sin(root.gradientRad))
+            height: parent.width * Math.abs(Math.sin(root.gradientRad)) + parent.height * Math.abs(Math.cos(root.gradientRad))
+            rotation: root.gradientAngle
+            gradient: root.gradient
+        }
     }
 
     // NOTE: never put layer.enabled on mask/gradRect: a layer plate breaks
@@ -97,7 +116,7 @@ Item {
     ShaderEffectSource {
         id: gradSrc
 
-        sourceItem: gradRect
+        sourceItem: gradWrap
         sourceRect: Qt.rect(-root.overscan, -root.overscan, root.surfaceSize.width, root.surfaceSize.height)
         hideSource: true
         live: true

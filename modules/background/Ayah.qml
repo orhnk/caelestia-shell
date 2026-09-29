@@ -22,8 +22,9 @@ Item {
 
     // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
     // between neighboring hues only (short distances stay vivid, never gray).
-    // Each surah rotates the wheel to its own starting phase.
-    readonly property int phaseIdx: Quran.surah % Accents.charSpectrum.length
+    // The order never changes; each ayah just starts the wheel at a random
+    // entry, so the look varies without altering the spectrum itself.
+    readonly property int phaseIdx: Math.floor(Quran.spectrumPhase * Accents.charSpectrum.length) % Accents.charSpectrum.length
 
     function wheelColor(k: int, step: int): color {
         const n = Accents.charSpectrum.length;
@@ -147,6 +148,7 @@ Item {
             font: Tokens.font.headline.builders.medium.scale(root.fitScale * root.ayahScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
             fill: Quran.fgVerse === "" ? root.fillLight : Quran.fgVerse
             gradient: root.verseGradient
+            gradientAngle: Quran.gradientAngle
             strokeColor: root.strokeFlat
             outlineWidth: 2.5 * root.ayahScale
             auraWidth: 14 * root.ayahScale

@@ -22,6 +22,11 @@ Singleton {
     property string fontFamily: "Noto Nastaliq Urdu"
     property bool fontRandom: true
 
+    // Per-ayah visual variation. The spectrum order itself never changes; only
+    // which entry the gradient starts on and how far it is tilted.
+    property real spectrumPhase: 0
+    property real gradientAngle: 0
+
     // ---- Translation shown under the verse --------------------------------
     property bool translationEnabled: false
     property string translationId: "en.sahih"
@@ -192,6 +197,8 @@ Singleton {
         root.ref = `${v.surah}:${v.ayah}`;
         root.ready = true;
         root.updateTranslation();
+        root.spectrumPhase = Math.random();
+        root.gradientAngle = (Math.random() * 2 - 1) * 14;
         if (root.fontRandom)
             rollFont();
         saveTimer.restart();
