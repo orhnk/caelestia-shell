@@ -69,12 +69,17 @@ Item {
     readonly property int maxLines: Math.max(3, Math.min(9, Math.round(Quran.text.length / 70)))
 
     readonly property real fitScale: {
+        // Faces that draw small (see Quran.fontFactors) get their size scaled up
+        // here. The width-derived cap is left unscaled so a boosted face can
+        // never spill past maxLines - the multiplier only raises the user-size
+        // ceiling that normally limits compact faces.
+        const factor = Quran.fontSizeFactor;
         if (root.letterCount < 45)
-            return 2.7;
+            return 2.7 * factor;
         const adv = meter.advanceWidth;
         if (adv <= 0)
-            return Quran.fontScale;
-        return Math.min(Quran.fontScale, Math.max(root.maxLines * root.cardWidth / (adv * root.ayahScale), 0.15));
+            return Quran.fontScale * factor;
+        return Math.min(Quran.fontScale * factor, Math.max(root.maxLines * root.cardWidth / (adv * root.ayahScale), 0.15));
     }
 
     readonly property real cardWidth: parent ? Math.min(parent.width, 1100 * ayahScale) : 640 * ayahScale

@@ -25,16 +25,16 @@ Singleton {
     // Every family here must cover Arabic (verified via `fc-list :lang=ar`).
     readonly property list<string> fontPool: [
         "(A) Arslan Wessam B",
-        "AGA Kyrawan V.2", // TODO: x2
+        "AGA Kyrawan V.2",
         "Amiri Quran",
         "Amiri",
         "Aref Ruqaa",
-        "B Fantezy", // TODO: x1.5
+        "B Fantezy",
         "Diwani Letter",
         // "IBM Plex Sans Arabic Light",
         // "IBM Plex Sans Arabic Medium",
         "IBM Plex Sans Arabic Bold",
-        "IranNastaliq", // TODO: Small font: Make it x2 when selected.
+        "IranNastaliq",
         "Islamic Palestine",
         "KFGQPC Kufi Extended",
         "KFGQPC Kufi Stylistic",
@@ -44,7 +44,7 @@ Singleton {
         "Noto Naskh Arabic",
         "Noto Nastaliq Urdu",
         "Noto Sans Arabic",
-        "Old Antic Bold", // TODO: Make x1.5
+        "Old Antic Bold",
         "Raqq",
         "Reem Kufi Medium",
         "Reem Kufi",
@@ -57,6 +57,19 @@ Singleton {
         // "MCS Hijaz S_U adorn.", // BROKEN
         // "Samir_Khouaja_Maghribi", // SEMI-WORKING FIX NEEDED
     ]
+
+    // Some faces draw noticeably smaller than the rest at the same point size.
+    // When such a face is selected its rendered size is scaled up so it reads at
+    // the same visual weight (these offsets used to live as TODO notes here).
+    readonly property var fontFactors: ({
+        "AGA Kyrawan V.2": 2.0,
+        "B Fantezy": 1.5,
+        "IranNastaliq": 2.0,
+        "Old Antic Bold": 1.5
+    })
+
+    // Multiplier applied to the size of the currently selected face.
+    readonly property real fontSizeFactor: fontFactors[fontFamily] ?? 1.0
 
     // Compact faces, picked with 40% probability (see TODO.md).
     readonly property list<string> smallFonts: [
