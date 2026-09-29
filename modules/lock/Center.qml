@@ -85,7 +85,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
 
         text: Time.format("dddd • d MMM").toUpperCase()
-        color: Accents.ink(5, 0.3)
+        color: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
         font: Tokens.font.title.builders.medium.weight(Font.DemiBold).build()
     }
 

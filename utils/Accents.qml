@@ -59,27 +59,6 @@ Singleton {
         return colors[i];
     }
 
-    // ---- Widget identity (lock screen) -------------------------------------
-
-    // One hue from the base08-0F run pulled into a surface colour: enough of
-    // the hue that the panels can be told apart at a glance, little enough that
-    // the surface still reads as a background. The surface's own alpha is kept,
-    // so the transparency setting still lets the wallpaper through.
-    function tint(base: color, index: int, amount: real): color {
-        return Qt.alpha(mix(base, at(charSpectrum, index), amount), base.a);
-    }
-
-    // The same, for the lock screen's widget cards.
-    function wash(index: int, amount: real): color {
-        return tint(Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer), index, amount);
-    }
-
-    // Label/icon colour for a widget hue: the hue pulled towards the theme's ink
-    // so it stays readable on the washed card.
-    function ink(index: int, amount: real): color {
-        return mix(at(charSpectrum, index), base05, amount);
-    }
-
     function ws(index: int): color {
         return at(wsColors, index);
     }

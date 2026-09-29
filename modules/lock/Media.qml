@@ -17,10 +17,7 @@ StyledClippingRect {
 
     implicitHeight: layout.implicitHeight + layout.anchors.margins * 2
     radius: Tokens.rounding.extraLarge
-    // The artwork covers the card, so the hue lives on the border.
-    color: Accents.wash(6, 0.17)
-    border.width: 1
-    border.color: Accents.opaque(Accents.charColor(6), 0.4)
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     FadeImage {
         anchors.fill: parent

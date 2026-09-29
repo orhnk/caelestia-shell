@@ -155,7 +155,7 @@ StyledRect {
                 StyledText {
                     Layout.fillWidth: true
                     text: root.modelData
-                    color: root.urgency === "critical" ? Accents.base08 : Accents.ink(1, 0.5)
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                     font: Tokens.font.body.small
                     elide: Text.ElideRight
                 }
@@ -163,7 +163,7 @@ StyledRect {
                 StyledText {
                     animate: true
                     text: root.notifs[0]?.timeStr ?? ""
-                    color: Accents.ink(1, 0.65)
+                    color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.small
                 }
 

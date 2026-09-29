@@ -11,9 +11,7 @@ import qs.utils
 StyledRect {
     id: root
 
-    // Layered like before (so it still reads as raised inside the weather card),
-    // then washed with the same hue at a lower amount.
-    color: Accents.tint(Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 2), 4, 0.14)
+    color: Colours.layer(Colours.pick(Colours.palette.m3base03, Colours.palette.m3surfaceContainerHigh), 2)
     radius: Tokens.rounding.extraLargeIncreased
     implicitHeight: header.anchors.margins + header.implicitHeight + Tokens.spacing.medium + layout.implicitHeight + layout.anchors.bottomMargin
 
@@ -29,7 +27,6 @@ StyledRect {
         MaterialIcon {
             Layout.topMargin: Math.round(fontInfo.pointSize * 0.12)
             text: "schedule"
-            color: Accents.charColor(4)
             fontStyle: Tokens.font.icon.builders.medium.weight(title.font.weight).build()
         }
 

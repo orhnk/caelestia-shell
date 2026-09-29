@@ -22,10 +22,7 @@ StyledRect {
 
     implicitHeight: layout.implicitHeight + layout.anchors.margins * 2
     radius: Tokens.rounding.extraLarge
-    // Green: the health of the machine.
-    color: Accents.wash(3, 0.15)
-    border.width: 1
-    border.color: Accents.opaque(Accents.charColor(3), 0.35)
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     ServiceRef {
         service: Cpu

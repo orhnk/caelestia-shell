@@ -19,11 +19,7 @@ StyledRect {
 
     implicitHeight: layout.implicitHeight + layout.anchors.topMargin + layout.anchors.margins
     radius: Tokens.rounding.medium
-    // Blue: the fetch card is the shell's terminal, and it keeps the text in its
-    // own hue so the block reads as one thing.
-    color: Accents.wash(5, 0.17)
-    border.width: 1
-    border.color: Accents.opaque(Accents.charColor(5), 0.35)
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     ColumnLayout {
         id: layout
@@ -59,7 +55,6 @@ StyledRect {
             MonoText {
                 Layout.fillWidth: true
                 text: "caelestiafetch.sh"
-                color: Accents.ink(5, 0.2)
                 elide: Text.ElideRight
             }
 
@@ -129,7 +124,6 @@ StyledRect {
 
                         Layout.fillWidth: true
                         text: modelData
-                        color: Accents.ink(5, 0.4)
                         elide: Text.ElideRight
                     }
                 }

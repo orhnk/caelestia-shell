@@ -3,7 +3,6 @@ import QtQuick
 import Caelestia.Config
 import qs.components
 import qs.services
-import qs.utils
 
 StyledRect {
     id: root
@@ -18,10 +17,7 @@ StyledRect {
         return base + brief.anchors.topMargin;
     }
     radius: Tokens.rounding.extraExtraLarge
-    // Cyan, the sky's corner of the spectrum.
-    color: Accents.wash(4, 0.17)
-    border.width: 1
-    border.color: Accents.opaque(Accents.charColor(4), 0.35)
+    color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
 
     Timer {
         running: true
