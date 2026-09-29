@@ -20,6 +20,11 @@ Item {
     readonly property color fillLight: Colours.palette.m3base07
     readonly property color strokeFlat: Quran.outline === "" ? "transparent" : Quran.outline
 
+    // Translation under the verse: base01 glyphs inside a base05 outline drawn
+    // at the verse's own width, so both read as one layer.
+    readonly property color translationFill: Colours.pick(Colours.palette.m3base01, Colours.palette.m3surfaceContainer)
+    readonly property bool translationShown: Quran.translationEnabled && Quran.translatedText !== ""
+
     // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
     // between neighboring hues only (short distances stay vivid, never gray).
     // The order never changes; each ayah just starts the wheel at a random
@@ -83,8 +88,9 @@ Item {
         return Math.min(Quran.fontScale * factor, Math.max(root.maxLines * root.cardWidth / (adv * root.ayahScale), 0.15));
     }
 
-    // Translation under the verse: its own face, sized relative to the rendered
-    // verse (dynamic) but clamped so it stays readable and subordinate.
+    // Translation under the verse: its own face, always smaller than the verse
+    // it follows, sized relative to the rendered verse (dynamic) but clamped so
+    // it stays readable and subordinate.
     readonly property int translationPointSize: {
         const bodyPx = Tokens.font.body.medium.pointSize;
         const versePx = Tokens.font.headline.medium.pointSize * root.fitScale * root.ayahScale;
@@ -136,8 +142,8 @@ Item {
         id: layout
 
         anchors.fill: parent
-        // Pull the ref line up into the verse's descent whitespace,
-        // roughly halving the visible gap (auras overlap harmlessly).
+        // Negative spacing: pull the row below up into the verse's descent
+        // whitespace, roughly halving the visible gap (auras overlap harmlessly).
         spacing: -40 * root.ayahScale
         transformOrigin: Item.Center
 
@@ -157,26 +163,35 @@ Item {
             lineH: 1.0
         }
 
-        StyledText {
-            Layout.alignment: Qt.AlignHCenter
-            horizontalAlignment: Text.AlignHCenter
-            text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
-            color: Quran.fgRef === "" ? Colours.palette.m3base03 : Quran.fgRef
-            font: Tokens.font.label.builders.medium.scale(1.5).family("Aref Ruqaa").weight(Font.DemiBold).letterSpacing(0).build()
-        }
-
-        StyledText {
+        // The translation sits between the verse and its surah signature:
+        // smaller than the verse, base01 glyphs under a base05 outline that is
+        // as wide as the verse's own.
+        GradientText {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             // Offset the negative inter-row spacing above so the translation
-            // keeps a normal gap under the ref line.
-            Layout.topMargin: Tokens.spacing.extraLarge + 40 * root.ayahScale
-            visible: Quran.translationEnabled && Quran.translatedText !== ""
+            // keeps a normal gap under the verse.
+            Layout.topMargin: Tokens.spacing.medium + 40 * root.ayahScale
+            visible: root.translationShown
             text: Quran.translatedText
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WordWrap
-            color: Colours.palette.m3base03
             font: Quran.translationFont ? Tokens.font.body.builders.medium.size(root.translationPointSize).family(Quran.translationFont).build() : Tokens.font.body.builders.medium.size(root.translationPointSize).build()
+            fill: root.translationFill
+            strokeColor: root.ink
+            outlineWidth: 2.5 * root.ayahScale
+            auraWidth: 0
+            auraStrength: 0
+            lineH: 1.0
+        }
+
+        StyledText {
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            // With the translation in between, the ref line can no longer tuck
+            // into the verse's descent - give it a normal gap instead.
+            Layout.topMargin: root.translationShown ? Tokens.spacing.small + 40 * root.ayahScale : 0
+            text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
+            color: Quran.fgRef === "" ? Colours.palette.m3base03 : Quran.fgRef
+            font: Tokens.font.label.builders.medium.scale(1.5).family("Aref Ruqaa").weight(Font.DemiBold).letterSpacing(0).build()
         }
     }
 }

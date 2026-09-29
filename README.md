@@ -173,7 +173,10 @@ Use `caelestia wallpaper -h` for more info about this command.
 
 The Quran wallpaper widget shows a random, daily or sequential ayah. Everything about it is configurable
 from the **Islam** tab in the settings (Super+N), including the display face, size and glow, the rotation
-mode, the prayer-time settings and the translation shown under the ayah.
+mode, the prayer-time settings and the translation.
+
+The translation is on by default. It sits between the ayah and the surah signature, in its own face and a
+smaller size, filled with `base01` and outlined with `base05` at the same width as the ayah's outline.
 
 Three translations are bundled (`data/quran-translations/`), from the [Tanzil Project][tanzil]:
 

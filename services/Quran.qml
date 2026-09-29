@@ -27,8 +27,8 @@ Singleton {
     property real spectrumPhase: 0
     property real gradientAngle: 0
 
-    // ---- Translation shown under the verse --------------------------------
-    property bool translationEnabled: false
+    // ---- Translation, shown under the verse by default --------------------
+    property bool translationEnabled: true
     property string translationId: "en.sahih"
     // Family for the translation text ("" = the shell's body font).
     property string translationFont: "Amiri"
