@@ -4,17 +4,19 @@ import QtQuick
 import Caelestia.Config
 import qs.components
 import qs.services
-import qs.utils
 
 Item {
     id: root
 
     required property real centerScale
 
-    // Two consecutive hues out of the base08-0F run, rolled per lock screen, so
-    // the clock is not the same pair of theme colours every time: the hours take
-    // the first, the minutes the second.
-    readonly property var clockRun: Accents.spectrumRun(2)
+    // Reverse outline: the hours are base02 filled and base05 rimmed, the
+    // minutes the other way round, so the two halves of the clock read as one
+    // lockup instead of two unrelated digits.
+    readonly property color hourFill: Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer)
+    readonly property color hourStroke: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+    readonly property color minuteFill: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
+    readonly property color minuteStroke: Colours.pick(Colours.palette.m3base02, Colours.palette.m3surfaceContainer)
 
     function calcTopOff(metrics: TextMetrics): real {
         return metrics.tightBoundingRect.y - metrics.boundingRect.y;
@@ -23,13 +25,18 @@ Item {
     implicitWidth: hours.implicitWidth + minutes.implicitWidth + Tokens.spacing.small
     implicitHeight: hourMetrics.tightBoundingRect.height
 
-    StyledText {
+    GradientText {
         id: hours
 
         y: -root.calcTopOff(hourMetrics)
         text: Time.hourStr
-        color: Accents.runAt(root.clockRun, 0)
         font: Tokens.font.headline.builders.large.scale(7 * root.centerScale).width(30).build()
+        fill: root.hourFill
+        strokeColor: root.hourStroke
+        outlineWidth: 4 * root.centerScale
+        auraWidth: 0
+        auraStrength: 0
+        lineH: 1.0
 
         TextMetrics {
             id: hourMetrics
@@ -39,15 +46,20 @@ Item {
         }
     }
 
-    StyledText {
+    GradientText {
         id: minutes
 
         anchors.right: parent.right
         y: -root.calcTopOff(minuteMetrics)
 
         text: Time.minuteStr
-        color: Accents.runAt(root.clockRun, 1)
         font: Tokens.font.headline.builders.large.scale((GlobalConfig.services.useTwelveHourClock ? 3.8 : 7) * root.centerScale).width(30).build()
+        fill: root.minuteFill
+        strokeColor: root.minuteStroke
+        outlineWidth: 4 * root.centerScale
+        auraWidth: 0
+        auraStrength: 0
+        lineH: 1.0
 
         TextMetrics {
             id: minuteMetrics
