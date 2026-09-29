@@ -1,0 +1,52 @@
+# TODO
+
+Status: all four items below are implemented and verified on `main`
+(commit `6e88e51c`, "fix: lockscreen screencopy bg, salat own fonts, flat
+wallpapers, picker bg"). No further code changes were needed.
+
+- [x] The lock screen while caelestia is on should not use the wallpaper as
+      background (use the older implementation instead).
+  - `modules/lock/LockSurface.qml:157` — the background is again a plain
+    `ScreencopyView` (`captureSource: root.screen`) with the same blur
+    `MultiEffect`. The `Loader` that chose between wallpaper and screencopy,
+    the `wallpaperBackground` `CachingImage` component and the
+    `qs.components.images` import are gone.
+  - `plugin/src/Caelestia/Config/lockconfig.hpp` — the `lock.useWallpaper`
+    option was removed, and its README example entry with it, so no wallpaper
+    path can be selected (`grep -r useWallpaper` is empty).
+  - `modules/lock/Lock.qml:32` still pre-warms a screencopy, so the first
+    capture succeeds (the compositor refuses capture once locked).
+
+- [x] The Salat widget should use its own fonts for salat names and times.
+  - `modules/dashboard/dash/PrayerTimes.qml:17` — pinned `nameFamily` =
+    "Noto Kufi Arabic" and `timeFamily` = "Rubik" (same approach as
+    `DateTime.clockFamily`).
+  - The `TextMetrics` (lines 85, 92) and both row `StyledText`s (lines 169,
+    185) now build through `.family(...)`, so the widget no longer follows the
+    theme font.
+
+- [x] The wallpapers (random pick and the view) should not be colour-scheme
+      dependent — all together from `${WPPPATH}`, never `${WPPPATH}/${THEME}`.
+  - `modules/nexus/pages/wallandstyle/WallpaperSelect.qml:107` — a single flat,
+    sorted list built from `Wallpapers.list` (the recursive `FileSystemModel`
+    over `Paths.wallsdir`); the per-category grouping, the category label and
+    the "open category subpage" branch were removed.
+  - `services/Wallpapers.qml:32` — `setRandom()` picks uniformly from the
+    recursive `wallpapers.entries`, so subdirectory wallpapers are included as
+    well.
+
+- [x] The color picker icon background should get coloured after picking a
+      color.
+  - `modules/utilities/cards/Toggles.qml:124` — the colorize toggle now sets
+    `activeColour`/`inactiveColour` (the button background) from
+    `ColourPicker.lastColor`, not only the icon (`On`) colours, with
+    `Colours.on(...)` for a readable foreground; before a pick it falls back to
+    `accent` / `Accents.toggleBg(accentIndex, checked)`.
+
+## Notes / possible follow-ups
+
+- `modules/nexus/pages/wallandstyle/WallpaperCategory.qml`,
+  `NexusState.selectedWallpaperCategory` and `Wallpapers.getCategoryFor()` are
+  now unreachable (nothing opens subpage 2 any more) — safe to prune, but kept
+  because the Appearance `StackPage` component indices are referenced by number
+  (`WallpaperAndStyle.qml` opens subpages 1 and 3).
