@@ -17,7 +17,7 @@ Item {
     property real ayahScale: 1
 
     readonly property color ink: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
-    readonly property color fillLight: Colours.palette.m3base07
+    readonly property color fillLight: Colours.pick(Colours.palette.m3base01, Colours.palette.m3surfaceContainer)
     readonly property color strokeFlat: Quran.outline === "" ? "transparent" : Quran.outline
 
     // Translation under the verse: base01 glyphs inside a base05 outline drawn
