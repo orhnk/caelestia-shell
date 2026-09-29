@@ -25,6 +25,10 @@ Item {
     readonly property color translationFill: Colours.pick(Colours.palette.m3base01, Colours.palette.m3surfaceContainer)
     readonly property bool translationShown: Quran.translationEnabled && Quran.translatedText !== ""
 
+    // The verse's own font, shared with the GradientText below so the metrics
+    // used for spacing can never drift from what is actually rendered.
+    readonly property font verseFont: Tokens.font.headline.builders.medium.scale(root.fitScale * root.ayahScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
+
     // Full-spectrum wheel: one stop per base08-0F entry, so every blend is
     // between neighboring hues only (short distances stay vivid, never gray).
     // The order never changes; each ayah just starts the wheel at a random
@@ -60,6 +64,20 @@ Item {
         font: Tokens.font.headline.builders.medium.family(Quran.fontFamily).weight(Font.DemiBold).build()
         text: Quran.text
     }
+
+    // Metrics of the verse as it is rendered (scaled font), used to tuck the
+    // translation into the verse's descender whitespace.
+    FontMetrics {
+        id: verseFm
+
+        font: root.verseFont
+    }
+
+    // Arabic faces keep their ink near the baseline but their line box holds the
+    // font's full descent, so most of the gap under the verse is empty descender
+    // space rather than spacing. Take most of it back - proportional to the
+    // rendered font, so the tuck follows the verse whatever size it ends up.
+    readonly property real verseDescentTuck: Math.max(0, verseFm.descent) * 0.55
 
     // Letter count: strips tashkeel/diacritics (explicit ranges, no
     // Unicode property escapes so every JS engine handles it), spaces and
@@ -151,7 +169,7 @@ Item {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             text: Quran.text
-            font: Tokens.font.headline.builders.medium.scale(root.fitScale * root.ayahScale).family(Quran.fontFamily).weight(Font.DemiBold).letterSpacing(0).build()
+            font: root.verseFont
             fill: Quran.fgVerse === "" ? root.fillLight : Quran.fgVerse
             gradient: root.verseGradient
             gradientAngle: Quran.gradientAngle
@@ -169,9 +187,10 @@ Item {
         GradientText {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            // Offset the negative inter-row spacing above so the translation
-            // keeps a normal gap under the verse.
-            Layout.topMargin: Tokens.spacing.medium + 40 * root.ayahScale
+            // 40 * ayahScale cancels the negative row spacing above, so what is
+            // left is the real gap: a sliver of breathing room minus the verse's
+            // descender space (see verseDescentTuck).
+            Layout.topMargin: 40 * root.ayahScale + Tokens.spacing.extraSmall - root.verseDescentTuck
             visible: root.translationShown
             text: Quran.translatedText
             font: Quran.translationFont ? Tokens.font.body.builders.medium.size(root.translationPointSize).family(Quran.translationFont).build() : Tokens.font.body.builders.medium.size(root.translationPointSize).build()
