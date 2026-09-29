@@ -405,8 +405,14 @@ Singleton {
         saveTimer.restart();
     }
 
+    function translationLabel(): string {
+        if (!root.translationEnabled)
+            return "off";
+        return `${root.translationId} (${root.translationNameFor(root.translationId)})`;
+    }
+
     function describe(): string {
-        return `verse: ${root.surahName} ${root.ref}\nmode: ${root.mode}\nfont: ${root.fontFamily} x${root.fontScale}${root.fontRandom ? " (random)" : ""}\nfg: ${root.fgVerse || "default"}\nfgRef: ${root.fgRef || "default"}\noutline: ${root.outline || "default"}\naura: ${root.auraScale}\ntranslation: ${root.translationEnabled ? `${root.translationId} (${root.translationNameFor(root.translationId)})` : "off"}\ntext: ${root.text}`;
+        return `verse: ${root.surahName} ${root.ref}\nmode: ${root.mode}\nfont: ${root.fontFamily} x${root.fontScale}${root.fontRandom ? " (random)" : ""}\nfg: ${root.fgVerse || "default"}\nfgRef: ${root.fgRef || "default"}\noutline: ${root.outline || "default"}\naura: ${root.auraScale}\ntranslation: ${root.translationLabel()}\ntext: ${root.text}`;
     }
 
     IpcHandler {

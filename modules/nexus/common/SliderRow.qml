@@ -15,6 +15,7 @@ ConnectedRect {
     property alias icon: icon.text
     property alias label: label.text
     property alias valueLabel: valueLabel.text
+    property string subtext
     property real value
     property color accent: Colours.pick(Colours.palette.m3base0D, Colours.palette.m3primary)
 
@@ -60,6 +61,15 @@ ConnectedRect {
                     color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
                     font: Tokens.font.body.small
                 }
+            }
+
+            StyledText {
+                Layout.fillWidth: true
+                visible: root.subtext
+                text: root.subtext
+                color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3outline)
+                font: Tokens.font.label.small
+                elide: Text.ElideRight
             }
 
             CustomMouseArea {
