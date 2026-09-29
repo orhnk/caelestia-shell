@@ -176,6 +176,15 @@ QtObject {
             }
         },
 
+        Component {
+            // Islam
+            StackPage {
+                Component {
+                    IslamPage {}
+                }
+            }
+        },
+
         // About
         Component {
             StackPage {

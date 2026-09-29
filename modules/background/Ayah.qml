@@ -82,6 +82,14 @@ Item {
         return Math.min(Quran.fontScale * factor, Math.max(root.maxLines * root.cardWidth / (adv * root.ayahScale), 0.15));
     }
 
+    // Translation under the verse: its own face, sized relative to the rendered
+    // verse (dynamic) but clamped so it stays readable and subordinate.
+    readonly property int translationPointSize: {
+        const bodyPx = Tokens.font.body.medium.pointSize;
+        const versePx = Tokens.font.headline.medium.pointSize * root.fitScale * root.ayahScale;
+        return Math.round(Math.max(bodyPx * 0.85, Math.min(bodyPx * 2, versePx * Quran.translationScale)));
+    }
+
     readonly property real cardWidth: parent ? Math.min(parent.width, 1100 * ayahScale) : 640 * ayahScale
 
     anchors.centerIn: parent
@@ -153,6 +161,20 @@ Item {
             text: Quran.ready ? `سورة ${Quran.surahName} • ${Quran.ref}` : ""
             color: Quran.fgRef === "" ? Colours.palette.m3base03 : Quran.fgRef
             font: Tokens.font.label.builders.medium.scale(1.5).family("Aref Ruqaa").weight(Font.DemiBold).letterSpacing(0).build()
+        }
+
+        StyledText {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
+            // Offset the negative inter-row spacing above so the translation
+            // keeps a normal gap under the ref line.
+            Layout.topMargin: Tokens.spacing.extraLarge + 40 * root.ayahScale
+            visible: Quran.translationEnabled && Quran.translatedText !== ""
+            text: Quran.translatedText
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            color: Colours.palette.m3base03
+            font: Quran.translationFont ? Tokens.font.body.builders.medium.size(root.translationPointSize).family(Quran.translationFont).build() : Tokens.font.body.builders.medium.size(root.translationPointSize).build()
         }
     }
 }

@@ -22,6 +22,52 @@ Singleton {
     property string fontFamily: "Noto Nastaliq Urdu"
     property bool fontRandom: true
 
+    // ---- Translation shown under the verse --------------------------------
+    property bool translationEnabled: false
+    property string translationId: "en.sahih"
+    // Family for the translation text ("" = the shell's body font).
+    property string translationFont: "Amiri"
+    // Fraction of the rendered verse size the translation is drawn at.
+    property real translationScale: 0.34
+    // Active translation parsed into a "surah:ayah" -> text map.
+    property var translationIndex: ({})
+    property string translatedText: ""
+    property bool translationFetching: false
+    property string translationFetchError: ""
+    // Translations downloaded at runtime: [{ id, language, name }]
+    property var fetchedTranslations: []
+
+    // Shipped in data/quran-translations/.
+    readonly property var builtinTranslations: [
+        { id: "en.sahih", language: "English", name: "Saheeh International" },
+        { id: "de.bubenheim", language: "German", name: "Bubenheim & Elyas" },
+        { id: "tr.ates", language: "Turkish", name: "Süleyman Ateş" },
+    ]
+
+    // Other Tanzil translations, downloadable on demand. The id is used
+    // directly in https://tanzil.net/trans/<id>.
+    readonly property var fetchableTranslations: [
+        { id: "ru.kuliev", language: "Russian", name: "Elmir Kuliev" },
+        { id: "ru.osmanov", language: "Russian", name: "Osmanov" },
+        { id: "fr.hamidullah", language: "French", name: "Muhammad Hamidullah" },
+        { id: "es.cortes", language: "Spanish", name: "Julio Cortes" },
+        { id: "de.aburida", language: "German", name: "Abu Rida" },
+        { id: "id.indonesian", language: "Indonesian", name: "Ministry of Religious Affairs" },
+        { id: "ur.jalandhry", language: "Urdu", name: "Fateh Muhammad Jalandhry" },
+        { id: "bn.bengali", language: "Bengali", name: "Muhiuddin Khan" },
+        { id: "fa.ansarian", language: "Persian", name: "Hussain Ansarian" },
+        { id: "zh.jian", language: "Chinese", name: "Ma Jian" },
+        { id: "ja.japanese", language: "Japanese", name: "Japanese" },
+        { id: "ko.korean", language: "Korean", name: "Korean" },
+        { id: "it.piccardo", language: "Italian", name: "Hamza Roberto Piccardo" },
+        { id: "nl.keyzer", language: "Dutch", name: "Salomo Keyzer" },
+        { id: "pt.elhayek", language: "Portuguese", name: "Samir El-Hayek" },
+        { id: "sv.bernstrom", language: "Swedish", name: "Knut Bernström" },
+        { id: "pl.bielawskiego", language: "Polish", name: "Józef Bielawski" },
+    ]
+
+    readonly property var translationOptions: [...builtinTranslations, ...fetchedTranslations]
+
     // Every family here must cover Arabic (verified via `fc-list :lang=ar`).
     readonly property list<string> fontPool: [
         "(A) Arslan Wessam B",
@@ -145,6 +191,7 @@ Singleton {
         root.surahName = surahNames[v.surah - 1] ?? "";
         root.ref = `${v.surah}:${v.ayah}`;
         root.ready = true;
+        root.updateTranslation();
         if (root.fontRandom)
             rollFont();
         saveTimer.restart();
@@ -243,6 +290,96 @@ Singleton {
         root.fontFamily = f;
     }
 
+    // ---- Translation helpers ----------------------------------------------
+
+    function isBuiltinTranslation(id: string): bool {
+        return builtinTranslations.some(t => t.id === id);
+    }
+
+    function translationCachePath(id: string): string {
+        return `${Paths.state}/quran-translation-${id}.txt`;
+    }
+
+    function translationSourcePath(id: string): string {
+        if (!id)
+            return "";
+        return isBuiltinTranslation(id) ? `${Quickshell.shellDir}/data/quran-translations/${id}.txt` : translationCachePath(id);
+    }
+
+    function translationNameFor(id: string): string {
+        const t = translationOptions.find(x => x.id === id);
+        return t ? `${t.language} — ${t.name}` : id;
+    }
+
+    function parseTranslations(raw: string): var {
+        const map = {};
+        for (const line of String(raw).split("\n")) {
+            if (!line || line[0] === "#")
+                continue;
+            const first = line.indexOf("|");
+            const second = line.indexOf("|", first + 1);
+            if (first < 0 || second < 0)
+                continue;
+            map[`${Number(line.slice(0, first))}:${Number(line.slice(first + 1, second))}`] = line.slice(second + 1).trim();
+        }
+        return map;
+    }
+
+    function updateTranslation(): void {
+        translatedText = root.translationEnabled ? (root.translationIndex[root.ref] ?? "") : "";
+    }
+
+    function setTranslationEnabled(v: bool): void {
+        root.translationEnabled = v;
+        root.updateTranslation();
+        saveTimer.restart();
+    }
+
+    function setTranslationId(id: string): void {
+        if (!id || id === root.translationId)
+            return;
+        root.translationId = id;
+        saveTimer.restart();
+    }
+
+    function fetchTranslation(id: string, language: string, name: string): void {
+        if (!id || root.translationFetching)
+            return;
+        root.translationFetching = true;
+        root.translationFetchError = "";
+        Requests.get(`https://tanzil.net/trans/${id}`, text => {
+            root.translationFetching = false;
+            if (!text || text.indexOf("|") === -1) {
+                root.translationFetchError = "Empty response";
+                return;
+            }
+            translationWriter.path = root.translationCachePath(id);
+            translationWriter.setText(text);
+            const rest = root.fetchedTranslations.filter(t => t.id !== id);
+            root.fetchedTranslations = [...rest, { id: id, language: language, name: name }];
+            root.setTranslationEnabled(true);
+            saveTimer.restart();
+            if (root.translationId === id) {
+                root.translationIndex = root.parseTranslations(text);
+                root.updateTranslation();
+            } else {
+                root.setTranslationId(id);
+            }
+        }, error => {
+            root.translationFetching = false;
+            root.translationFetchError = String(error);
+        });
+    }
+
+    function removeFetchedTranslation(id: string): void {
+        root.fetchedTranslations = root.fetchedTranslations.filter(t => t.id !== id);
+        if (root.translationId === id)
+            root.setTranslationId("en.sahih");
+        translationWriter.path = root.translationCachePath(id);
+        translationWriter.setText("");
+        saveTimer.restart();
+    }
+
     function setPaint(which: string, c: string): void {
         const v = (c === "" || c === "default") ? "" : c;
         if (which === "ref")
@@ -262,7 +399,7 @@ Singleton {
     }
 
     function describe(): string {
-        return `verse: ${root.surahName} ${root.ref}\nmode: ${root.mode}\nfont: ${root.fontFamily} x${root.fontScale}${root.fontRandom ? " (random)" : ""}\nfg: ${root.fgVerse || "default"}\nfgRef: ${root.fgRef || "default"}\noutline: ${root.outline || "default"}\naura: ${root.auraScale}\ntext: ${root.text}`;
+        return `verse: ${root.surahName} ${root.ref}\nmode: ${root.mode}\nfont: ${root.fontFamily} x${root.fontScale}${root.fontRandom ? " (random)" : ""}\nfg: ${root.fgVerse || "default"}\nfgRef: ${root.fgRef || "default"}\noutline: ${root.outline || "default"}\naura: ${root.auraScale}\ntranslation: ${root.translationEnabled ? `${root.translationId} (${root.translationNameFor(root.translationId)})` : "off"}\ntext: ${root.text}`;
     }
 
     IpcHandler {
@@ -334,8 +471,47 @@ Singleton {
             return root.fontPool.join("\n");
         }
 
+        function translation(enabled: string): string {
+            const v = enabled === "true" || enabled === "on" || enabled === "1";
+            root.setTranslationEnabled(v);
+            return `ok ${root.translationEnabled ? "on" : "off"}`;
+        }
+
+        function translationSet(id: string): string {
+            if (id === "off" || id === "") {
+                root.setTranslationEnabled(false);
+                return "ok off";
+            }
+            root.setTranslationEnabled(true);
+            root.setTranslationId(id);
+            return `ok ${root.translationId}`;
+        }
+
+        function translations(): string {
+            return [...root.builtinTranslations, ...root.fetchedTranslations].map(t => `${t.id}\t${t.language}\t${t.name}`).join("\n");
+        }
+
+        function translationFetch(id: string): string {
+            if (!id)
+                return "usage: translationFetch <tanzil id>";
+            const t = root.fetchableTranslations.find(x => x.id === id);
+            root.fetchTranslation(id, t?.language ?? id, t?.name ?? id);
+            return `ok fetching ${id}`;
+        }
+
+        function translationRemove(id: string): string {
+            if (!root.fetchedTranslations.some(t => t.id === id))
+                return `not fetched: ${id}`;
+            root.removeFetchedTranslation(id);
+            return `ok removed ${id}`;
+        }
+
         target: "quran"
     }
+
+    // Written from the settings UI directly (no setter), so persist those too.
+    onTranslationFontChanged: saveTimer.restart()
+    onTranslationScaleChanged: saveTimer.restart()
 
     Timer {
         id: saveTimer
@@ -349,7 +525,12 @@ Singleton {
             fgVerse: root.fgVerse,
             fgRef: root.fgRef,
             outline: root.outline,
-            auraScale: root.auraScale
+            auraScale: root.auraScale,
+            translationEnabled: root.translationEnabled,
+            translationId: root.translationId,
+            translationFont: root.translationFont,
+            translationScale: root.translationScale,
+            fetchedTranslations: root.fetchedTranslations
         }))
     }
 
@@ -378,6 +559,16 @@ Singleton {
                     root.outline = data.outline;
                 if (typeof data.auraScale === "number" && data.auraScale >= 0 && data.auraScale <= 3)
                     root.auraScale = data.auraScale;
+                if (typeof data.translationEnabled === "boolean")
+                    root.translationEnabled = data.translationEnabled;
+                if (typeof data.translationId === "string" && data.translationId)
+                    root.translationId = data.translationId;
+                if (typeof data.translationFont === "string")
+                    root.translationFont = data.translationFont;
+                if (typeof data.translationScale === "number" && data.translationScale >= 0.05 && data.translationScale <= 1)
+                    root.translationScale = data.translationScale;
+                if (Array.isArray(data.fetchedTranslations))
+                    root.fetchedTranslations = data.fetchedTranslations.filter(t => t && typeof t.id === "string");
             } catch (e) {
                 console.warn(lc, `Unable to parse quran state: ${e}`);
             }
@@ -390,6 +581,30 @@ Singleton {
             root.stateLoaded = true;
             maybeInit();
         }
+    }
+
+    // Active translation text. Reloads whenever translationId changes.
+    FileView {
+        id: translationFile
+
+        printErrors: false
+        watchChanges: true
+        path: root.translationId ? root.translationSourcePath(root.translationId) : ""
+        onLoaded: {
+            root.translationIndex = root.parseTranslations(text());
+            root.updateTranslation();
+        }
+        onLoadFailed: {
+            root.translationIndex = ({});
+            root.updateTranslation();
+        }
+    }
+
+    // Writes fetched translations into the state-dir cache.
+    FileView {
+        id: translationWriter
+
+        printErrors: false
     }
 
     FileView {

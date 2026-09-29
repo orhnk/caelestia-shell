@@ -169,6 +169,34 @@ To set the wallpaper, you can type `>wallpaper` in the launcher to open the wall
 Alternatively, you can also use `caelestia wallpaper -f <path_to_wallpaper>` to set the wallpaper directly.
 Use `caelestia wallpaper -h` for more info about this command.
 
+### Quran widget
+
+The Quran wallpaper widget shows a random, daily or sequential ayah. Everything about it is configurable
+from the **Islam** tab in the settings (Super+N), including the display face, size and glow, the rotation
+mode, the prayer-time settings and the translation shown under the ayah.
+
+Three translations are bundled (`data/quran-translations/`), from the [Tanzil Project][tanzil]:
+
+- English — Saheeh International (`en.sahih`)
+- German — Bubenheim & Elyas (`de.bubenheim`)
+- Turkish — Süleyman Ateş (`tr.ates`)
+
+More languages can be downloaded from the Islam tab; they are fetched from Tanzil on demand and cached
+under `~/.local/state/caelestia/`. The same options are available over IPC, e.g. via the bundled
+[`naqqash`](../naqqash) helper:
+
+```sh
+naqqash translation on
+naqqash translation-set en.sahih
+naqqash translations            # list built-in and downloaded translations
+naqqash translation-fetch ru.kuliev
+naqqash translation-remove ru.kuliev
+```
+
+Tanzil translations are for non-commercial use; see `data/quran-translations/NOTICE` for the full terms.
+
+[tanzil]: https://tanzil.net/trans/
+
 ## Updating
 
 ### Packaged install (AUR)

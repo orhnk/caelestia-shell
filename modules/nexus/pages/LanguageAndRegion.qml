@@ -37,19 +37,6 @@ PageBase {
         }
     ]
 
-    readonly property list<MenuItem> madhabItems: [
-        MenuItem {
-            text: Tr.tr("Shafi")
-            value: 0
-        },
-        MenuItem {
-            text: Tr.tr("Hanafi")
-            value: 1
-        }
-    ]
-
-
-
     title: Tr.tr("Language & region")
 
     ColumnLayout {
@@ -140,81 +127,6 @@ PageBase {
                     font: Tokens.font.body.small
                 }
             }
-        }
-
-        // Prayer times
-        SectionHeader {
-            text: Tr.tr("Prayer times")
-        }
-
-        RowButton {
-            first: true
-            icon: "location_on"
-            text: Weather.city || Weather.loc || Tr.tr("Unknown location")
-            subtext: Tr.tr("Prayer location (follows weather location)")
-            trailingIcon: "refresh"
-            onClicked: {
-                Weather.reload();
-                Salat.refresh();
-            }
-        }
-
-        SelectRow {
-            label: Tr.tr("Madhab")
-            subtext: Tr.tr("Asr calculation (Hanafi uses a longer shadow)")
-            menuItems: root.madhabItems
-            active: root.madhabItems.find(i => i.value === Salat.school) ?? root.madhabItems[0]
-            onSelected: item => Salat.school = item.value
-        }
-
-        SelectRow {
-            label: Tr.tr("Calculation method")
-            subtext: Salat.methodAuto ? Tr.tr("Auto: %1, from Aladhan").arg(Salat.methodName(Salat.method)) : Tr.tr("Fajr and Isha angles, from Aladhan")
-            menuItems: [autoMethod, ...methodVariants.instances]
-            active: Salat.methodAuto ? autoMethod : [...methodVariants.instances].find(i => i.value === Salat.method)
-            onSelected: item => {
-                if (item === autoMethod || item.value === -1) {
-                    Salat.methodAuto = true;
-                } else if (Number.isFinite(item.value)) {
-                    Salat.methodAuto = false;
-                    Salat.method = item.value;
-                }
-            }
-
-            MenuItem {
-                id: autoMethod
-
-                text: Salat.methodAuto ? Tr.tr("Auto (%1)").arg(Salat.methodName(Salat.method)) : Tr.tr("Auto")
-                value: -1
-            }
-
-            Variants {
-                id: methodVariants
-
-                model: Salat.methodList
-
-                MenuItem {
-                    required property var modelData
-
-                    text: modelData.name
-                    value: modelData.id
-                }
-            }
-        }
-
-        RowButton {
-            icon: "sync"
-            text: Tr.tr("Re-fetch times")
-            subtext: Tr.tr("Reload this month from Aladhan")
-            onClicked: Salat.refresh()
-        }
-
-        RowButton {
-            last: true
-            icon: "delete_sweep"
-            text: Tr.tr("Clear cache")
-            subtext: Tr.tr("Drop all saved timetables and fetch again")
-            onClicked: Salat.clearCache()
         }
 
         // Units

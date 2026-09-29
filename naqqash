@@ -13,6 +13,11 @@
 #   naqqash fg-ref "#3C3836" | default
 #   naqqash outline "#D65D0E" | default   flat verse stroke (default = spectrum gradient)
 #   naqqash aura 0.8                 glow 0..3 (0 = off)
+#   naqqash translation on|off       show a translation under the ayah
+#   naqqash translation-set <id>|off select a translation (e.g. en.sahih)
+#   naqqash translations             list built-in and downloaded translations
+#   naqqash translation-fetch <id>   download a Tanzil translation (e.g. ru.kuliev)
+#   naqqash translation-remove <id>  remove a downloaded translation
 #   naqqash show                     dump all live values
 #
 # Instance selection: NAQQASH_IPC uses raw quickshell ipc selectors instead
@@ -94,6 +99,21 @@ outline)
     ;;
 aura)
     call aura "${2:-}"
+    ;;
+translation)
+    call translation "${2:-on}"
+    ;;
+translation-set)
+    call translationSet "${2:-off}"
+    ;;
+translations)
+    call translations
+    ;;
+translation-fetch)
+    call translationFetch "${2:-}"
+    ;;
+translation-remove)
+    call translationRemove "${2:-}"
     ;;
 show)
     call status

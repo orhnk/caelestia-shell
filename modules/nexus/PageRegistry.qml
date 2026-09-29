@@ -83,6 +83,14 @@ QtObject {
             category: "shell"
         },
 
+        // Islam
+        {
+            label: Tr.tr("Islam"),
+            icon: "mosque",
+            description: Tr.tr("Quran translation, prayer times"),
+            category: "islam"
+        },
+
         // About
         {
             label: Tr.tr("About"),

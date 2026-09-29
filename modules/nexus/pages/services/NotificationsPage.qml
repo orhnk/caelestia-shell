@@ -184,33 +184,10 @@ PageBase {
         }
 
         ToggleRow {
+            last: true
             text: Tr.tr("Now playing")
             checked: GlobalConfig.utilities.toasts.nowPlaying
             onToggled: GlobalConfig.utilities.toasts.nowPlaying = checked
-        }
-
-        // Prayer times
-        SectionHeader {
-            text: Tr.tr("Prayer times")
-        }
-
-        StepperRow {
-            first: true
-            label: Tr.tr("Remind before")
-            subtext: Tr.tr("Minutes before prayer time to show a reminder")
-            value: Salat.reminderMins
-            from: 0
-            to: 60
-            stepSize: 1
-            onMoved: v => Salat.reminderMins = Math.round(v)
-        }
-
-        ToggleRow {
-            last: true
-            text: Tr.tr("Prayer reminders")
-            subtext: Tr.tr("Show a toast before each prayer")
-            checked: Salat.reminderMins > 0
-            onToggled: Salat.reminderMins = checked ? 5 : 0
         }
     }
 }

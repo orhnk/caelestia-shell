@@ -1,0 +1,36 @@
+Quran translations bundled with the shell
+=========================================
+
+These files are Quran translations downloaded from the Tanzil Project
+(https://tanzil.net/trans/). Each file is plain text with one verse per
+line in the form:
+
+    surah|ayah|translation
+
+and ends with Tanzil's own notice block.
+
+Built-in translations:
+
+    en.sahih.txt        Saheeh International (English)
+    de.bubenheim.txt    A. S. F. Bubenheim and N. Elyas (German)
+    tr.ates.txt         Süleyman Ateş (Turkish)
+
+Other languages are fetched on demand from https://tanzil.net/trans/<id>
+and cached under the shell's state directory.
+
+Terms of use (Tanzil Project, Copyright (C) 2007-2026)
+------------------------------------------------------
+
+- The translations are provided for non-commercial purposes only. If used
+  otherwise, the necessary permission must be obtained from the translator
+  or the publisher. The shell itself is non-commercial (GPL-3.0).
+- When using more than three of Tanzil's translations in a website or
+  application, a link back to https://tanzil.net/trans/ is required.
+- This copyright notice shall be included in all verbatim copies of the
+  text, and shall be reproduced appropriately in all files derived from or
+  containing substantial portions of this text.
+
+Please check updates at: http://tanzil.net/updates/
+
+Note: Tanzil's Diyanet (tr.diyanet) export repeats a whole short surah's
+text for each of its ayat in places, so Süleyman Ateş is bundled instead.
