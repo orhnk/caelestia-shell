@@ -31,9 +31,24 @@ wallpapers, picker bg"). No further code changes were needed.
     sorted list built from `Wallpapers.list` (the recursive `FileSystemModel`
     over `Paths.wallsdir`); the per-category grouping, the category label and
     the "open category subpage" branch were removed.
-  - `services/Wallpapers.qml:32` — `setRandom()` picks uniformly from the
+  - `services/Wallpapers.qml:45` — `setRandom()` picks uniformly from the
     recursive `wallpapers.entries`, so subdirectory wallpapers are included as
-    well.
+    well, and only images Qt could read are ever candidates (the model checks
+    `QImageReader::canRead`, unlike the cli's suffix scan).
+  - `utils/Paths.qml:22` — `wallsdir` is now exactly `paths.wallpaperDir` from
+    the caelestia config. The `CAELESTIA_WALLPAPERS_DIR` override that used to
+    take precedence is gone: a stale value (a theme dir that no longer exists)
+    silently won over the config, which is what left the switcher empty.
+  - Empty switcher, named: `services/Wallpapers.qml:22` checks the directory
+    with `test -d` into `dirExists`, warns with the offending path, toasts
+    instead of doing nothing when a random pick has no candidates, and
+    `modules/launcher/ContentList.qml:135-160` shows either "No wallpapers
+    found" or "Wallpaper directory not found" plus the `paths.wallpaperDir`
+    hint.
+  - `caelestia shell wallpaper random` (`services/Wallpapers.qml:118`) exposes
+    the same model-based pick over IPC, for keybinds that should not scan the
+    tree with the cli (which size-checks every candidate and aborts on an
+    unreadable file).
 
 - [x] The color picker icon background should get coloured after picking a
       color.

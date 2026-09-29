@@ -164,6 +164,9 @@ or by manually copying or symlinking your image to the path.
 
 The wallpapers for the wallpaper switcher are read from `~/Pictures/Wallpapers`
 by default. To change it, modify `paths.wallpaperDir` in `~/.config/caelestia/shell.json`.
+The whole directory tree is used, so wallpapers can live in as many subdirectories as you like, and
+`paths.wallpaperDir` is the only place the directory is set from. If it does not exist, the launcher
+says so instead of showing an empty switcher.
 
 To set the wallpaper, you can type `>wallpaper` in the launcher to open the wallpaper switcher.
 Alternatively, you can also use `caelestia wallpaper -f <path_to_wallpaper>` to set the wallpaper directly.
@@ -948,9 +951,11 @@ caelestia scheme set -n dynamic
 
 ### My wallpapers aren't showing up in the launcher!
 
-The launcher pulls wallpapers from `~/Pictures/Wallpapers` by default. You can change this in the config. Additionally,
-the launcher only shows an odd number of wallpapers at one time. If you only have 2 wallpapers, consider getting more
-(or just putting one).
+The launcher pulls wallpapers (including the ones in subdirectories) from `paths.wallpaperDir` in
+`~/.config/caelestia/shell.json`, which is `~/Pictures/Wallpapers` by default. The launcher names the directory it is
+looking at, and says when that directory does not exist at all, so check the path it prints before anything else.
+Additionally, the launcher only shows an odd number of wallpapers at one time. If you only have 2 wallpapers, consider
+getting more (or just putting one).
 
 ## Credits
 

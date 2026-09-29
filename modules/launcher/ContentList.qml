@@ -134,13 +134,25 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             StyledText {
-                text: root.state === "wallpapers" ? Tr.tr("No wallpapers found") : Tr.tr("No results")
+                text: {
+                    if (root.state !== "wallpapers")
+                        return Tr.tr("No results");
+                    // An empty list looks the same whether the directory is empty
+                    // or gone, so lead with which one it is.
+                    return Wallpapers.dirExists ? Tr.tr("No wallpapers found") : Tr.tr("Wallpaper directory not found");
+                }
                 color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.builders.large.weight(Font.Medium).build()
             }
 
             StyledText {
-                text: root.state === "wallpapers" && Wallpapers.list.length === 0 ? Tr.tr("Try putting some wallpapers in %1").arg(Paths.shortenHome(Paths.wallsdir)) : Tr.tr("Try searching for something else")
+                text: {
+                    if (root.state !== "wallpapers" || Wallpapers.list.length !== 0)
+                        return Tr.tr("Try searching for something else");
+                    if (!Wallpapers.dirExists)
+                        return Tr.tr("Check paths.wallpaperDir in the caelestia config: %1").arg(Paths.shortenHome(Paths.wallsdir));
+                    return Tr.tr("Try putting some wallpapers in %1").arg(Paths.shortenHome(Paths.wallsdir));
+                }
                 color: Colours.pick(Colours.palette.m3base04, Colours.palette.m3onSurfaceVariant)
                 font: Tokens.font.body.medium
             }

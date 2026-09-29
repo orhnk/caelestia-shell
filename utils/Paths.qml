@@ -19,7 +19,11 @@ Singleton {
 
     readonly property string imagecache: `${cache}/imagecache`
     readonly property string notifimagecache: `${imagecache}/notifs`
-    readonly property string wallsdir: Quickshell.env("CAELESTIA_WALLPAPERS_DIR") || absolutePath(GlobalConfig.paths.wallpaperDir)
+    // The wallpaper directory is owned by `paths.wallpaperDir`. An env override
+    // used to take precedence here, which let a stale CAELESTIA_WALLPAPERS_DIR
+    // silently shadow the config and made a broken path look like a bug in the
+    // switcher.
+    readonly property string wallsdir: absolutePath(GlobalConfig.paths.wallpaperDir)
     readonly property string recsdir: Quickshell.env("CAELESTIA_RECORDINGS_DIR") || `${videos}/Recordings`
     readonly property string libdir: Quickshell.env("CAELESTIA_LIB_DIR") || "/usr/lib/caelestia"
 
