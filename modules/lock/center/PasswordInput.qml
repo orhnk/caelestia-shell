@@ -22,10 +22,10 @@ StyledRect {
     }
     implicitHeight: input.implicitHeight + Tokens.padding.small
 
+    // No focus ring: the field is the only thing that can have focus here, and the
+    // strip around it made the round shape read as a box.
     color: Colours.pick(Colours.tPalette.m3base02, Colours.tPalette.m3surfaceContainer)
     radius: Tokens.rounding.full
-    border.width: activeFocus ? 2 : 0
-    border.color: Accents.base0D
 
     focus: true
     onActiveFocusChanged: {

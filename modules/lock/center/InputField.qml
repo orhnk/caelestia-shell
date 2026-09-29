@@ -70,7 +70,9 @@ Item {
         text: nonAnimPlaceholder.text
 
         animate: true
-        color: root.pam.passwd.active ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Accents.base0D
+        // base06 for the "Enter your password" prompt; the busy states keep their
+        // own accent so they still read as a different state.
+        color: root.pam.passwd.active ? Colours.pick(Colours.palette.m3base0C, Colours.palette.m3secondary) : Accents.base06
         font: Tokens.font.body.builders.medium.scale(root.centerScale).width(110).build()
 
         opacity: root.buffer ? 0 : 1
