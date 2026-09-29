@@ -121,10 +121,8 @@ StyledRect {
                         accentIndex: 3
                         icon: "colorize"
                         isToggle: false
-                        // Only the icon wears the last pick; the button itself keeps
-                        // the theme's structure like every other toggle.
-                        activeOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
-                        inactiveOnColour: ColourPicker.hasColor ? ColourPicker.lastColor : accent
+                        // The pick colours the toast's icon tile, not this button:
+                        // every toggle here stays on the theme, icon included.
                         onClicked: ColourPicker.pick()
                     }
                 }

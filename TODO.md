@@ -52,9 +52,9 @@ wallpapers, picker bg"). No further code changes were needed.
 
 - [x] The color picker icon background should get coloured after picking a
       color.
-  - This is the icon tile of the **toast**, not the quick-toggle button: the
-    button keeps the theme's structure, with only its icon wearing the last
-    pick (`modules/utilities/cards/Toggles.qml:124`).
+  - This is the icon tile of the **toast**, not the quick-toggle button: every
+    toggle in the utilities panel — the colour picker included — stays on the
+    theme, icon and background alike (`modules/utilities/cards/Toggles.qml`).
   - `services/ColourPicker.qml:47` passes the pick to the toast as a
     `color:#rrggbb` icon, and `modules/utilities/toasts/ToastItem.qml:16-22`
     paints the toast's icon tile with it, the glyph on top taking
