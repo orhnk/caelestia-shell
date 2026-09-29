@@ -53,7 +53,7 @@ StyledRect {
     Colouriser {
         source: root.mask
         sourceColor: Colours.pick(Colours.palette.m3base05, Colours.palette.m3onSurface)
-        colorizationColor: Colours.pick(Colours.palette.m3base02, Colours.palette.m3secondaryContainer)
+        colorizationColor: Colours.pick(Colours.palette.m3base00, Colours.palette.m3secondaryContainer)
 
         x: 0
         y: -parent.offset
