@@ -175,8 +175,10 @@ The Quran wallpaper widget shows a random, daily or sequential ayah. Everything 
 from the **Islam** tab in the settings (Super+N), including the display face, size and glow, the rotation
 mode, the prayer-time settings and the translation.
 
-The translation is on by default. It sits between the ayah and the surah signature, in its own face and a
-smaller size, filled with `base01` and outlined with `base05` at the same width as the ayah's outline.
+The translation is on by default, and follows the shell language: the bundled English, German and Turkish
+ones are used where they apply, and any other language is downloaded from Tanzil on demand. Picking a
+translation by hand stops the following. It sits between the ayah and the surah signature, in its own face
+and a smaller size, filled with `base01` and outlined with `base05` at the same width as the ayah's outline.
 
 Three translations are bundled (`data/quran-translations/`), from the [Tanzil Project][tanzil]:
 
@@ -190,6 +192,7 @@ under `~/.local/state/caelestia/`. The same options are available over IPC, e.g.
 
 ```sh
 naqqash translation on
+naqqash translation-follow on
 naqqash translation-set en.sahih
 naqqash translations            # list built-in and downloaded translations
 naqqash translation-fetch ru.kuliev

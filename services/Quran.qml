@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Caelestia.I18n
 import qs.utils
 
 Singleton {
@@ -41,6 +42,20 @@ Singleton {
     property string translationFetchError: ""
     // Translations downloaded at runtime: [{ id, language, name }]
     property var fetchedTranslations: []
+    // Follow the shell/system language: show the translation for that language,
+    // downloading it when we don't ship it. Any explicit pick turns this off.
+    property bool translationFollowLanguage: true
+    // Set when a language was auto-downloaded (or the download failed), so a
+    // failure isn't retried for every verse.
+    property string translationAutoTried: ""
+
+    // Language the translation follows: the shell UI language when one is set,
+    // otherwise the system locale. Only the primary subtag matters, so "tr_TR"
+    // and "tr-TR" both give "tr".
+    readonly property string translationLanguage: {
+        const raw = Tr.language || Qt.locale().name || "";
+        return String(raw).split(/[_\-.@]/)[0].toLowerCase();
+    }
 
     // Shipped in data/quran-translations/.
     readonly property var builtinTranslations: [
@@ -151,6 +166,7 @@ Singleton {
             applyIndex((root.index + 1) % verses.length);
         else
             applyIndex(pickIndex());
+        root.syncTranslationLanguage();
     }
 
     readonly property list<string> surahNames: [
@@ -303,6 +319,12 @@ Singleton {
         return builtinTranslations.some(t => t.id === id);
     }
 
+    // Tanzil ids are "<language>.<translator>", so the id also names the
+    // language the translation belongs to.
+    function translationLangFor(t: var): string {
+        return t && t.id ? String(t.id).split(".")[0].toLowerCase() : "";
+    }
+
     function translationCachePath(id: string): string {
         return `${Paths.state}/quran-translation-${id}.txt`;
     }
@@ -336,20 +358,66 @@ Singleton {
         translatedText = root.translationEnabled ? (root.translationIndex[root.ref] ?? "") : "";
     }
 
-    function setTranslationEnabled(v: bool): void {
-        root.translationEnabled = v;
-        root.updateTranslation();
+    // Keeps the shown translation in step with the language, fetching one the
+    // shell doesn't ship. Silent about languages we have nothing for.
+    function syncTranslationLanguage(): void {
+        if (!root.translationFollowLanguage || !root.translationEnabled)
+            return;
+        const code = root.translationLanguage;
+        if (!code)
+            return;
+
+        const have = translationOptions.find(t => translationLangFor(t) === code);
+        if (have) {
+            root.applyTranslation(have.id, false);
+            return;
+        }
+
+        const want = fetchableTranslations.find(t => translationLangFor(t) === code);
+        // No translation for this language, or we already tried to get it.
+        if (!want || root.translationAutoTried === want.id)
+            return;
+        if (root.translationFetching || root.fetchedTranslations.some(t => t.id === want.id))
+            return;
+
+        root.translationAutoTried = want.id;
+        root.fetchTranslation(want.id, want.language, want.name, false);
+    }
+
+    function setTranslationFollowLanguage(v: bool): void {
+        root.translationFollowLanguage = v;
+        if (v) {
+            // Turning it back on is also the way to retry a failed download.
+            root.translationAutoTried = "";
+            root.syncTranslationLanguage();
+        }
         saveTimer.restart();
     }
 
-    function setTranslationId(id: string): void {
+    function setTranslationEnabled(v: bool): void {
+        root.translationEnabled = v;
+        root.updateTranslation();
+        if (v)
+            root.syncTranslationLanguage();
+        saveTimer.restart();
+    }
+
+    // manual marks an explicit pick, which stops the translation from following
+    // the language.
+    function applyTranslation(id: string, manual: bool): void {
         if (!id || id === root.translationId)
             return;
+        if (manual)
+            root.translationFollowLanguage = false;
         root.translationId = id;
         saveTimer.restart();
     }
 
-    function fetchTranslation(id: string, language: string, name: string): void {
+    function setTranslationId(id: string): void {
+        root.applyTranslation(id, true);
+    }
+
+    function fetchTranslation(id: string, language: string, name: string, manual: bool): void {
         if (!id || root.translationFetching)
             return;
         root.translationFetching = true;
@@ -370,7 +438,7 @@ Singleton {
                 root.translationIndex = root.parseTranslations(text);
                 root.updateTranslation();
             } else {
-                root.setTranslationId(id);
+                root.applyTranslation(id, manual);
             }
         }, error => {
             root.translationFetching = false;
@@ -381,7 +449,9 @@ Singleton {
     function removeFetchedTranslation(id: string): void {
         root.fetchedTranslations = root.fetchedTranslations.filter(t => t.id !== id);
         if (root.translationId === id)
-            root.setTranslationId("en.sahih");
+            root.applyTranslation("en.sahih", false);
+        // Don't immediately download the language the user just removed.
+        root.translationAutoTried = id;
         translationWriter.path = root.translationCachePath(id);
         translationWriter.setText("");
         saveTimer.restart();
@@ -490,11 +560,18 @@ Singleton {
             return `ok ${root.translationEnabled ? "on" : "off"}`;
         }
 
+        function translationFollow(enabled: string): string {
+            const v = enabled === "true" || enabled === "on" || enabled === "1";
+            root.setTranslationFollowLanguage(v);
+            return `ok ${root.translationFollowLanguage ? "on" : "off"} (${root.translationLanguage || "unknown language"} -> ${root.translationId})`;
+        }
+
         function translationSet(id: string): string {
             if (id === "off" || id === "") {
                 root.setTranslationEnabled(false);
                 return "ok off";
             }
+            root.setTranslationFollowLanguage(false);
             root.setTranslationEnabled(true);
             root.setTranslationId(id);
             return `ok ${root.translationId}`;
@@ -508,7 +585,7 @@ Singleton {
             if (!id)
                 return "usage: translationFetch <tanzil id>";
             const t = root.fetchableTranslations.find(x => x.id === id);
-            root.fetchTranslation(id, t?.language ?? id, t?.name ?? id);
+            root.fetchTranslation(id, t?.language ?? id, t?.name ?? id, true);
             return `ok fetching ${id}`;
         }
 
@@ -525,6 +602,16 @@ Singleton {
     // Written from the settings UI directly (no setter), so persist those too.
     onTranslationFontChanged: saveTimer.restart()
     onTranslationScaleChanged: saveTimer.restart()
+
+    // Re-pick (and re-download) when the shell language changes.
+    Connections {
+        target: Tr
+
+        function onLanguageChanged(): void {
+            root.translationAutoTried = "";
+            root.syncTranslationLanguage();
+        }
+    }
 
     Timer {
         id: saveTimer
@@ -543,6 +630,7 @@ Singleton {
             translationId: root.translationId,
             translationFont: root.translationFont,
             translationScale: root.translationScale,
+            translationFollowLanguage: root.translationFollowLanguage,
             fetchedTranslations: root.fetchedTranslations
         }))
     }
@@ -580,6 +668,8 @@ Singleton {
                     root.translationFont = data.translationFont;
                 if (typeof data.translationScale === "number" && data.translationScale >= 0.05 && data.translationScale <= 1)
                     root.translationScale = data.translationScale;
+                if (typeof data.translationFollowLanguage === "boolean")
+                    root.translationFollowLanguage = data.translationFollowLanguage;
                 if (Array.isArray(data.fetchedTranslations))
                     root.fetchedTranslations = data.fetchedTranslations.filter(t => t && typeof t.id === "string");
             } catch (e) {

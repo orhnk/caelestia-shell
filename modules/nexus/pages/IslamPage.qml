@@ -79,6 +79,13 @@ PageBase {
             onToggled: Quran.setTranslationEnabled(checked)
         }
 
+        ToggleRow {
+            text: Tr.tr("Follow the system language")
+            subtext: Quran.translationFollowLanguage ? Tr.tr("Using %1").arg(Quran.translationNameFor(Quran.translationId)) : Tr.tr("Use the translation for the shell language, downloading it if needed")
+            checked: Quran.translationFollowLanguage
+            onToggled: Quran.setTranslationFollowLanguage(checked)
+        }
+
         SelectRow {
             label: Tr.tr("Translation")
             subtext: Quran.translationNameFor(Quran.translationId)
@@ -168,7 +175,7 @@ PageBase {
             onClicked: {
                 const t = Quran.fetchableTranslations.find(x => x.id === root.pendingFetch);
                 if (t) {
-                    Quran.fetchTranslation(t.id, t.language, t.name);
+                    Quran.fetchTranslation(t.id, t.language, t.name, true);
                     root.pendingFetch = null;
                 }
             }
