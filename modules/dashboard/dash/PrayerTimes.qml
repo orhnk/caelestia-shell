@@ -10,12 +10,15 @@ import qs.utils
 Item {
     id: root
 
-    // Own faces, pinned here rather than taken from `appearance.font`,
-    // so the widget does not follow the theme fonts.
+    // Own face, pinned here rather than taken from `appearance.font`, so the
+    // widget does not follow the theme fonts.
     // Same approach as DateTime.clockFamily ("Rubik is the shell's own
-    // default clock face").
-    property string nameFamily: "Noto Kufi Arabic"
-    property string timeFamily: "Rubik"
+    // default clock face"), now shared by the names and the times.
+    property string fontFamily: "Rubik"
+
+    // One font for the prayer names and their times, so the two columns cannot
+    // drift apart: both read the same built font instead of two lookalikes.
+    readonly property font rowFont: Tokens.font.mono.builders.medium.family(root.fontFamily).weight(Font.DemiBold).build()
 
     clip: true
 
@@ -82,14 +85,14 @@ Item {
         TextMetrics {
             id: timeMetrics
 
-            font: Tokens.font.mono.builders.medium.family(root.timeFamily).weight(Font.DemiBold).build()
+            font: root.rowFont
             text: GlobalConfig.services.useTwelveHourClock ? "00:00 AM" : "00:00"
         }
 
         TextMetrics {
             id: nameMetrics
 
-            font: Tokens.font.body.builders.medium.family(root.nameFamily).weight(Font.DemiBold).build()
+            font: root.rowFont
         }
 
         StyledText {
@@ -166,7 +169,7 @@ Item {
                         Layout.preferredWidth: root.nameColWidth
                         text: Salat.label(row.modelData.name)
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.body.builders.medium.family(root.nameFamily).weight(Font.DemiBold).build()
+                        font: root.rowFont
                         elide: Text.ElideRight
                     }
 
@@ -182,7 +185,7 @@ Item {
                         horizontalAlignment: Text.AlignRight
                         text: row.modelData.display
                         color: row.isNext ? Colours.on(row.prayerColor) : row.prayerColor
-                        font: Tokens.font.mono.builders.medium.family(root.timeFamily).weight(Font.DemiBold).build()
+                        font: root.rowFont
                     }
                 }
             }

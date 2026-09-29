@@ -17,13 +17,13 @@ wallpapers, picker bg"). No further code changes were needed.
   - `modules/lock/Lock.qml:32` still pre-warms a screencopy, so the first
     capture succeeds (the compositor refuses capture once locked).
 
-- [x] The Salat widget should use its own fonts for salat names and times.
-  - `modules/dashboard/dash/PrayerTimes.qml:17` — pinned `nameFamily` =
-    "Noto Kufi Arabic" and `timeFamily` = "Rubik" (same approach as
-    `DateTime.clockFamily`).
-  - The `TextMetrics` (lines 85, 92) and both row `StyledText`s (lines 169,
-    185) now build through `.family(...)`, so the widget no longer follows the
-    theme font.
+- [x] The Salat widget should use its own font for salat names and times.
+  - `modules/dashboard/dash/PrayerTimes.qml:17` — pinned `fontFamily` =
+    "Rubik" (same approach as `DateTime.clockFamily`), which the names and the
+    times share.
+  - `rowFont` (`:22`) builds that one font once, and the two `TextMetrics` plus
+    both row `StyledText`s read it, so the widget no longer follows the theme
+    font and the names cannot drift apart from the times.
 
 - [x] The wallpapers (random pick and the view) should not be colour-scheme
       dependent — all together from `${WPPPATH}`, never `${WPPPATH}/${THEME}`.
